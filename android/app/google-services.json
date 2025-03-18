@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "343713050206",
+    "project_id": "storymap-ca61e",
+    "storage_bucket": "storymap-ca61e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343713050206:android:1ddf77210e5259778fcecf",
+        "android_client_info": {
+          "package_name": "com.example.story_map"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343713050206-8lhb08vi8u15uce8qrlh675vtiv7m62c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.story_map",
+            "certificate_hash": "f824ea0bbdab8e9c8f7e5ea0879d96c6cad56d2d"
+          }
+        },
+        {
+          "client_id": "343713050206-lnr43dc3k15bq39qtjr6s74vu90giu2p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS3hu0JU78USUBtQFWbojvLfHFevKxAxw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343713050206-i46rlg5bigne9ul4f8p5s2102jq76fv6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "343713050206-j556cldj640j69aols5rg0sjqskfrum9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.storyMap"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

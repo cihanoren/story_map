@@ -59,12 +59,18 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
   }
 
   void _initializeMarkers() {
-    for (var markerData in PredefinedMarkers.markers) {
-      addMarker(markerData['position'], markerData['title'], markerData['image']);
-    }
+  // PredefinedMarkers içindeki tüm işaretçileri ekle
+  for (var markerData in PredefinedMarkers.markers) {
+    addMarker(
+      markerData['position'], // Konum
+      markerData['title'],    // Başlık
+      markerData['image'],    // Görsel URL
+    );
   }
+}
 
-  void addMarker(LatLng position, String title, String imagePath) {
+
+  void addMarker(LatLng position, String title, String imageUrl) {
     final markers = Set<Marker>.from(state['markers']);
 
     markers.add(
@@ -74,7 +80,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
         icon: BitmapDescriptor.defaultMarker,
         infoWindow: InfoWindow(title: title),
         onTap: () {
-          _showBottomSheet(title, imagePath);
+          _showBottomSheet(title, imageUrl);
         },
       ),
     );
@@ -85,7 +91,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     };
   }
 
-  void _showBottomSheet(String title, String imagePath) {
+  void _showBottomSheet(String title, String imageUrl) {
     final context = navigatorKey.currentContext;
     if (context == null || _googleMapController == null) return;
 
@@ -103,12 +109,17 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
               controller: scrollController,
               child: StoryBottomSheet(
                 title: title,
-                imagePath: imagePath,
+                imagePath: imageUrl,
               ),
             );
           },
         );
       },
     );
+  }
+
+  // 🌟 **EKLENEN YENİ METOT**
+  void loadMarkers() {
+    _initializeMarkers();
   }
 }

@@ -23,10 +23,13 @@ class MapView extends ConsumerWidget {
               onMapCreated: (GoogleMapController controller) {
                 mapController.setMapController(controller);
                 mapController.moveToCurrentLocation();
+                Future.delayed(Duration(milliseconds: 300), () {
+                  mapController.loadMarkers(); // ✅ API'den gelen markerları yükle
+                });
               },
               myLocationEnabled: true,
               myLocationButtonEnabled: true,
-              markers: mapState['markers'],
+              markers: mapState['markers'], // Markerlar burada gösterilecek
               onTap: (LatLng position) {
                 // Kullanıcı tıklayınca yeni hikaye ekleyebiliriz
               },

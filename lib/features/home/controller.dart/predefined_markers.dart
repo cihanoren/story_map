@@ -5,12 +5,17 @@ class PredefinedMarkers {
     {
       'position': LatLng(41.008469, 28.980261),
       'title': "Ayasofya",
-      'image': "assets/images/ayasofya.png"
+      'image': "https://storymap-images.s3.us-east-1.amazonaws.com/ayasofya.png"
     },
     {
       'position': LatLng(41.0055, 28.9769),
       'title': "Topkapı Sarayı",
-      'image': "assets/images/topkapi.png"
+      'image': "https://storymap-images.s3.us-east-1.amazonaws.com/topkapi.png"
+    },
+    {
+      'position': LatLng(41.4460, 31.7890), // Gökgöl Mağarası koordinatları
+      'title': "Gökgöl Mağarası",
+      'image': "https://storymap-images.s3.us-east-1.amazonaws.com/gokgol.jpg" // AWS S3 URL
     }
   ];
 }

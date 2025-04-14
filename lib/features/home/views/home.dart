@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:story_map/core/theme/theme_provider.dart';
 import 'package:story_map/features/home/views/explore_page.dart';
 import 'package:story_map/features/home/views/map_view.dart';
-import 'package:story_map/features/home/views/profile_page.dart';
+import 'package:story_map/features/home/views/profile/profile_page.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class Home extends ConsumerStatefulWidget {
@@ -25,8 +25,7 @@ class _HomeState extends ConsumerState<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         body: Stack(
           children: [
             IndexedStack(
@@ -35,24 +34,24 @@ class _HomeState extends ConsumerState<Home> {
             ),
 
             // Sağ üst köşede sade bir koyu mod butonu
-            Positioned(
-              top: 5,
-              right: 10,
-              child: IconButton(
-                icon: Icon(
-                  ref.watch(themeProvider).brightness == Brightness.dark
-                      ? Icons.dark_mode
-                      : Icons.light_mode,
-                  size: 28,
+            if (_selectedIndex == 0) // sadece HomePage aktifken göster
+              Positioned(
+                top: 5,
+                right: 10,
+                child: IconButton(
+                  icon: Icon(
+                    ref.watch(themeProvider).brightness == Brightness.dark
+                        ? Icons.dark_mode
+                        : Icons.light_mode,
+                    size: 28,
+                  ),
+                  onPressed: () {
+                    ref.read(themeProvider.notifier).toggleTheme();
+                  },
                 ),
-                onPressed: () {
-                  ref.read(themeProvider.notifier).toggleTheme();
-                },
               ),
-            ),
           ],
         ),
-
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: GNav(
@@ -68,7 +67,6 @@ class _HomeState extends ConsumerState<Home> {
               GButton(icon: Icons.public, text: "Explore"),
               GButton(icon: Icons.location_on, text: "Maps"),
               GButton(icon: Icons.person, text: "Profile"),
-              
             ],
             selectedIndex: _selectedIndex,
             onTabChange: (index) {
@@ -79,9 +77,7 @@ class _HomeState extends ConsumerState<Home> {
               });
             },
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 
@@ -98,7 +94,6 @@ class _HomePageState extends State<HomePage> {
     return Center(
       child: Text(
         "Welcome to Home Page",
-        
       ),
     );
   }

@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'app_theme.dart';
 
-// Tema durumunu yöneten Provider
-class ThemeNotifier extends StateNotifier<ThemeData> {
-  ThemeNotifier() : super(AppThemes.lightTheme);
-
-  void toggleTheme() {
-    state = (state.brightness == Brightness.dark)
-        ? AppThemes.lightTheme
-        : AppThemes.darkTheme;
-  }
-}
-
-// Riverpod Provider tanımlaması
-final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeData>((ref) {
+final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>((ref) {
   return ThemeNotifier();
 });
+
+class ThemeNotifier extends StateNotifier<ThemeMode> {
+  ThemeNotifier() : super(ThemeMode.light);
+
+  void toggleTheme() {
+    state = state == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+  }
+}

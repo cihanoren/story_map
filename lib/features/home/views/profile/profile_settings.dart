@@ -13,14 +13,22 @@ class ProfileSettingPage extends StatelessWidget {
             leading: Icon(Icons.lock),
             title: Text("Şifreyi Değiştir"),
           ),
+
           ListTile(
             leading: Icon(Icons.notifications),
             title: Text("Bildirim Ayarları"),
           ),
+
           ListTile(
             leading: Icon(Icons.language),
             title: Text("Dil Seçenekleri"),
           ),
+
+          ListTile(
+            leading: Icon(Icons.dark_mode),
+            title: Text("Tema Değiştir"),
+          ),
+
           ListTile(
             leading: Icon(
               Icons.logout_outlined,
@@ -31,6 +39,8 @@ class ProfileSettingPage extends StatelessWidget {
               style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
             ),
           ),
+
+          
         ],
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:story_map/features/home/controller.dart/maps_controller.dart';
+import 'package:story_map/utils/marker_icons.dart'; // ✅ Eklediğimiz marker_icons
 
 class MapView extends ConsumerWidget {
   const MapView({super.key});
@@ -10,6 +11,9 @@ class MapView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mapState = ref.watch(mapControllerProvider);
     final mapController = ref.read(mapControllerProvider.notifier);
+
+    // Marker ikonlarını yükle
+    MarkerIcons.loadIcons();
 
     return Scaffold(
       appBar: AppBar(title: const Text("Harita")),

@@ -7,6 +7,7 @@ import 'package:story_map/core/theme/theme_provider.dart';
 import 'package:story_map/core/theme/app_theme.dart';
 import 'package:story_map/features/auth/views/sing_in.dart';
 import 'package:story_map/features/home/views/home.dart';
+import 'package:story_map/utils/marker_icons.dart';
 import 'firebase_options.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -14,6 +15,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await MarkerIcons.loadIcons(); // ikonları önceden yükle
+
   runApp(const ProviderScope(child: MyApp()));
 }
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:story_map/features/home/controller.dart/predefined_markers.dart';
 import 'package:story_map/features/home/views/bottom_sheet.dart';
 import 'package:story_map/main.dart';
+import 'package:story_map/utils/marker_icons.dart'; // ✅ MarkerIcons'ı ekliyoruz
 
 final mapControllerProvider =
     StateNotifierProvider<MapController, Map<String, dynamic>>((ref) {
@@ -58,26 +59,48 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     }
   }
 
-  void _initializeMarkers() {
-  // PredefinedMarkers içindeki tüm işaretçileri ekle
-  for (var markerData in PredefinedMarkers.markers) {
-    addMarker(
-      markerData['position'], // Konum
-      markerData['title'],    // Başlık
-      markerData['image'],    // Görsel URL
-    );
+  void _initializeMarkers() async {
+    // İkonları yüklemeden önce loadIcons çağırılıyor
+    await MarkerIcons.loadIcons();
+    
+    for (var markerData in PredefinedMarkers.markers) {
+      await addMarker(
+        markerData['position'],
+        markerData['title'],
+        markerData['image'],
+        markerData['iconPath'],
+      );
+    }
   }
-}
 
-
-  void addMarker(LatLng position, String title, String imageUrl) {
+  Future<void> addMarker(
+      LatLng position, String title, String imageUrl, String iconPath) async {
     final markers = Set<Marker>.from(state['markers']);
+    BitmapDescriptor customIcon;
+
+    // İkonları MarkerIcons'dan alıyoruz
+    if (iconPath == 'assets/markers/church.png') {
+      customIcon = MarkerIcons.churchIcon!;
+    } else if (iconPath == 'assets/markers/cave.png') {
+      customIcon = MarkerIcons.caveIcon!;
+    } else if (iconPath == 'assets/markers/palace.png') {
+      customIcon = MarkerIcons.palaceIcon!;
+    } else if (iconPath == 'assets/markers/castle.png') {
+      customIcon = MarkerIcons.castleIcon!;
+    } else if (iconPath == 'assets/markers/mosque.png') {
+      customIcon = MarkerIcons.mosqueIcon!;
+    } else if (iconPath == 'assets/markers/museum.png') {
+      customIcon = MarkerIcons.museumIcon!;
+    } else {
+      // Varsayılan bir ikon kullanabiliriz
+      customIcon = await MarkerIcons.getBitmapDescriptor(iconPath);
+    }
 
     markers.add(
       Marker(
         markerId: MarkerId(position.toString()),
         position: position,
-        icon: BitmapDescriptor.defaultMarker,
+        icon: customIcon,
         infoWindow: InfoWindow(title: title),
         onTap: () {
           _showBottomSheet(title, imageUrl);
@@ -118,7 +141,6 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     );
   }
 
-  // 🌟 **EKLENEN YENİ METOT**
   void loadMarkers() {
     _initializeMarkers();
   }

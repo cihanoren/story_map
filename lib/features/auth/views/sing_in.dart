@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:story_map/features/auth/controller/auth_controller.dart';
 import 'package:story_map/features/auth/controller/auth_google.dart';
@@ -55,7 +56,7 @@ class _SignInState extends ConsumerState<SignIn> {
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/login_page.jpg'),
+                image: AssetImage('assets/images/sign_in.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -161,12 +162,16 @@ class _SignInState extends ConsumerState<SignIn> {
                                       password: _passwordController.text,
                                     );
 
-                                // Başarılı girişten sonra Home sayfasına git
+                                // ✅ SharedPreferences: Oturum bilgisini sakla
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                await prefs.setBool("is_logged_in", true);
+
+                                // Ana sayfaya yönlendir
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => const Home(),
-                                  ),
+                                      builder: (_) => const Home()),
                                   (route) => false,
                                 );
                               } catch (e) {
@@ -195,6 +200,7 @@ class _SignInState extends ConsumerState<SignIn> {
 
                         const SizedBox(height: 15),
 
+                        // Google İle Giriş Butonu
                         SignInButton(
                           Buttons.google,
                           text: "Continue with Google",
@@ -204,6 +210,11 @@ class _SignInState extends ConsumerState<SignIn> {
                                 await googleAuthService.signInWithGoogle();
 
                             if (userCredential != null) {
+                              // ✅ Oturum bilgisini sakla
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.setBool("is_logged_in", true);
+
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -219,10 +230,9 @@ class _SignInState extends ConsumerState<SignIn> {
                             }
                           },
                           shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(30), // Oval köşeler
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                          elevation: 3, // Hafif gölge efekti
+                          elevation: 3,
                           padding: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 10),
                         ),
@@ -235,6 +245,11 @@ class _SignInState extends ConsumerState<SignIn> {
                             await ref
                                 .read(authControllerProvider.notifier)
                                 .signInAnonymously();
+
+                            // ✅ Oturum bilgisini sakla
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setBool("is_logged_in", true);
+
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(

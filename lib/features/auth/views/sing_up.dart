@@ -23,7 +23,7 @@ class SignUp extends ConsumerWidget {
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/sing_up.jpg'),
+                image: AssetImage('assets/images/sign_in.png'),
                 fit: BoxFit.cover,
               ),
             ),

@@ -22,6 +22,8 @@ class _ProfilePageState extends State<ProfilePage> {
   String? _locationDescription;
   bool _isUsingStaticLocation = false;
   LatLng? _staticLocation;
+  bool _isGuest = false;
+  static int guestCounter = 1; // Misafir sayaç
 
   @override
   void initState() {
@@ -32,10 +34,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _fetchUserEmail() async {
     final user = FirebaseAuth.instance.currentUser;
-    setState(() {
-      _email = user?.email;
-      _username = user?.email?.split("@").first;
-    });
+    if (user != null) {
+      if (user.isAnonymous) {
+        setState(() {
+          _isGuest = true;
+          _username = "guest${guestCounter++}"; // guest1, guest2 gibi
+          _email = null; // Misafir ise e-posta gösterilmeyecek
+        });
+      } else {
+        setState(() {
+          _email = user.email;
+          _username = user.email?.split("@").first;
+        });
+      }
+    }
   }
 
   Future<void> _fetchCurrentLocation() async {
@@ -111,86 +123,86 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   @override
-Widget build(BuildContext context) {
-  final displayLocation = _locationDescription ?? "Konum alınıyor...";
+  Widget build(BuildContext context) {
+    final displayLocation = _locationDescription ?? "Konum alınıyor...";
 
-  return Scaffold(
-    body: SafeArea(
-      child: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 20, 16, 30),
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: _showImagePickerOptions,
-                      child: CircleAvatar(
-                        radius: 60,
-                        backgroundImage: _imageFile != null
-                            ? FileImage(_imageFile!)
-                            : const AssetImage("assets/images/avatar.jpg") as ImageProvider,
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 30),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: _showImagePickerOptions,
+                        child: CircleAvatar(
+                          radius: 60,
+                          backgroundImage: _imageFile != null
+                              ? FileImage(_imageFile!)
+                              : const AssetImage("assets/images/avatar.jpg") as ImageProvider,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      _username ?? "Kullanıcı Adı",
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      _email ?? "E-posta yükleniyor...",
-                      style: const TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.location_on, color: Colors.blue.shade700),
-                        const SizedBox(width: 8),
+                      const SizedBox(height: 12),
+                      Text(
+                        _username ?? "Kullanıcı Adı",
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 6),
+                      if (!_isGuest) // Eğer misafir değilse e-posta göster
                         Text(
-                          displayLocation,
-                          style: const TextStyle(fontSize: 16),
+                          _email ?? "E-posta yükleniyor...",
+                          style: const TextStyle(fontSize: 16, color: Colors.grey),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.edit, size: 20),
-                          onPressed: _selectStaticLocation,
-                        ),
-                      ],
-                    ),
-                    if (_isUsingStaticLocation)
-                      TextButton(
-                        onPressed: () {
-                          _isUsingStaticLocation = false;
-                          _fetchCurrentLocation();
-                        },
-                        child: const Text("Anlık konuma geri dön"),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.location_on, color: Colors.blue.shade700),
+                          const SizedBox(width: 8),
+                          Text(
+                            displayLocation,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.edit, size: 20),
+                            onPressed: _selectStaticLocation,
+                          ),
+                        ],
                       ),
-                  ],
+                      if (_isUsingStaticLocation)
+                        TextButton(
+                          onPressed: () {
+                            _isUsingStaticLocation = false;
+                            _fetchCurrentLocation();
+                          },
+                          child: const Text("Anlık konuma geri dön"),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            top: 5,
-            right: 4,
-            child: IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const ProfileSettingPage()),
-                );
-              },
+            Positioned(
+              top: 5,
+              right: 4,
+              child: IconButton(
+                icon: const Icon(Icons.settings),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ProfileSettingPage()),
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 }
 
 class LatLng {

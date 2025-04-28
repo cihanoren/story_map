@@ -44,9 +44,7 @@ dependencies:
   geocoding: ^3.0.0
   shared_preferences: ^2.5.3
   flutter_native_splash: ^2.4.6
-
-
-
+  flutter_keyboard_visibility: ^6.0.0
 
 
 

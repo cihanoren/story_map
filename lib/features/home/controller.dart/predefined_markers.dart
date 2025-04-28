@@ -999,5 +999,113 @@ class PredefinedMarkers {
       'image': "",
       'iconPath': 'assets/markers/temple.png'
     },
+    {
+      'position': LatLng(41.16714279572021, 41.79460321349126),
+      'title': "Kafkasör Yaylası",
+      'image': "",
+      'iconPath': 'assets/markers/park.png'
+    },
+    {
+      'position': LatLng(40.1906844, 29.046268),
+      'title': "Şehzade Ahmet Türbesi",
+      'image': "",
+      'iconPath': 'assets/markers/tomb.png'
+    },
+    {
+      'position': LatLng(40.1905532, 29.0461205),
+      'title': "II.Murat Türbesi",
+      'image': "",
+      'iconPath': 'assets/markers/tomb.png'
+    },
+    {
+      'position': LatLng(40.1905553, 29.0456297),
+      'title': "Cem Sultan Türbesi",
+      'image': "",
+      'iconPath': 'assets/markers/tomb.png'
+    },
+    {
+      'position': LatLng(40.1903955, 29.0458281),
+      'title': "Şehzade Mustafa Türbesi",
+      'image': "",
+      'iconPath': 'assets/markers/tomb.png'
+    },
+    
+    {
+      'position': LatLng(41.012473857472045, 28.983337340622487),
+      'title': "Adalet Kulesi",
+      'image': "",
+      'iconPath': 'assets/markers/tower.png'
+    },
+    {
+      'position': LatLng(41.01455237277495, 28.985565458081194),
+      'title': "Gotlar Sütunu",
+      'image': "",
+      'iconPath': 'assets/markers/memorial.png'
+    },
+    {
+      'position': LatLng(41.011736861235136, 28.98132287824452),
+      'title': "İstanbul Arkeoloji Müzeleri",
+      'image': "",
+      'iconPath': 'assets/markers/museum.png'
+    },
+    
+    {
+      'position': LatLng(41.01333751446348, 28.981513641707306),
+      'title': "Gülhane Parkı",
+      'image': "",
+      'iconPath': 'assets/markers/park.png'
+    },
+    
+    {
+      'position': LatLng(41.01389024898477, 28.981818863279727),
+      'title': "Gülhane Parkı Sarnıcı",
+      'image': "",
+      'iconPath': 'assets/markers/museum.png'
+    },
+    {
+      'position': LatLng(41.013116742377036, 28.9852978340244),
+      'title': "Fatih Köşkü",
+      'image': "",
+      'iconPath': 'assets/markers/memorial.png'
+    },
+    {
+      'position': LatLng(41.01273673343013, 28.987075749683754),
+      'title': "Bizans Surları",
+      'image': "",
+      'iconPath': 'assets/markers/memorial.png'
+    },
+    {
+      'position': LatLng(41.01128589367264, 28.982655528879935),
+      'title': "Deavi Kasrı",
+      'image': "",
+      'iconPath': 'assets/markers/castle.png'
+    },
+    
+    {
+      'position': LatLng(41.00753583228963, 28.972470030689987),
+      'title': "Şerefiye Sarnıcı",
+      'image': "",
+      'iconPath': 'assets/markers/museum.png'
+    },
+    
+    {
+      'position': LatLng(41.00598943430901, 28.975334629922788),
+      'title': "Theodosius Dikilitaşı",
+      'image': "",
+      'iconPath': 'assets/markers/tower.png'
+    },
+{
+  'position': LatLng(40.959791, 29.1918835),
+  'title': "Seyit Onbaşı Heykeli",
+  'image': "",
+  'iconPath': 'assets/markers/monument.png'
+},
+
+{
+  'position': LatLng(41.0056649, 28.9751101),
+  'title': "Yılanlı Sütun",
+  'image': "",
+  'iconPath': 'assets/markers/memorial.png'
+},
   ];
 }

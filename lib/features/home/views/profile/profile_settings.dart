@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:story_map/core/theme/theme_provider.dart';
 import 'package:story_map/features/auth/views/sing_in.dart';
+import 'package:story_map/features/home/views/profile/account__info.dart';
+import 'package:story_map/features/home/views/profile/change_password.dart';
 import 'package:story_map/main.dart';
 
 class ProfileSettingPage extends ConsumerStatefulWidget {
@@ -19,14 +21,38 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
     final currentTheme = ref.watch(themeProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Ayarlar")),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: const Text("Ayarlar", style: TextStyle(color: Colors.black),),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
       body: ListView(
         children: [
+          ListTile(
+            leading: const Icon(Icons.manage_accounts_rounded),
+            title: const Text("Hesap Bilgileri"),
+            onTap: () {
+              // Hesap bilgileri ekranına yönlendirme yapar
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AccountInfo(),
+                ),
+              );
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.lock),
             title: const Text("Şifreyi Değiştir"),
             onTap: () {
-              // Şifre değiştir ekranına yönlendirme yapılabilir
+              // Şifre değiştir ekranına yönlendirme yapar
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const ChangePassword();
+              }));
             },
           ),
           ListTile(

@@ -55,19 +55,23 @@ class _ProfilePageState extends State<ProfilePage> {
     if (!serviceEnabled) return;
 
     LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
       permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.whileInUse && permission != LocationPermission.always) {
+      if (permission != LocationPermission.whileInUse &&
+          permission != LocationPermission.always) {
         return;
       }
     }
 
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     _updateLocation(position);
   }
 
   Future<void> _updateLocation(Position position) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
     final place = placemarks.first;
 
     setState(() {
@@ -114,12 +118,38 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _selectStaticLocation() async {
-    final position = await Geolocator.getCurrentPosition();
-    setState(() {
-      _staticLocation = LatLng(position.latitude, position.longitude);
-      _isUsingStaticLocation = true;
-    });
-    _updateLocation(position);
+    final TextEditingController controller = TextEditingController();
+
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Konum Bilgisi Gir"),
+        content: TextField(
+          controller: controller,
+          decoration: const InputDecoration(
+            hintText: "Örn: Artvin, Merkez",
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("İptal"),
+          ),
+          TextButton(
+            onPressed: () {
+              if (controller.text.trim().isNotEmpty) {
+                setState(() {
+                  _locationDescription = controller.text.trim();
+                  _isUsingStaticLocation = true;
+                });
+              }
+              Navigator.pop(context);
+            },
+            child: const Text("Kaydet"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -142,19 +172,22 @@ class _ProfilePageState extends State<ProfilePage> {
                           radius: 60,
                           backgroundImage: _imageFile != null
                               ? FileImage(_imageFile!)
-                              : const AssetImage("assets/images/avatar.jpg") as ImageProvider,
+                              : const AssetImage("assets/images/avatar.jpg")
+                                  as ImageProvider,
                         ),
                       ),
                       const SizedBox(height: 12),
                       Text(
                         _username ?? "Kullanıcı Adı",
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 6),
                       if (!_isGuest) // Eğer misafir değilse e-posta göster
                         Text(
                           _email ?? "E-posta yükleniyor...",
-                          style: const TextStyle(fontSize: 16, color: Colors.grey),
+                          style:
+                              const TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                       const SizedBox(height: 20),
                       Row(
@@ -175,7 +208,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       if (_isUsingStaticLocation)
                         TextButton(
                           onPressed: () {
-                            _isUsingStaticLocation = false;
+                            setState(() {
+                              _isUsingStaticLocation = false;
+                            });
                             _fetchCurrentLocation();
                           },
                           child: const Text("Anlık konuma geri dön"),
@@ -193,7 +228,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => const ProfileSettingPage()),
+                    MaterialPageRoute(
+                        builder: (_) => const ProfileSettingPage()),
                   );
                 },
               ),

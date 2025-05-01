@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:story_map/features/home/controller.dart/predefined_markers.dart';
 import 'package:story_map/features/home/views/bottom_sheet.dart';
 import 'package:story_map/main.dart';
-import 'package:story_map/utils/marker_icons.dart'; // ✅ MarkerIcons'ı ekliyoruz
+import 'package:story_map/utils/marker_icons.dart';
 
 final mapControllerProvider =
     StateNotifierProvider<MapController, Map<String, dynamic>>((ref) {
@@ -49,6 +49,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     state = {
       'location': currentLocation,
       'markers': state['markers'],
+      'isTourActive': state['isTourActive'] ?? false, // <-- EKLE
     };
 
     moveToCurrentLocation();
@@ -81,46 +82,63 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     final markers = Set<Marker>.from(state['markers']);
     BitmapDescriptor customIcon;
 
-    // İkonları MarkerIcons'dan alıyoruz
-    if (iconPath == 'assets/markers/church.png') {
-      customIcon = MarkerIcons.churchIcon!;
-    } else if (iconPath == 'assets/markers/cave.png') {
-      customIcon = MarkerIcons.caveIcon!;
-    } else if (iconPath == 'assets/markers/palace.png') {
-      customIcon = MarkerIcons.palaceIcon!;
-    } else if (iconPath == 'assets/markers/castle.png') {
-      customIcon = MarkerIcons.castleIcon!;
-    } else if (iconPath == 'assets/markers/mosque.png') {
-      customIcon = MarkerIcons.mosqueIcon!;
-    } else if (iconPath == 'assets/markers/museum.png') {
-      customIcon = MarkerIcons.museumIcon!;
-    } else if (iconPath == 'assets/markers/tomb.png') {
-      customIcon = MarkerIcons.tombIcon!;
-    } else if (iconPath == 'assets/markers/park.png') {
-      customIcon = MarkerIcons.parkIcon!;
-    } else if (iconPath == 'assets/markers/theatre.png') {
-      customIcon = MarkerIcons.theatreIcon!;
-    } else if (iconPath == 'assets/markers/bridge.png') {
-      customIcon = MarkerIcons.bridgeIcon!;
-    } else if (iconPath == 'assets/markers/lake.png') {
-      customIcon = MarkerIcons.lakeIcon!;
-    } else if (iconPath == 'assets/markers/mountain.png') {
-      customIcon = MarkerIcons.mountainIcon!;
-    } else if (iconPath == 'assets/markers/ruins.png') {
-      customIcon = MarkerIcons.ruinsIcon!;
-    } else if (iconPath == 'assets/markers/tower.png') {
-      customIcon = MarkerIcons.towerIcon!;
-    } else if (iconPath == 'assets/markers/national_park.png') {
-      customIcon = MarkerIcons.national_parkIcon!;
-    } else if (iconPath == 'assets/markers/temple.png') {
-      customIcon = MarkerIcons.templeIcon!;
-    } else if (iconPath == 'assets/markers/memorial.png') {
-      customIcon = MarkerIcons.memorialIcon!;
-    } else if (iconPath == 'assets/markers/monument.png') {
-      customIcon = MarkerIcons.monumentIcon!;
-    } else {
-      // Varsayılan bir ikon kullanabiliriz
-      customIcon = await MarkerIcons.getBitmapDescriptor(iconPath);
+    switch (iconPath) {
+      case 'assets/markers/church.png':
+        customIcon = MarkerIcons.churchIcon!;
+        break;
+      case 'assets/markers/cave.png':
+        customIcon = MarkerIcons.caveIcon!;
+        break;
+      case 'assets/markers/palace.png':
+        customIcon = MarkerIcons.palaceIcon!;
+        break;
+      case 'assets/markers/castle.png':
+        customIcon = MarkerIcons.castleIcon!;
+        break;
+      case 'assets/markers/mosque.png':
+        customIcon = MarkerIcons.mosqueIcon!;
+        break;
+      case 'assets/markers/museum.png':
+        customIcon = MarkerIcons.museumIcon!;
+        break;
+      case 'assets/markers/tomb.png':
+        customIcon = MarkerIcons.tombIcon!;
+        break;
+      case 'assets/markers/park.png':
+        customIcon = MarkerIcons.parkIcon!;
+        break;
+      case 'assets/markers/theatre.png':
+        customIcon = MarkerIcons.theatreIcon!;
+        break;
+      case 'assets/markers/bridge.png':
+        customIcon = MarkerIcons.bridgeIcon!;
+        break;
+      case 'assets/markers/lake.png':
+        customIcon = MarkerIcons.lakeIcon!;
+        break;
+      case 'assets/markers/mountain.png':
+        customIcon = MarkerIcons.mountainIcon!;
+        break;
+      case 'assets/markers/ruins.png':
+        customIcon = MarkerIcons.ruinsIcon!;
+        break;
+      case 'assets/markers/tower.png':
+        customIcon = MarkerIcons.towerIcon!;
+        break;
+      case 'assets/markers/national_park.png':
+        customIcon = MarkerIcons.national_parkIcon!;
+        break;
+      case 'assets/markers/temple.png':
+        customIcon = MarkerIcons.templeIcon!;
+        break;
+      case 'assets/markers/memorial.png':
+        customIcon = MarkerIcons.memorialIcon!;
+        break;
+      case 'assets/markers/monument.png':
+        customIcon = MarkerIcons.monumentIcon!;
+        break;
+      default:
+        customIcon = await MarkerIcons.getBitmapDescriptor(iconPath);
     }
 
     markers.add(
@@ -138,6 +156,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     state = {
       'location': state['location'],
       'markers': markers,
+      'isTourActive': state['isTourActive'] ?? false, // <-- EKLE
     };
   }
 
@@ -215,9 +234,19 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
         remainingMarkers.remove(nearestMarker);
       }
     }
+    // Gezi rotası belirlendikten sonra
+    setTourPath(
+        path,
+        path.map((point) {
+          final marker = markers.firstWhere((m) => m.position == point,
+              orElse: () => Marker(markerId: MarkerId('')));
+          return marker.infoWindow.title ?? 'Konumunuz';
+        }).toList());
 
     return path;
   }
+  List<String> getTourTitles() => _tourTitles;
+
 
   /// İki koordinat arasındaki mesafeyi hesaplayan fonksiyon (Haversine Formula)
   double _calculateDistance(
@@ -312,6 +341,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
       'location': state['location'],
       'markers': markers,
       'polyline': newPolyline, // yeni polyline ekledik
+      'isTourActive': state['isTourActive'] ?? false, // <-- EKLE
     };
   }
 
@@ -374,5 +404,31 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     }
 
     return polyline;
+  }
+
+  List<LatLng> _tourPath = [];
+  List<String> _tourTitles = [];
+
+  void startTour() {
+    state = {
+      ...state,
+      'isTourActive': true,
+    };
+  }
+
+  void endTour() {
+    _tourPath.clear();
+    _tourTitles.clear();
+    state = {
+      ...state,
+      'isTourActive': false,
+      'polyline': null,
+    };
+  }
+
+  /// Tur rotasını saklamak için çağrılır
+  void setTourPath(List<LatLng> path, List<String> titles) {
+    _tourPath = path;
+    _tourTitles = titles;
   }
 }

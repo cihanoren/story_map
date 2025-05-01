@@ -1029,7 +1029,6 @@ class PredefinedMarkers {
       'image': "",
       'iconPath': 'assets/markers/tomb.png'
     },
-    
     {
       'position': LatLng(41.012473857472045, 28.983337340622487),
       'title': "Adalet Kulesi",
@@ -1048,14 +1047,12 @@ class PredefinedMarkers {
       'image': "",
       'iconPath': 'assets/markers/museum.png'
     },
-    
     {
       'position': LatLng(41.01333751446348, 28.981513641707306),
       'title': "Gülhane Parkı",
       'image': "",
       'iconPath': 'assets/markers/park.png'
     },
-    
     {
       'position': LatLng(41.01389024898477, 28.981818863279727),
       'title': "Gülhane Parkı Sarnıcı",
@@ -1080,32 +1077,35 @@ class PredefinedMarkers {
       'image': "",
       'iconPath': 'assets/markers/castle.png'
     },
-    
     {
       'position': LatLng(41.00753583228963, 28.972470030689987),
       'title': "Şerefiye Sarnıcı",
       'image': "",
       'iconPath': 'assets/markers/museum.png'
     },
-    
     {
       'position': LatLng(41.00598943430901, 28.975334629922788),
       'title': "Theodosius Dikilitaşı",
       'image': "",
       'iconPath': 'assets/markers/tower.png'
     },
-{
-  'position': LatLng(40.959791, 29.1918835),
-  'title': "Seyit Onbaşı Heykeli",
-  'image': "",
-  'iconPath': 'assets/markers/monument.png'
-},
-
-{
-  'position': LatLng(41.0056649, 28.9751101),
-  'title': "Yılanlı Sütun",
-  'image': "",
-  'iconPath': 'assets/markers/memorial.png'
-},
+    {
+      'position': LatLng(40.959791, 29.1918835),
+      'title': "Seyit Onbaşı Heykeli",
+      'image': "",
+      'iconPath': 'assets/markers/monument.png'
+    },
+    {
+      'position': LatLng(41.0056649, 28.9751101),
+      'title': "Yılanlı Sütun",
+      'image': "",
+      'iconPath': 'assets/markers/memorial.png'
+    },
+    {
+      'position': LatLng(41.00732264142693, 28.979222627307625),
+      'title': "Hürrem Sultan Hamamı",
+      'image': "",
+      'iconPath': 'assets/markers/memorial.png'
+    },
   ];
 }

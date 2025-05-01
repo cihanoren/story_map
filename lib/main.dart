@@ -38,7 +38,6 @@ class MyApp extends ConsumerWidget {
   }
 }
 
-// 🔁 SplashPage ile giriş kontrolü
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
 
@@ -64,12 +63,12 @@ class _SplashPageState extends State<SplashPage> {
       await prefs.setBool("is_logged_in", true);
     }
 
-    await Future.delayed(const Duration(seconds: 2)); // loading efekti
+    await Future.delayed(const Duration(seconds: 2)); 
 
     if (isLoggedIn) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const Home()), // Anasayfa
+        MaterialPageRoute(builder: (_) => const Home()), 
       );
     } else {
       Navigator.pushReplacement(

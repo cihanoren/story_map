@@ -35,12 +35,35 @@ class _HomeState extends ConsumerState<Home> {
             children: _pages,
           ),
 
-          // 🔄 Sağ üst köşede animasyonlu tema butonu (sadece Home sayfasında)
-          if (_selectedIndex == 0)
-            Positioned(
-              top: 30,
-              right: 10,
-              child: AnimatedSwitcher(
+          ..._selectedIndex == 0
+    ? [
+        Positioned(
+          top: 45,
+          left: 10,
+          right: 10,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // 👤 Kullanıcı Profili
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 18,
+                    backgroundImage:
+                        AssetImage("assets/images/avatar.jpg"),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    "Ahmet Yılmaz",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
+                    ),
+                  ),
+                ],
+              ),
+              AnimatedSwitcher(
                 duration: const Duration(milliseconds: 520),
                 transitionBuilder: (child, animation) {
                   return RotationTransition(
@@ -63,7 +86,12 @@ class _HomeState extends ConsumerState<Home> {
                   },
                 ),
               ),
-            ),
+            ],
+          ),
+        ),
+      ]
+    : [],
+
         ],
       ),
       bottomNavigationBar: Padding(
@@ -106,10 +134,48 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        "Welcome to Home Page",
-        style: Theme.of(context).textTheme.bodyMedium,
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 100, 16, 16),
+        child: Card(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Üst kısım: 4 eş parça görsel alanı
+                Row(
+                  children: List.generate(4, (index) {
+                    return Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        height: 80,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Text("Resim ${index + 1}"),
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+                const SizedBox(height: 16),
+                // Devamı gelecek alanlar
+                const Text(
+                  "Tur Bilgileri Buraya Gelecek",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

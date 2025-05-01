@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:story_map/features/auth/repository/auth_repository.dart';
@@ -52,10 +53,27 @@ class AuthController extends StateNotifier<User?> {
     required String password,
   }) async {
     try {
-      await authRepository.signUpWithEmailAndPassword(
+      User? user = await authRepository.signUpWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      if (user != null) {
+        // Firestore'a kullanıcıyı kaydet
+        final userDoc =
+            FirebaseFirestore.instance.collection('users').doc(user.uid);
+        await userDoc.set({
+          'uid': user.uid,
+          'email': user.email,
+          'username': null, // kullanıcı sonradan ekler
+          'fullName': null,
+          'createdAt': FieldValue.serverTimestamp(),
+          'photoUrl': null,
+          'location': null,
+        });
+
+        state = user;
+      }
     } catch (e) {
       throw Exception("Kayıt başarısız: ${e.toString()}");
     }
@@ -82,15 +100,30 @@ class AuthController extends StateNotifier<User?> {
 
   // ✅ Anonim Giriş Yapma
   Future<void> signInAnonymously() async {
-    try {
-      UserCredential? userCredential = await authRepository.signInAnonymously();
-      if (userCredential != null) {
-        state = userCredential.user; // Kullanıcı oturumu başlatıldı
-      }
-    } catch (e) {
-      print("❌ Anonim giriş hatası: $e");
-    }
-  }
+  try {
+    UserCredential? userCredential = await authRepository.signInAnonymously();
 
-  
+    final user = userCredential?.user;
+    if (user != null) {
+      state = user;
+
+      // Firestore'a kullanıcıyı kaydet
+      final userDoc = FirebaseFirestore.instance.collection('users').doc(user.uid);
+      final docSnapshot = await userDoc.get();
+
+      if (!docSnapshot.exists) {
+        await userDoc.set({
+          'uid': user.uid,
+          'email': user.email,
+          'createdAt': DateTime.now(),
+          'isAnonymous': user.isAnonymous,
+        });
+      }
+    }
+  } catch (e) {
+    print("❌ Anonim giriş hatası: $e");
+    throw Exception("Anonim giriş başarısız: ${e.toString()}");
+  }
+}
+
 }

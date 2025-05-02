@@ -1,10 +1,14 @@
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:story_map/features/home/views/profile/profile_settings.dart';
+
+String? _userProfileImageUrl;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -24,6 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
   LatLng? _staticLocation;
   bool _isGuest = false;
   static int guestCounter = 1; // Misafir sayaç
+  String? userId;
 
   @override
   void initState() {
@@ -35,17 +40,50 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _fetchUserEmail() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
+      userId = user.uid;
+
       if (user.isAnonymous) {
         setState(() {
           _isGuest = true;
-          _username = "guest${guestCounter++}"; // guest1, guest2 gibi
-          _email = null; // Misafir ise e-posta gösterilmeyecek
+          _username = "guest$userId"; // userId kullanıldı
+          _email = null;
         });
       } else {
-        setState(() {
-          _email = user.email;
-          _username = user.email?.split("@").first;
-        });
+        _email = user.email;
+
+        final userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+        final data = userDoc.data();
+
+        if (data != null) {
+          setState(() {
+            _username = data['username'] ?? _email!.split("@").first;
+            _userProfileImageUrl = data['profileImageUrl'];
+          });
+
+          // Eğer username yoksa Firestore'a ekle
+          if (data['username'] == null && _email != null) {
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(user.uid)
+                .set({
+              'username': _email!.split("@").first,
+            }, SetOptions(merge: true));
+          }
+        } else if (_email != null) {
+          final generatedUsername = _email!.split("@").first;
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .set({
+            'username': generatedUsername,
+          });
+          setState(() {
+            _username = generatedUsername;
+          });
+        }
       }
     }
   }
@@ -66,7 +104,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    _updateLocation(position);
+
+    // Firestore'dan kaydedilen konumu al
+    await _loadSavedLocation();
+
+    if (_locationDescription == null) {
+      // Kaydedilmiş bir konum yoksa anlık konumu al
+      _updateLocation(position);
+    }
   }
 
   Future<void> _updateLocation(Position position) async {
@@ -80,12 +125,53 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  Future<void> _loadSavedLocation() async {
+    if (userId != null) {
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
+      if (userDoc.exists) {
+        final data = userDoc.data();
+        if (data != null && data['savedLocation'] != null) {
+          setState(() {
+            _locationDescription = data['savedLocation'];
+          });
+        }
+      }
+    }
+  }
+
+  Future<void> _saveLocation() async {
+    if (userId != null && _locationDescription != null) {
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'savedLocation': _locationDescription,
+      });
+    }
+  }
+
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await picker.pickImage(source: source);
     if (pickedFile != null) {
+      final file = File(pickedFile.path);
       setState(() {
-        _imageFile = File(pickedFile.path);
+        _imageFile = file;
       });
+
+      if (userId != null) {
+        final storageRef =
+            FirebaseStorage.instance.ref().child('profile_images/$userId.jpg');
+        await storageRef.putFile(file);
+        final imageUrl = await storageRef.getDownloadURL();
+
+        // Firestore’a profil fotoğrafı URL’sini kaydet
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .update({
+          'profileImageUrl': imageUrl,
+        });
+      }
     }
   }
 
@@ -142,6 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   _locationDescription = controller.text.trim();
                   _isUsingStaticLocation = true;
                 });
+                _saveLocation(); // Konumu kaydet
               }
               Navigator.pop(context);
             },
@@ -160,11 +247,17 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SafeArea(
         child: Stack(
           children: [
-            SingleChildScrollView(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 30),
-                  child: Column(
+            RefreshIndicator(
+              onRefresh: () async {
+                await _fetchUserEmail(); // Kullanıcı bilgilerini güncelle
+                await _fetchCurrentLocation(); // Konum bilgisini güncelle
+                setState(() {}); // Yeniden çizim
+              },
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(16, 20, 16, 30),
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       GestureDetector(
                         onTap: _showImagePickerOptions,
@@ -172,52 +265,58 @@ class _ProfilePageState extends State<ProfilePage> {
                           radius: 60,
                           backgroundImage: _imageFile != null
                               ? FileImage(_imageFile!)
-                              : const AssetImage("assets/images/avatar.jpg")
-                                  as ImageProvider,
+                              : (_userProfileImageUrl != null
+                                  ? NetworkImage(_userProfileImageUrl!)
+                                  : const AssetImage('assets/images/avatar.jpg')
+                                      as ImageProvider),
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 20),
                       Text(
                         _username ?? "Kullanıcı Adı",
                         style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 6),
-                      if (!_isGuest) // Eğer misafir değilse e-posta göster
+                      if (!_isGuest)
                         Text(
                           _email ?? "E-posta yükleniyor...",
                           style:
                               const TextStyle(fontSize: 16, color: Colors.grey),
-                        ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.location_on, color: Colors.blue.shade700),
-                          const SizedBox(width: 8),
-                          Text(
-                            displayLocation,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.edit, size: 20),
-                            onPressed: _selectStaticLocation,
-                          ),
-                        ],
-                      ),
-                      if (_isUsingStaticLocation)
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              _isUsingStaticLocation = false;
-                            });
-                            _fetchCurrentLocation();
-                          },
-                          child: const Text("Anlık konuma geri dön"),
+                          textAlign: TextAlign.center,
                         ),
                     ],
                   ),
-                ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.location_on, color: Colors.blue.shade700),
+                      const SizedBox(width: 8),
+                      Text(
+                        displayLocation,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.edit, size: 20),
+                        onPressed: _selectStaticLocation,
+                      ),
+                    ],
+                  ),
+                  if (_isUsingStaticLocation)
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _isUsingStaticLocation = false;
+                        });
+                        _fetchCurrentLocation();
+                      },
+                      child: const Text("Anlık konuma geri dön"),
+                    ),
+                ],
               ),
             ),
             Positioned(

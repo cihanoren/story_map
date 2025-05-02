@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:story_map/core/theme/theme_provider.dart';
@@ -26,6 +28,7 @@ class _HomeState extends ConsumerState<Home> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       body: Stack(
@@ -34,64 +37,104 @@ class _HomeState extends ConsumerState<Home> {
             index: _selectedIndex,
             children: _pages,
           ),
-
-          ..._selectedIndex == 0
-    ? [
-        Positioned(
-          top: 45,
-          left: 10,
-          right: 10,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // 👤 Kullanıcı Profili
-              Row(
+          if (_selectedIndex == 0)
+            Positioned(
+              top: 45,
+              left: 10,
+              right: 10,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    radius: 18,
-                    backgroundImage:
-                        AssetImage("assets/images/avatar.jpg"),
+                  Row(
+                    children: [
+                      // Kullanıcı fotoğrafı
+                      FutureBuilder<DocumentSnapshot>(
+                        future: FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(user?.uid)
+                            .get(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            );
+                          }
+
+                          if (snapshot.hasError) {
+                            return Text('Hata: ${snapshot.error}');
+                          }
+
+                          if (snapshot.hasData && snapshot.data != null) {
+                            final data =
+                                snapshot.data!.data() as Map<String, dynamic>?;
+
+                            final displayName =
+                                data?['displayName'] ?? 'Kullanıcı';
+                            final profileImageUrl = data?['profileImageUrl'];
+
+                            return Row(
+                              children: [
+                                // Eğer profil fotoğrafı varsa, göster
+                                if (profileImageUrl != null &&
+                                    profileImageUrl.isNotEmpty)
+                                  CircleAvatar(
+                                    radius: 18,
+                                    backgroundImage:
+                                        NetworkImage(profileImageUrl),
+                                  )
+                                else
+                                  const SizedBox(
+                                      width: 36), // Fotoğraf yoksa boşluk bırak
+                                const SizedBox(width: 8),
+                                Text(
+                                  displayName,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.color,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+
+                          return const Text('Kullanıcı Bulunamadı');
+                        },
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    "Ahmet Yılmaz",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).textTheme.bodyLarge?.color,
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 520),
+                    transitionBuilder: (child, animation) {
+                      return RotationTransition(
+                        turns: animation,
+                        child: FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        ),
+                      );
+                    },
+                    child: IconButton(
+                      key: ValueKey<bool>(isDark),
+                      icon: Icon(
+                        isDark ? Icons.dark_mode : Icons.light_mode,
+                        size: 28,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      onPressed: () {
+                        ref.read(themeProvider.notifier).toggleTheme();
+                      },
                     ),
                   ),
                 ],
               ),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 520),
-                transitionBuilder: (child, animation) {
-                  return RotationTransition(
-                    turns: animation,
-                    child: FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    ),
-                  );
-                },
-                child: IconButton(
-                  key: ValueKey<bool>(isDark),
-                  icon: Icon(
-                    isDark ? Icons.dark_mode : Icons.light_mode,
-                    size: 28,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
-                  onPressed: () {
-                    ref.read(themeProvider.notifier).toggleTheme();
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ]
-    : [],
-
+            ),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -132,51 +175,83 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isLoading = true;
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 100, 16, 16),
-        child: Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Üst kısım: 4 eş parça görsel alanı
-                Row(
-                  children: List.generate(4, (index) {
-                    return Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        height: 80,
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          borderRadius: BorderRadius.circular(8),
+  void initState() {
+    super.initState();
+    _loadPageData();
+  }
+
+  Future<void> _loadPageData() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    // Örn. Firebase’den tur bilgisi vs çekilebilir burada
+    await Future.delayed(const Duration(seconds: 1));
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+Widget build(BuildContext context) {
+  return RefreshIndicator(
+    onRefresh: () async {
+      await _loadPageData(); // Sayfayı yenile
+      setState(() {
+        isLoading = false; // Yenileme tamamlandığında yükleme durumunu kapat
+      });
+    },
+    child: SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(16, 100, 16, 16),
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              isLoading
+                  ? const CircularProgressIndicator() // Yükleniyor durumunda göster
+                  : Column(
+                      children: [
+                        Row(
+                          children: List.generate(4, (index) {
+                            return Expanded(
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 4),
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade300,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Center(
+                                  child: Text("Resim ${index + 1}"),
+                                ),
+                              ),
+                            );
+                          }),
                         ),
-                        child: Center(
-                          child: Text("Resim ${index + 1}"),
+                        const SizedBox(height: 16),
+                        const Text(
+                          "Tur Bilgileri Buraya Gelecek",
+                          style: TextStyle(fontSize: 16),
                         ),
-                      ),
-                    );
-                  }),
-                ),
-                const SizedBox(height: 16),
-                // Devamı gelecek alanlar
-                const Text(
-                  "Tur Bilgileri Buraya Gelecek",
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
+                      ],
+                    ),
+            ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

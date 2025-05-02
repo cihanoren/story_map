@@ -70,10 +70,10 @@ class _ChangePasswordState extends State<ChangePassword> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title:
-            const Text("Şifre Değiştir", style: TextStyle(color: Colors.black)),
+            Text("Şifre Değiştir", style: TextStyle(color: Theme.of(context).textTheme.titleLarge?.color)),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Theme.of(context).textTheme.bodyLarge?.color),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -91,10 +91,16 @@ class _ChangePasswordState extends State<ChangePassword> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).splashColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
                 onPressed: _isLoading ? null : _changePassword,
                 child: _isLoading
                     ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text("Şifreyi Değiştir", style:TextStyle(color: Colors.black, fontSize: 16)),
+                    : Text("Şifreyi Değiştir", style:TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color, fontSize: 16)),
               ),
             ),
           ],

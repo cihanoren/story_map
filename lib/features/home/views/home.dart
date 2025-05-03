@@ -176,82 +176,145 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isLoading = true;
+  List<String> routeTitles = [];
+  List<List<String>> placeImageUrlsList = [];
+  List<List<String>> placeNamesList = [];
 
   @override
   void initState() {
     super.initState();
-    _loadPageData();
+    _loadPageData(); // İlk veri yükleme
+    setState(() {}); // State'i güncellemek için çağırıyoruz
   }
 
   Future<void> _loadPageData() async {
-    setState(() {
-      isLoading = true;
-    });
+    setState(() => isLoading = true);
 
-    // Örn. Firebase’den tur bilgisi vs çekilebilir burada
-    await Future.delayed(const Duration(seconds: 1));
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    if (userId != null) {
+      try {
+        final routesQuery = await FirebaseFirestore.instance
+            .collection('routes')
+            .where('userId', isEqualTo: userId)
+            .orderBy('createdAt',
+                descending: true) // Tüm rotaları tarih sırasına göre alıyoruz
+            .get();
 
-    setState(() {
-      isLoading = false;
-    });
+        if (routesQuery.docs.isNotEmpty) {
+          List<String> allRouteTitles = [];
+          List<List<String>> allPlaceImageUrls = [];
+          List<List<String>> allPlaceNames = [];
+
+          // Tüm rotalar için verileri alıyoruz
+          for (var routeDoc in routesQuery.docs) {
+            final routeData = routeDoc.data();
+            final List<dynamic> places = routeData['places'];
+
+            allRouteTitles.add(routeData['title'] ?? 'İsimsiz Rota');
+
+            // Her rota için 1. ila 5. yerin görsellerini alıyoruz
+            allPlaceImageUrls.add(places
+                .skip(1)
+                .take(5)
+                .map((e) => (e['image'] ?? '') as String)
+                .toList());
+
+            // Yer adlarını alıyoruz
+            allPlaceNames
+                .add(places.map((e) => (e['name'] ?? '') as String).toList());
+          }
+
+          setState(() {
+            routeTitles = allRouteTitles;
+            placeImageUrlsList = allPlaceImageUrls;
+            placeNamesList = allPlaceNames;
+          });
+        }
+      } catch (e) {
+        // Hata oluşursa hata mesajı gösterebiliriz
+        print('Veri çekme hatası: $e');
+      }
+    }
+
+    setState(() => isLoading = false);
   }
 
   @override
-Widget build(BuildContext context) {
-  return RefreshIndicator(
-    onRefresh: () async {
-      await _loadPageData(); // Sayfayı yenile
-      setState(() {
-        isLoading = false; // Yenileme tamamlandığında yükleme durumunu kapat
-      });
-    },
-    child: SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(16, 100, 16, 16),
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              isLoading
-                  ? const CircularProgressIndicator() // Yükleniyor durumunda göster
-                  : Column(
+  Widget build(BuildContext context) {
+    return RefreshIndicator(
+      onRefresh: _loadPageData,
+      child: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              padding: const EdgeInsets.fromLTRB(16, 100, 16, 16),
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemCount: routeTitles.length,
+              itemBuilder: (context, index) {
+                final routeTitle = routeTitles[index];
+                final placeImageUrls = placeImageUrlsList[index];
+                final placeNames = placeNamesList[index];
+
+                return Card(
+                  elevation: 4,
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          children: List.generate(4, (index) {
+                          children: List.generate(4, (i) {
+                            final imageUrl = i < placeImageUrls.length
+                                ? placeImageUrls[i]
+                                : null;
+
                             return Expanded(
                               child: Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 4),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 4),
                                 height: 80,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey.shade300,
+                                  color: Colors.grey.shade200,
                                   borderRadius: BorderRadius.circular(8),
+                                  image: imageUrl != null && imageUrl.isNotEmpty
+                                      ? DecorationImage(
+                                          image: NetworkImage(imageUrl),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null,
                                 ),
-                                child: Center(
-                                  child: Text("Resim ${index + 1}"),
-                                ),
+                                child: imageUrl == null || imageUrl.isEmpty
+                                    ? const Center(child: Text("Boş"))
+                                    : null,
                               ),
                             );
                           }),
                         ),
                         const SizedBox(height: 16),
-                        const Text(
-                          "Tur Bilgileri Buraya Gelecek",
-                          style: TextStyle(fontSize: 16),
+                        Center(
+                          child: Text(
+                            routeTitle,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          placeNames.join(' - '),
+                          style: const TextStyle(fontSize: 14),
+                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
-}
+                  ),
+                );
+              },
+            ),
+    );
+  }
 }

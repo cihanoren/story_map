@@ -233,126 +233,157 @@ class MapView extends ConsumerWidget {
                           isScrollControlled: true,
                           builder: (context) {
                             final titles = mapController.getTourTitles();
-                            return Padding(
-                              padding: MediaQuery.of(context).viewInsets,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const SizedBox(height: 20),
-                                  const Text("Gezi Rotası",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold)),
-                                  const SizedBox(height: 10),
-                                  ...titles.asMap().entries.map((entry) {
-                                    return ListTile(
-                                      leading: CircleAvatar(
-                                          child:
-                                              Text((entry.key + 1).toString())),
-                                      title: Text(entry.value),
-                                    );
-                                  }).toList(),
-                                  const SizedBox(height: 20),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      //Rota Kaydet butonu
-                                      ElevatedButton(
-                                        onPressed: () async {
-                                          final TextEditingController
-                                              titleController =
-                                              TextEditingController();
 
-                                          await showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AlertDialog(
-                                                title:
-                                                    const Text("Rota Başlığı"),
-                                                content: TextField(
-                                                  controller: titleController,
-                                                  decoration: const InputDecoration(
-                                                      hintText:
-                                                          "Örn: Sultanahmet Gezisi"),
-                                                ),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.of(context)
-                                                            .pop(),
-                                                    child: const Text("İptal"),
-                                                  ),
-                                                  TextButton(
-                                                    onPressed: () async {
-                                                      final customTitle =
-                                                          titleController.text
-                                                              .trim();
-                                                      Navigator.of(context)
-                                                          .pop(); // AlertDialog'u kapat
-
-                                                      await ref
-                                                          .read(
-                                                              mapControllerProvider
-                                                                  .notifier)
-                                                          .saveCurrentRoute(
-                                                            travelMode:
-                                                                "walking",
-                                                            customTitle: customTitle
-                                                                    .isNotEmpty
-                                                                ? customTitle
-                                                                : null,
-                                                          );
-
-                                                      if (context.mounted) {
-                                                        Navigator.of(context)
-                                                            .pop(); // Mevcut sayfayı kapat
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                          const SnackBar(
-                                                            content: Text(
-                                                                "Tur başarıyla kaydedildi!"),
-                                                          ),
-                                                        );
-                                                      }
-                                                    },
-                                                    child: const Text("Kaydet"),
-                                                  ),
-                                                ],
-                                              );
-                                            },
+                            return DraggableScrollableSheet(
+                              expand: false,
+                              initialChildSize: 0.6,
+                              minChildSize: 0.4,
+                              maxChildSize: 0.95,
+                              builder: (context, scrollController) {
+                                return Padding(
+                                  padding: MediaQuery.of(context).viewInsets,
+                                  child: SingleChildScrollView(
+                                    controller: scrollController,
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(height: 20),
+                                        const Text("Gezi Rotası",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold)),
+                                        const SizedBox(height: 10),
+                                        ...titles.asMap().entries.map((entry) {
+                                          return ListTile(
+                                            leading: CircleAvatar(
+                                                child: Text((entry.key + 1)
+                                                    .toString())),
+                                            title: Text(entry.value),
                                           );
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.deepPurple,
-                                          foregroundColor: Colors.white,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 40, vertical: 12),
-                                        ),
-                                        child: const Text("Turu Kaydet"),
-                                      ),
+                                        }).toList(),
+                                        const SizedBox(height: 20),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            // Rota Kaydet Butonu
+                                            ElevatedButton(
+                                              onPressed: () async {
+                                                final TextEditingController
+                                                    titleController =
+                                                    TextEditingController();
 
-                                      // Tur sonlandır butonu
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          mapController
-                                              .endTour(); // 🔚 Turu sonlandır
-                                        },
-                                        child: const Text("Turu Bitir"),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.red,
-                                          foregroundColor: Colors.white,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 40, vertical: 12),
+                                                await showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          "Rota Başlığı"),
+                                                      content: TextField(
+                                                        controller:
+                                                            titleController,
+                                                        decoration:
+                                                            const InputDecoration(
+                                                                hintText:
+                                                                    "Örn: Sultanahmet Gezisi"),
+                                                      ),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop(),
+                                                          child: const Text(
+                                                              "İptal"),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () async {
+                                                            final customTitle =
+                                                                titleController
+                                                                    .text
+                                                                    .trim();
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(); // dialog kapat
+
+                                                            await ref
+                                                                .read(mapControllerProvider
+                                                                    .notifier)
+                                                                .saveCurrentRoute(
+                                                                  travelMode:
+                                                                      "walking",
+                                                                  customTitle: customTitle
+                                                                          .isNotEmpty
+                                                                      ? customTitle
+                                                                      : null,
+                                                                );
+
+                                                            if (context
+                                                                .mounted) {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop(); // sheet kapat
+                                                              ScaffoldMessenger
+                                                                      .of(context)
+                                                                  .showSnackBar(
+                                                                const SnackBar(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .green,
+                                                                  content: Text(
+                                                                    "Tur başarıyla kaydedildi!",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }
+                                                          },
+                                                          child: const Text(
+                                                              "Kaydet"),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor:
+                                                    Colors.deepPurple,
+                                                foregroundColor: Colors.white,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 40,
+                                                        vertical: 12),
+                                              ),
+                                              child: const Text("Turu Kaydet"),
+                                            ),
+
+                                            // Tur Bitir Butonu
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                mapController
+                                                    .endTour(); // Turu bitir
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.red,
+                                                foregroundColor: Colors.white,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 40,
+                                                        vertical: 12),
+                                              ),
+                                              child: const Text("Turu Bitir"),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ],
+                                        const SizedBox(height: 20),
+                                      ],
+                                    ),
                                   ),
-                                  const SizedBox(height: 20),
-                                ],
-                              ),
+                                );
+                              },
                             );
                           },
                         );

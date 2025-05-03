@@ -29,11 +29,11 @@ class Place {
 }
 
 class RouteModel {
-  final String id; // Bu değer Firestore'dan alınabilir
+  final String id;  // Firestore'dan gelen id
   final String userId;
   final String title;
   final String description;
-  final List<Place> places;  // Burada List<Map<String, dynamic>> yerine List<Place> kullandık
+  final List<Place> places;  // List<Place> olarak değiştirildi
   final String mode;
   final bool isShared;
   final Timestamp createdAt;
@@ -49,26 +49,31 @@ class RouteModel {
     required this.createdAt,
   });
 
+  // Firestore veri modeline dönüştürme
   Map<String, dynamic> toJson() => {
         'id': id,
         'userId': userId,
         'title': title,
         'description': description,
-        'places': places.map((place) => place.toJson()).toList(),  // places verilerini JSON formatına dönüştürdük
-        'mode': mode.isNotEmpty ? mode : 'walking',  // Eğer mode boşsa 'walking' olarak ayarlıyoruz
+        'places': places.map((place) => place.toJson()).toList(),  // places verisini JSON formatına dönüştürme
+        'mode': mode.isNotEmpty ? mode : 'walking',  // Varsayılan değer
         'isShared': isShared,
         'createdAt': createdAt,
       };
 
+  // Firestore'dan gelen veriyi RouteModel'e dönüştürme
   factory RouteModel.fromJson(Map<String, dynamic> json) => RouteModel(
-        id: json['id'],
-        userId: json['userId'],
-        title: json['title'],
-        description: json['description'],
+        id: json['id'] ?? '',  // id alındı
+        userId: json['userId'] ?? '',
+        title: json['title'] ?? '',
+        description: json['description'] ?? '',
         places: List<Place>.from(
-            json['places'].map((place) => Place.fromJson(place))),  // places verisini doğru şekilde dönüştürüyoruz
-        mode: json['mode'],
-        isShared: json['isShared'],
-        createdAt: json['createdAt'],
+            json['places'].map((place) => Place.fromJson(place))),  // places'leri doğru şekilde dönüştür
+        mode: json['mode'] ?? 'walking',
+        isShared: json['isShared'] ?? false,
+        createdAt: json['createdAt'] as Timestamp,  // Firestore Timestamp tipi
       );
+  
+  // Firestore'dan gelen veriyi RouteModel'e dönüştürürken tarihleri DateTime'a dönüştür
+  DateTime get createdAtDate => createdAt.toDate();
 }

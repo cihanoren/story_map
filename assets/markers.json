@@ -320,7 +320,7 @@
       "lng": 41.8286948
     },
     "title": "Atatepe",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/atatepe.png",
     "iconPath": "assets/markers/memorial.png"
   },
   {
@@ -329,7 +329,7 @@
       "lng": 41.8244105
     },
     "title": "Artvin Kalesi",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/artvin_kalesi.jpeg",
     "iconPath": "assets/markers/castle.png"
   },
   {
@@ -1391,7 +1391,7 @@
       "lng": 41.79460321349126
     },
     "title": "Kafkasör Yaylası",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/kafkasor.jpg",
     "iconPath": "assets/markers/park.png"
   },
   {

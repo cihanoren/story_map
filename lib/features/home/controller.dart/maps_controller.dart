@@ -1,11 +1,16 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:story_map/features/home/controller.dart/predefined_markers.dart';
+import 'package:story_map/features/home/models.dart/route_model.dart';
+import 'package:story_map/features/home/services.dart/route_service.dart';
 import 'package:story_map/features/home/views/bottom_sheet.dart';
 import 'package:story_map/main.dart';
 import 'package:story_map/utils/marker_icons.dart';
@@ -67,7 +72,11 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     // İkonları yüklemeden önce loadIcons çağırılıyor
     await MarkerIcons.loadIcons();
 
-    for (var markerData in PredefinedMarkers.markers) {
+    // JSON verisini assets/markers.json'dan oku
+    List<Map<String, dynamic>> markers = await PredefinedMarkers.loadMarkers();
+
+    // Markerları ekleyin
+    for (var markerData in markers) {
       await addMarker(
         markerData['position'],
         markerData['title'],
@@ -196,17 +205,13 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     final currentLocation = state['location'] as LatLng?;
     final markers = state['markers'] as Set<Marker>;
 
-    if (currentLocation == null || markers.isEmpty) {
-      return [];
-    }
+    if (currentLocation == null || markers.isEmpty) return [];
 
-    List<LatLng> path = [];
+    List<LatLng> path = [currentLocation];
+    List<String> addedMarkerIds = [];
+
     Set<Marker> remainingMarkers = {...markers};
-
     LatLng currentPoint = currentLocation;
-
-    // Başlangıç konumunu path'e ekleyelim
-    path.add(currentPoint);
 
     for (int i = 0; i < locationCount; i++) {
       if (remainingMarkers.isEmpty) break;
@@ -215,6 +220,8 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
       double minDistance = double.infinity;
 
       for (var marker in remainingMarkers) {
+        if (addedMarkerIds.contains(marker.markerId.value)) continue;
+
         double distance = _calculateDistance(
           currentPoint.latitude,
           currentPoint.longitude,
@@ -230,23 +237,28 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
 
       if (nearestMarker != null) {
         path.add(nearestMarker.position);
+        addedMarkerIds.add(nearestMarker.markerId.value);
         currentPoint = nearestMarker.position;
         remainingMarkers.remove(nearestMarker);
       }
     }
-    // Gezi rotası belirlendikten sonra
+
     setTourPath(
-        path,
-        path.map((point) {
-          final marker = markers.firstWhere((m) => m.position == point,
-              orElse: () => Marker(markerId: MarkerId('')));
-          return marker.infoWindow.title ?? 'Konumunuz';
-        }).toList());
+      path,
+      path.map((point) {
+        final marker = markers.firstWhere(
+          (m) => m.position == point,
+          orElse: () => Marker(markerId: MarkerId('')),
+        );
+        return marker.infoWindow.title ?? 'Konumunuz';
+      }).toList(),
+    );
 
     return path;
   }
-  List<String> getTourTitles() => _tourTitles;
 
+  /// Tur rotasını döndüren fonksiyon
+  List<String> getTourTitles() => _tourTitles;
 
   /// İki koordinat arasındaki mesafeyi hesaplayan fonksiyon (Haversine Formula)
   double _calculateDistance(
@@ -431,4 +443,63 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     _tourPath = path;
     _tourTitles = titles;
   }
+
+
+Future<Map<String, String>> loadMarkerImages() async {
+  final String jsonStr = await rootBundle.loadString('assets/markers.json');
+  final List<dynamic> jsonList = json.decode(jsonStr);
+
+  // title -> image URL eşlemesi
+  return {
+    for (var item in jsonList)
+      if (item['title'] != null && item['image'] != null)
+        item['title']: item['image']
+  };
+}
+
+Future<void> saveCurrentRoute({
+  String travelMode = 'walking',
+  String? customTitle,
+}) async {
+  final userId = FirebaseAuth.instance.currentUser?.uid;
+  if (userId == null) return;
+
+  // title -> image map'i yükle
+  final imageMap = await loadMarkerImages();
+
+  // Place listesi oluştur
+  final places = _tourPath.asMap().map((index, e) {
+    final title = _tourTitles[index];
+    return MapEntry(
+      index,
+      Place(
+        name: title,
+        image: imageMap[title] ?? '', // eşleşen varsa, image URL, yoksa boş
+        lat: e.latitude,
+        lng: e.longitude,
+      ),
+    );
+  }).values.toList();
+
+  final route = RouteModel(
+    id: '',
+    userId: userId,
+    title: customTitle ?? 'İsimsiz Rota',
+    description: _tourTitles.join(' - '),
+    places: places,
+    mode: travelMode,
+    isShared: false,
+    createdAt: Timestamp.now(),
+  );
+
+  await _routeService.saveRoute(route);
+}
+
+
+  final RouteService _routeService = RouteService();
+
+
+
+
+
 }

@@ -257,19 +257,80 @@ class MapView extends ConsumerWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-
                                       //Rota Kaydet butonu
                                       ElevatedButton(
-                                        onPressed: () {
-                                          // Veritabanı Kayıt işlemleri burada yapılacak
+                                        onPressed: () async {
+                                          final TextEditingController
+                                              titleController =
+                                              TextEditingController();
+
+                                          await showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title:
+                                                    const Text("Rota Başlığı"),
+                                                content: TextField(
+                                                  controller: titleController,
+                                                  decoration: const InputDecoration(
+                                                      hintText:
+                                                          "Örn: Sultanahmet Gezisi"),
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.of(context)
+                                                            .pop(),
+                                                    child: const Text("İptal"),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () async {
+                                                      final customTitle =
+                                                          titleController.text
+                                                              .trim();
+                                                      Navigator.of(context)
+                                                          .pop(); // AlertDialog'u kapat
+
+                                                      await ref
+                                                          .read(
+                                                              mapControllerProvider
+                                                                  .notifier)
+                                                          .saveCurrentRoute(
+                                                            travelMode:
+                                                                "walking",
+                                                            customTitle: customTitle
+                                                                    .isNotEmpty
+                                                                ? customTitle
+                                                                : null,
+                                                          );
+
+                                                      if (context.mounted) {
+                                                        Navigator.of(context)
+                                                            .pop(); // Mevcut sayfayı kapat
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          const SnackBar(
+                                                            content: Text(
+                                                                "Tur başarıyla kaydedildi!"),
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                    child: const Text("Kaydet"),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
                                         },
-                                        child: const Text("Turu Kaydet"),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.deepPurple,
                                           foregroundColor: Colors.white,
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 40, vertical: 12),
                                         ),
+                                        child: const Text("Turu Kaydet"),
                                       ),
 
                                       // Tur sonlandır butonu

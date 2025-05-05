@@ -151,10 +151,12 @@ class MapView extends ConsumerWidget {
                                           onPressed: () async {
                                             Navigator.of(context).pop();
 
-                                            mapController
-                                                .startTour(); // 👈 TURU BAŞLAT
+                                            mapController.setTravelMode(
+                                                selectedTravelMode); // 👈 travel mode'u sakla
 
-                                            mapController.createRealPath(
+                                            mapController.startTour();
+
+                                            await mapController.createRealPath(
                                               locationCount,
                                               Config.googleMapsPlacesApiKey,
                                               travelMode: selectedTravelMode,
@@ -309,8 +311,6 @@ class MapView extends ConsumerWidget {
                                                                 .read(mapControllerProvider
                                                                     .notifier)
                                                                 .saveCurrentRoute(
-                                                                  travelMode:
-                                                                      "walking",
                                                                   customTitle: customTitle
                                                                           .isNotEmpty
                                                                       ? customTitle

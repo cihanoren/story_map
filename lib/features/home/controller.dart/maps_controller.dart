@@ -444,62 +444,65 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     _tourTitles = titles;
   }
 
+  Future<Map<String, String>> loadMarkerImages() async {
+    final String jsonStr = await rootBundle.loadString('assets/markers.json');
+    final List<dynamic> jsonList = json.decode(jsonStr);
 
-Future<Map<String, String>> loadMarkerImages() async {
-  final String jsonStr = await rootBundle.loadString('assets/markers.json');
-  final List<dynamic> jsonList = json.decode(jsonStr);
+    // title -> image URL eşlemesi
+    return {
+      for (var item in jsonList)
+        if (item['title'] != null && item['image'] != null)
+          item['title']: item['image']
+    };
+  }
 
-  // title -> image URL eşlemesi
-  return {
-    for (var item in jsonList)
-      if (item['title'] != null && item['image'] != null)
-        item['title']: item['image']
-  };
-}
+  Future<void> saveCurrentRoute({
+    String? customTitle,
+  }) async {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    if (userId == null) return;
 
-Future<void> saveCurrentRoute({
-  String travelMode = 'walking',
-  String? customTitle,
-}) async {
-  final userId = FirebaseAuth.instance.currentUser?.uid;
-  if (userId == null) return;
+    final imageMap = await loadMarkerImages();
 
-  // title -> image map'i yükle
-  final imageMap = await loadMarkerImages();
+    final places = _tourPath
+        .asMap()
+        .map((index, e) {
+          final title = _tourTitles[index];
+          return MapEntry(
+            index,
+            Place(
+              name: title,
+              image: imageMap[title] ?? '',
+              lat: e.latitude,
+              lng: e.longitude,
+            ),
+          );
+        })
+        .values
+        .toList();
 
-  // Place listesi oluştur
-  final places = _tourPath.asMap().map((index, e) {
-    final title = _tourTitles[index];
-    return MapEntry(
-      index,
-      Place(
-        name: title,
-        image: imageMap[title] ?? '', // eşleşen varsa, image URL, yoksa boş
-        lat: e.latitude,
-        lng: e.longitude,
-      ),
+    final route = RouteModel(
+      id: '',
+      userId: userId,
+      title: customTitle ?? 'İsimsiz Rota',
+      description: _tourTitles.join(' - '),
+      places: places,
+      mode:
+          _selectedTravelMode, // 👈 burada artık kayıtlı olan travel mode kullanılıyor
+      isShared: false,
+      createdAt: Timestamp.now(),
     );
-  }).values.toList();
 
-  final route = RouteModel(
-    id: '',
-    userId: userId,
-    title: customTitle ?? 'İsimsiz Rota',
-    description: _tourTitles.join(' - '),
-    places: places,
-    mode: travelMode,
-    isShared: false,
-    createdAt: Timestamp.now(),
-  );
-
-  await _routeService.saveRoute(route);
-}
-
+    await _routeService.saveRoute(route);
+  }
 
   final RouteService _routeService = RouteService();
 
+  String _selectedTravelMode = 'walking';
 
+  void setTravelMode(String mode) {
+    _selectedTravelMode = mode;
+  }
 
-
-
+  String get selectedTravelMode => _selectedTravelMode;
 }

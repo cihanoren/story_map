@@ -150,10 +150,7 @@ class _AccountInfoState extends State<AccountInfo> {
               color: Theme.of(context).textTheme.bodyLarge?.color),
           onPressed: () => Navigator.pop(context),
         ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.0),
-          child: Divider(height: 1, color: Colors.grey.shade300),
-        ),
+        
       ),
       body: RefreshIndicator(
         onRefresh: () async {

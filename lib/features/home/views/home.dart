@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:story_map/core/theme/theme_provider.dart';
+import 'package:story_map/features/home/views/card_details.dart';
 import 'package:story_map/features/home/views/explore_page.dart';
 import 'package:story_map/features/home/views/map_view.dart';
 import 'package:story_map/features/home/views/profile/profile_page.dart';
@@ -47,7 +48,6 @@ class _HomeState extends ConsumerState<Home> {
                 children: [
                   Row(
                     children: [
-                      // Kullanıcı fotoğrafı
                       FutureBuilder<DocumentSnapshot>(
                         future: FirebaseFirestore.instance
                             .collection('users')
@@ -77,7 +77,6 @@ class _HomeState extends ConsumerState<Home> {
 
                             return Row(
                               children: [
-                                // Eğer profil fotoğrafı varsa, göster
                                 if (profileImageUrl != null &&
                                     profileImageUrl.isNotEmpty)
                                   CircleAvatar(
@@ -86,8 +85,7 @@ class _HomeState extends ConsumerState<Home> {
                                         NetworkImage(profileImageUrl),
                                   )
                                 else
-                                  const SizedBox(
-                                      width: 36), // Fotoğraf yoksa boşluk bırak
+                                  const SizedBox(width: 36),
                                 const SizedBox(width: 8),
                                 Text(
                                   displayName,
@@ -104,7 +102,7 @@ class _HomeState extends ConsumerState<Home> {
                             );
                           }
 
-                          return const Text('Kullanıcı Bulunamadı');
+                          return const Text('Kullanıcı bilgisi alınamadı');
                         },
                       ),
                     ],
@@ -177,14 +175,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool isLoading = true;
   List<String> routeTitles = [];
+  List<String> routeIds = [];
   List<List<String>> placeImageUrlsList = [];
   List<List<String>> placeNamesList = [];
 
   @override
   void initState() {
     super.initState();
-    _loadPageData(); // İlk veri yükleme
-    setState(() {}); // State'i güncellemek için çağırıyoruz
+    _loadPageData();
   }
 
   Future<void> _loadPageData() async {
@@ -196,42 +194,40 @@ class _HomePageState extends State<HomePage> {
         final routesQuery = await FirebaseFirestore.instance
             .collection('routes')
             .where('userId', isEqualTo: userId)
-            .orderBy('createdAt',
-                descending: true) // Tüm rotaları tarih sırasına göre alıyoruz
+            .orderBy('createdAt', descending: true)
             .get();
 
         if (routesQuery.docs.isNotEmpty) {
           List<String> allRouteTitles = [];
+          List<String> allRouteIds = [];
           List<List<String>> allPlaceImageUrls = [];
           List<List<String>> allPlaceNames = [];
 
-          // Tüm rotalar için verileri alıyoruz
           for (var routeDoc in routesQuery.docs) {
             final routeData = routeDoc.data();
             final List<dynamic> places = routeData['places'];
 
             allRouteTitles.add(routeData['title'] ?? 'İsimsiz Rota');
+            allRouteIds.add(routeDoc.id);
 
-            // Her rota için 1. ila 5. yerin görsellerini alıyoruz
             allPlaceImageUrls.add(places
                 .skip(1)
                 .take(5)
                 .map((e) => (e['image'] ?? '') as String)
                 .toList());
 
-            // Yer adlarını alıyoruz
             allPlaceNames
                 .add(places.map((e) => (e['name'] ?? '') as String).toList());
           }
 
           setState(() {
             routeTitles = allRouteTitles;
+            routeIds = allRouteIds;
             placeImageUrlsList = allPlaceImageUrls;
             placeNamesList = allPlaceNames;
           });
         }
       } catch (e) {
-        // Hata oluşursa hata mesajı gösterebiliriz
         print('Veri çekme hatası: $e');
       }
     }
@@ -253,63 +249,79 @@ class _HomePageState extends State<HomePage> {
                 final routeTitle = routeTitles[index];
                 final placeImageUrls = placeImageUrlsList[index];
                 final placeNames = placeNamesList[index];
+                final routeId = routeIds[index];
 
-                return Card(
-                  elevation: 4,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                return InkWell(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CardDetails(
+                        routeId:
+                            routeId, // Veya uygun routeId'yi burada kullanın
+                        routeTitle: routeTitle,
+                        placeNames: placeNames,
+                        imagesUrls: placeImageUrls,
+                      ),
+                    ),
                   ),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: List.generate(4, (i) {
-                            final imageUrl = i < placeImageUrls.length
-                                ? placeImageUrls[i]
-                                : null;
+                  child: Card(
+                    elevation: 4,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: List.generate(4, (i) {
+                              final imageUrl = i < placeImageUrls.length
+                                  ? placeImageUrls[i]
+                                  : null;
 
-                            return Expanded(
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 4),
-                                height: 80,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade200,
-                                  borderRadius: BorderRadius.circular(8),
-                                  image: imageUrl != null && imageUrl.isNotEmpty
-                                      ? DecorationImage(
-                                          image: NetworkImage(imageUrl),
-                                          fit: BoxFit.cover,
-                                        )
+                              return Expanded(
+                                child: Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 4),
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    borderRadius: BorderRadius.circular(8),
+                                    image:
+                                        imageUrl != null && imageUrl.isNotEmpty
+                                            ? DecorationImage(
+                                                image: NetworkImage(imageUrl),
+                                                fit: BoxFit.cover,
+                                              )
+                                            : null,
+                                  ),
+                                  child: imageUrl == null || imageUrl.isEmpty
+                                      ? const Center(child: Text("Boş"))
                                       : null,
                                 ),
-                                child: imageUrl == null || imageUrl.isEmpty
-                                    ? const Center(child: Text("Boş"))
-                                    : null,
+                              );
+                            }),
+                          ),
+                          const SizedBox(height: 16),
+                          Center(
+                            child: Text(
+                              routeTitle,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
-                            );
-                          }),
-                        ),
-                        const SizedBox(height: 16),
-                        Center(
-                          child: Text(
-                            routeTitle,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          placeNames.join(' - '),
-                          style: const TextStyle(fontSize: 14),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                          const SizedBox(height: 8),
+                          Text(
+                            placeNames.skip(1).join(' - '),
+                            style: const TextStyle(fontSize: 14),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

@@ -23,10 +23,14 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text("Ayarlar", style: TextStyle(color: Colors.black),),
+        title: Text(
+          "Ayarlar",
+          style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
+        ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back,
+              color: Theme.of(context).textTheme.bodyLarge?.color),
           onPressed: () => Navigator.pop(context),
         ),
       ),

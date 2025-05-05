@@ -1573,5 +1573,23 @@
     "title": "Küçük Ayasofya Camii",
     "image": "https://storymap-images.s3.us-east-1.amazonaws.com/kucuk_ayasofya.jpg",
     "iconPath": "assets/markers/mosque.png"
+  },
+  {
+    "position": {
+      "lat": 41.04265268752141,   
+      "lng": 29.04010201394046
+    },
+    "title": "Beylerbeyi Sarayı",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/beylerbeyi_sarayi.jpeg",
+    "iconPath": "assets/markers/palace.png"
+  },
+  {
+    "position": {
+      "lat": 41.04093763732319,  
+      "lng": 29.04013476304858
+    },
+    "title": "Mermer Köşk",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/mermer_kosk.jpeg",
+    "iconPath": "assets/markers/palace.png"
   }
 ]

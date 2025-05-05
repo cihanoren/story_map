@@ -67,12 +67,12 @@ class _CardDetailsState extends State<CardDetails> {
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: _placesFuture,
       builder: (context, snapshot) {
-        final title = _routeTitleFromFirestore ?? widget.routeTitle ?? "Rota Detayları";
+        final title =
+            _routeTitleFromFirestore ?? widget.routeTitle ?? "Rota Detayları";
 
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            elevation: 1,
             title: Text(
               title,
               style: TextStyle(
@@ -85,6 +85,87 @@ class _CardDetailsState extends State<CardDetails> {
                   color: Theme.of(context).textTheme.bodyLarge?.color),
               onPressed: () => Navigator.pop(context),
             ),
+            actions: [
+              PopupMenuButton<String>(
+                icon: Icon(Icons.more_vert,
+                    color: Theme.of(context).textTheme.bodyLarge?.color),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                color: Colors.white,
+                onSelected: (String value) {
+                  switch (value) {
+                    case 'edit':
+                      // Rotayı düzenleme işlemi
+                      _editRouteTitle();
+                      break;
+                    case 'share_in_explore':
+                      // Keşfette paylaş
+                      break;
+                    case 'share':
+                      // Paylaşma işlemi
+                      break;
+                    case 'delete':
+                      _showDeleteConfirmationDialog(); // 👈 Yeni fonksiyon
+                      break;
+                  }
+                },
+                itemBuilder: (BuildContext context) => [
+                  PopupMenuItem<String>(
+                    value: 'edit',
+                    child: SizedBox(
+                      width: 180,
+                      child: Row(
+                        children: const [
+                          Icon(Icons.edit, color: Colors.purple),
+                          SizedBox(width: 10),
+                          Text('Rotayı Düzenle'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'share_in_explore',
+                    child: SizedBox(
+                      width: 180, // genişlik artırıldı
+                      child: Row(
+                        children: const [
+                          Icon(Icons.switch_access_shortcut_outlined,
+                              color: Colors.blue),
+                          SizedBox(width: 10),
+                          Text('Keşfette Paylaş'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'share',
+                    child: SizedBox(
+                      width: 180,
+                      child: Row(
+                        children: const [
+                          Icon(Icons.share, color: Colors.green),
+                          SizedBox(width: 10),
+                          Text('Rotayı Paylaş'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'delete',
+                    child: SizedBox(
+                      width: 180,
+                      child: Row(
+                        children: const [
+                          Icon(Icons.delete, color: Colors.red),
+                          SizedBox(width: 10),
+                          Text('Rotayı Sil'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
           body: () {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -181,5 +262,100 @@ class _CardDetailsState extends State<CardDetails> {
         );
       },
     );
+  }
+
+  // Başlık düzenleme fonksiyonu
+  void _editRouteTitle() async {
+    TextEditingController _titleController = TextEditingController(
+        text: _routeTitleFromFirestore ?? widget.routeTitle);
+
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text("Rota Adını Düzenle"),
+        content: TextField(
+          controller: _titleController,
+          decoration: const InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue, width: 2)),
+            labelText: "Yeni Rota Başlığı",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("İptal"),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final newTitle = _titleController.text.trim();
+              if (newTitle.isNotEmpty && newTitle != _routeTitleFromFirestore) {
+                // Firestore güncelle
+                await FirebaseFirestore.instance
+                    .collection('routes') // koleksiyon adı
+                    .doc(widget.routeId) // rota ID'si
+                    .update({'title': newTitle});
+
+                // UI güncellemesi
+                setState(() {
+                  _routeTitleFromFirestore = newTitle;
+                });
+              }
+              Navigator.pop(context);
+            },
+            child: const Text("Kaydet"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDeleteConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Rotayı Sil'),
+        content: const Text(
+            'Bu rotayı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.', style: TextStyle(fontSize: 15),),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('İptal'),
+          ),
+          TextButton(style: TextButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () {
+              Navigator.of(context).pop(); // dialogu kapat
+              _deleteRoute(); // silme işlemini başlat
+            },
+            child: Text('Sil', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _deleteRoute() async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('routes')
+          .doc(widget.routeId)
+          .delete();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Rota başarıyla silindi')),
+          
+        );
+        Navigator.of(context).pop(); // Önceki sayfaya dön
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Silme işlemi başarısız: $e')),
+      );
+    }
   }
 }

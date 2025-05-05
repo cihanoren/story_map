@@ -48,6 +48,8 @@ dependencies:
   cloud_firestore: ^5.6.7
   firebase_storage: ^12.4.5
   intl: ^0.20.2
+  pull_to_refresh: ^2.0.0
+
 
 
 

@@ -250,7 +250,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
           (m) => m.position == point,
           orElse: () => Marker(markerId: MarkerId('')),
         );
-        return marker.infoWindow.title ?? 'Konumunuz';
+        return marker.infoWindow.title ?? 'Başlangıç Noktası';
       }).toList(),
     );
 

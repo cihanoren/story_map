@@ -1463,7 +1463,7 @@
       "lng": 28.981513641707306
     },
     "title": "Gülhane Parkı",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/g%C3%BClhane-parki.jpg",
     "iconPath": "assets/markers/park.png"
   },
   {
@@ -1471,8 +1471,8 @@
       "lat": 41.01389024898477,
       "lng": 28.981818863279727
     },
-    "title": "Gülhane Parkı Sarnıcı",
-    "image": "",
+    "title": "Gülhane Sarnıcı",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/gulhane-sarnici-.jpg",
     "iconPath": "assets/markers/museum.png"
   },
   {
@@ -1481,7 +1481,7 @@
       "lng": 28.9852978340244
     },
     "title": "Fatih Köşkü",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/fatih-kosku.jpg",
     "iconPath": "assets/markers/memorial.png"
   },
   {
@@ -1490,7 +1490,7 @@
       "lng": 28.987075749683754
     },
     "title": "Bizans Surları",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/istanbul_surlari.jpg",
     "iconPath": "assets/markers/memorial.png"
   },
   {
@@ -1499,7 +1499,7 @@
       "lng": 28.982655528879935
     },
     "title": "Deavi Kasrı",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/deavi_kasri.jpg",
     "iconPath": "assets/markers/castle.png"
   },
   {
@@ -1508,7 +1508,7 @@
       "lng": 28.972470030689987
     },
     "title": "Şerefiye Sarnıcı",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/serefiye_sarnici.jpg",
     "iconPath": "assets/markers/museum.png"
   },
   {
@@ -1544,7 +1544,7 @@
       "lng": 28.979222627307625
     },
     "title": "Hürrem Sultan Hamamı",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/h%C3%BCrremSultan_hamam%C4%B1.jpg",
     "iconPath": "assets/markers/memorial.png"
   },
   {

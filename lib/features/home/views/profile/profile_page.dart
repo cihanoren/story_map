@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:story_map/features/home/views/profile/profile_settings.dart';
 
 String? _userProfileImageUrl;
@@ -18,6 +19,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final RefreshController _refreshController = RefreshController();
+
   final picker = ImagePicker();
   File? _imageFile;
   String? _email;
@@ -247,11 +250,19 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SafeArea(
         child: Stack(
           children: [
-            RefreshIndicator(
+            SmartRefresher(
+              controller: _refreshController,
+              enablePullDown: true,
+              header: WaterDropMaterialHeader(
+                backgroundColor: Colors.deepPurple,
+                color: Colors.white,
+              ),
               onRefresh: () async {
                 await _fetchUserEmail(); // Kullanıcı bilgilerini güncelle
                 await _fetchCurrentLocation(); // Konum bilgisini güncelle
-                setState(() {}); // Yeniden çizim
+                setState(() {
+                  _refreshController.refreshCompleted(); // Bunu ekle
+                }); // Yeniden çizim
               },
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(16, 20, 16, 30),

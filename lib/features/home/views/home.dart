@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:story_map/core/theme/theme_provider.dart';
 import 'package:story_map/features/home/views/card_details.dart';
 import 'package:story_map/features/home/views/explore_page.dart';
@@ -173,6 +174,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final RefreshController _refreshController = RefreshController();
+
   bool isLoading = true;
   List<String> routeTitles = [];
   List<String> routeIds = [];
@@ -233,14 +236,21 @@ class _HomePageState extends State<HomePage> {
     }
 
     setState(() => isLoading = false);
+    _refreshController.refreshCompleted(); // Bunu ekle
   }
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
+    return SmartRefresher(
+      controller: _refreshController,
+      enablePullDown: true,
+      header: const WaterDropMaterialHeader(
+        backgroundColor: Colors.deepPurple,
+        color: Colors.white,
+      ),
       onRefresh: _loadPageData,
       child: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center()
           : ListView.builder(
               padding: const EdgeInsets.fromLTRB(16, 100, 16, 16),
               physics: const AlwaysScrollableScrollPhysics(),

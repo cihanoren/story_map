@@ -320,18 +320,23 @@ class _CardDetailsState extends State<CardDetails> {
       builder: (context) => AlertDialog(
         title: const Text('Rotayı Sil'),
         content: const Text(
-            'Bu rotayı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.', style: TextStyle(fontSize: 15),),
+          'Bu rotayı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.',
+          style: TextStyle(fontSize: 15),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text('İptal'),
           ),
-          TextButton(style: TextButton.styleFrom(backgroundColor: Colors.red),
+          TextButton(
+            style: TextButton.styleFrom(backgroundColor: Colors.red),
             onPressed: () {
               Navigator.of(context).pop(); // dialogu kapat
               _deleteRoute(); // silme işlemini başlat
             },
-            child: Text('Sil', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            child: Text('Sil',
+                style: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -347,14 +352,23 @@ class _CardDetailsState extends State<CardDetails> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Rota başarıyla silindi')),
-          
+          const SnackBar(
+            content: Text('Rota başarıyla silindi'),
+            backgroundColor: Colors.red,
+          ),
         );
         Navigator.of(context).pop(); // Önceki sayfaya dön
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Silme işlemi başarısız: $e')),
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.error, color: Colors.red),
+              Text('Silme işlemi başarısız: $e'),
+            ],
+          ),
+        ),
       );
     }
   }

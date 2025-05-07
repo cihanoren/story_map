@@ -1591,5 +1591,14 @@
     "title": "Mermer Köşk",
     "image": "https://storymap-images.s3.us-east-1.amazonaws.com/mermer_kosk.jpeg",
     "iconPath": "assets/markers/palace.png"
+  },
+  {
+    "position": {
+      "lat": 39.924997689095825,   
+      "lng": 32.837078600000005
+    },
+    "title": "Anıtkabir",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/anitkabir.jpeg",
+    "iconPath": "assets/markers/monument.png"
   }
 ]

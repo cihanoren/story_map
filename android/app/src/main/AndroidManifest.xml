@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="story_map"
+        android:label="Story Map"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

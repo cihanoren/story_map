@@ -1,5 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key}) : super(key: key);
@@ -9,99 +12,161 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
-  late Future<List<Map<String, dynamic>>> _topRatedPlaces;
+  final RefreshController _refreshController = RefreshController();
+  List<Map<String, dynamic>> _topRatedPlaces = [];
+  Map<String, String> _titleToImageMap = {};
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _topRatedPlaces = fetchTopRatedPlaces();
+    _initialLoad();
   }
 
-  Future<List<Map<String, dynamic>>> fetchTopRatedPlaces() async {
+  Future<void> _initialLoad() async {
+    await _loadMarkerImages();
+    await _updateMissingImagesInFirestore();
+    await _loadTopRatedPlaces();
+    setState(() => _isLoading = false);
+  }
+
+  // markers.json dosyasını yükle
+  Future<void> _loadMarkerImages() async {
+    final jsonStr = await rootBundle.loadString('assets/markers.json');
+    final List<dynamic> jsonList = jsonDecode(jsonStr);
+    _titleToImageMap = {
+      for (var item in jsonList)
+        if (item['title'] != null && item['image'] != null)
+          item['title']: item['image']
+    };
+  }
+
+  // Firestore'da placeImage alanı eksik olanlara markers.json'dan güncelle
+  Future<void> _updateMissingImagesInFirestore() async {
     final snapshot = await FirebaseFirestore.instance
         .collection('ratings')
-        .orderBy('rating', descending: true)
-        .limit(100) // daha fazla veri çekerek daha iyi ortalama çıkar
+        .limit(100)  // İstersen limit artırabilirsin
         .get();
-
-    Map<String, List<double>> ratingsMap = {};
 
     for (var doc in snapshot.docs) {
       final data = doc.data();
-      final placeTitle = data['placeTitle'];
-      final rating = (data['rating'] as num?)?.toDouble();
+      final title = data['placeTitle'];
+      final hasImage = data.containsKey('placeImage') && (data['placeImage'] as String).isNotEmpty;
 
-      if (placeTitle != null && rating != null) {
-        ratingsMap.putIfAbsent(placeTitle, () => []);
-        ratingsMap[placeTitle]!.add(rating);
+      if (title != null && !hasImage) {
+        final imageUrl = _titleToImageMap[title];
+        if (imageUrl != null) {
+          try {
+            await doc.reference.update({'placeImage': imageUrl});
+          } catch (e) {
+            print('Firestore güncelleme hatası: $e');
+            // Eğer izin yoksa veya hata varsa burada yakalanır, istersen kullanıcıya da bildirebilirsin
+          }
+        }
+      }
+    }
+  }
+
+  // Top rated mekanları yükle ve placeImage verisini kullan
+  Future<void> _loadTopRatedPlaces() async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('ratings')
+        .orderBy('rating', descending: true)
+        .limit(100)
+        .get();
+
+    final Map<String, List<double>> ratingMap = {};
+    final Map<String, String> imageMap = {};
+
+    for (var doc in snapshot.docs) {
+      final data = doc.data();
+      final title = data['placeTitle'];
+      final rating = (data['rating'] as num?)?.toDouble();
+      final imageUrl = data['placeImage']; // Firestore’daki resim
+
+      if (title != null && rating != null) {
+        ratingMap.putIfAbsent(title, () => []).add(rating);
+        if (imageUrl != null && imageUrl is String && imageUrl.isNotEmpty) {
+          imageMap[title] = imageUrl;
+        }
       }
     }
 
-    // Ortalama puana göre sıralanmış ilk 5 mekan
-    List<Map<String, dynamic>> results = ratingsMap.entries.map((entry) {
-      final ratings = entry.value;
-      final average = ratings.reduce((a, b) => a + b) / ratings.length;
+    final List<Map<String, dynamic>> results = ratingMap.entries.map((e) {
+      final avg = e.value.reduce((a, b) => a + b) / e.value.length;
       return {
-        'placeTitle': entry.key,
-        'averageRating': average,
-        'count': ratings.length,
+        'placeTitle': e.key,
+        'averageRating': avg,
+        'count': e.value.length,
+        'placeImage': imageMap[e.key], // Firestore’dan varsa
       };
     }).toList()
-      ..sort((a, b) => (b['averageRating'] as double)
-          .compareTo(a['averageRating'] as double));
+      ..sort((a, b) =>
+          (b['averageRating'] as double).compareTo(a['averageRating'] as double));
 
-    return results.take(5).toList();
+    setState(() => _topRatedPlaces = results.take(5).toList());
+  }
+
+  Future<void> _onRefresh() async {
+    await _loadTopRatedPlaces();
+    _refreshController.refreshCompleted();
+  }
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
-      future: _topRatedPlaces,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
-        if (snapshot.hasError) {
-          return Center(child: Text('Hata: ${snapshot.error}'));
-        }
+    return SmartRefresher(
+      controller: _refreshController,
+      enablePullDown: true,
+      onRefresh: _onRefresh,
+      header: const WaterDropMaterialHeader(
+        backgroundColor: Colors.deepPurple,
+        color: Colors.white,
+      ),
+      child: ListView.builder(
+        padding: const EdgeInsets.fromLTRB(16, 66, 16, 16),
+        itemCount: _topRatedPlaces.length,
+        itemBuilder: (context, index) {
+          final item = _topRatedPlaces[index];
+          final title = item['placeTitle'];
+          final rating = (item['averageRating'] as double).toStringAsFixed(1);
+          final count = item['count'];
 
-        final data = snapshot.data;
+          // Öncelik Firestore’daki image, yoksa markers.json’dan al
+          final imageUrl = item['placeImage'] ?? _titleToImageMap[title];
 
-        if (data == null || data.isEmpty) {
-          return const Center(child: Text('Henüz puanlanmış mekan yok.'));
-        }
-
-        return Padding(
-          padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top + 16, bottom: 16),
-          child: ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              final item = data[index];
-              final title = item['placeTitle'] ?? 'İsimsiz Mekan';
-              final rating =
-                  (item['averageRating'] as double).toStringAsFixed(1);
-              final count = item['count'];
-
-              return Card(
-                elevation: 3,
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListTile(
-                  title: Text(title,
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Text("Ortalama Puan: $rating ($count oy)"),
-                  trailing: const Icon(Icons.star, color: Colors.amber),
-                ),
-              );
-            },
-          ),
-        );
-      },
+          return Card(
+            elevation: 3,
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: ListTile(
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: imageUrl != null
+                    ? Image.network(imageUrl,
+                        width: 60, height: 60, fit: BoxFit.cover)
+                    : Image.asset('assets/images/avatar.jpg',
+                        width: 60, height: 60, fit: BoxFit.cover),
+              ),
+              title: Text(title,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              subtitle: Text("Ortalama Puan: $rating ($count oy)"),
+              trailing: const Icon(Icons.star, color: Colors.amber),
+            ),
+          );
+        },
+      ),
     );
   }
 }

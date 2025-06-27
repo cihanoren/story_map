@@ -72,19 +72,43 @@ class _AccountInfoState extends State<AccountInfo> {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
+    final newUsername = _usernameController.text.trim();
+
     try {
+      // Kullanıcı adını başkası kullanıyor mu kontrol et
+      final existingUsers = await FirebaseFirestore.instance
+          .collection('users')
+          .where('username', isEqualTo: newUsername)
+          .get();
+
+      // Eğer bu kullanıcı dışında biri bu kullanıcı adını kullanıyorsa
+      final isUsernameTaken =
+          existingUsers.docs.any((doc) => doc.id != user.uid);
+
+      if (isUsernameTaken) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.yellow[700],
+          content: Text(
+              "Bu kullanıcı adı zaten kullanımda. Lütfen başka bir ad seçin."),
+        ));
+        return;
+      }
+
+      // Güncelleme işlemi
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
           .update({
         'displayName': _nameController.text.trim(),
-        'username': _usernameController.text.trim(),
+        'username': newUsername,
         'email': _emailController.text.trim(),
         'updatedAt': DateTime.now(),
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Bilgiler başarıyla güncellendi")),
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text("Bilgiler başarıyla güncellendi")),
       );
     } catch (e) {
       print("Profil güncelleme hatası: $e");
@@ -150,7 +174,6 @@ class _AccountInfoState extends State<AccountInfo> {
               color: Theme.of(context).textTheme.bodyLarge?.color),
           onPressed: () => Navigator.pop(context),
         ),
-        
       ),
       body: RefreshIndicator(
         onRefresh: () async {

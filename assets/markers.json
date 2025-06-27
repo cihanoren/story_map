@@ -851,7 +851,7 @@
       "lng": 32.3889807
     },
     "title": "Amasra Kalesi",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/amasra_kalesi.jpg",
     "iconPath": "assets/markers/castle.png"
   },
   {

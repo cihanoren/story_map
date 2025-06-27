@@ -136,30 +136,38 @@ class _HomeState extends ConsumerState<Home> {
             ),
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: GNav(
-          gap: 12,
-          activeColor: Colors.white,
-          color: Colors.grey,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          tabBackgroundColor: Colors.deepPurple,
-          padding: const EdgeInsets.all(14),
-          tabMargin: const EdgeInsets.symmetric(horizontal: 10),
-          tabs: const [
-            GButton(icon: Icons.home, text: "Home"),
-            GButton(icon: Icons.public, text: "Explore"),
-            GButton(icon: Icons.location_on, text: "Maps"),
-            GButton(icon: Icons.person, text: "Profile"),
-          ],
-          selectedIndex: _selectedIndex,
-          onTabChange: (index) {
-            setState(() {
-              if (index < _pages.length) {
-                _selectedIndex = index;
-              }
-            });
-          },
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final isSmallScreen = constraints.maxWidth < 330;
+
+              return GNav(
+                gap: isSmallScreen ? 4 : 12,
+                padding: const EdgeInsets.all(12),
+                tabMargin: const EdgeInsets.symmetric(horizontal: 6),
+                activeColor: Colors.white,
+                color: Colors.grey,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                tabBackgroundColor: Colors.deepPurple,
+                tabs: const [
+                  GButton(icon: Icons.home, text: "Home"),
+                  GButton(icon: Icons.public, text: "Explore"),
+                  GButton(icon: Icons.location_on, text: "Maps"),
+                  GButton(icon: Icons.person, text: "Profile"),
+                ],
+                selectedIndex: _selectedIndex,
+                onTabChange: (index) {
+                  setState(() {
+                    if (index < _pages.length) {
+                      _selectedIndex = index;
+                    }
+                  });
+                },
+              );
+            },
+          ),
         ),
       ),
     );

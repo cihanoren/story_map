@@ -41,10 +41,8 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
   }
 
   Future<void> _updateMissingImagesInFirestore() async {
-    final snapshot = await FirebaseFirestore.instance
-        .collection('ratings')
-        .limit(100)
-        .get();
+    final snapshot =
+        await FirebaseFirestore.instance.collection('ratings').limit(100).get();
 
     for (var doc in snapshot.docs) {
       final data = doc.data();
@@ -98,8 +96,8 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
         'placeImage': imageMap[e.key],
       };
     }).toList()
-      ..sort((a, b) =>
-          (b['averageRating'] as double).compareTo(a['averageRating'] as double));
+      ..sort((a, b) => (b['averageRating'] as double)
+          .compareTo(a['averageRating'] as double));
 
     setState(() => _topRatedPlaces = results.take(5).toList());
   }
@@ -146,6 +144,63 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: ListTile(
+              onTap: () async {
+                final storyText = await _fetchStory(title);
+
+                if (context.mounted) {
+                  showModalBottomSheet(
+                    context: context,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(20)),
+                    ),
+                    isScrollControlled: true,
+                    backgroundColor: Colors.white,
+                    builder: (context) {
+                      return DraggableScrollableSheet(
+                        initialChildSize: 0.7, // Başlangıçta %70
+                        minChildSize: 0.3, // En az %30
+                        maxChildSize: 0.95, // En fazla %95
+                        expand: false,
+                        builder: (context, scrollController) {
+                          return SingleChildScrollView(
+                            controller: scrollController,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 24),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Center(
+                                  child: Text(
+                                    title,
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: imageUrl != null
+                                      ? Image.network(imageUrl)
+                                      : Image.asset("assets/images/avatar.jpg"),
+                                ),
+                                const SizedBox(height: 16),
+                                Text(
+                                  storyText ??
+                                      "Bu mekan için bir hikaye bulunamadı.",
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                const SizedBox(height: 24),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                }
+              },
               leading: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: imageUrl != null
@@ -163,5 +218,25 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
         },
       ),
     );
+  }
+
+  // Hikaye çekme fonksiyonu
+  // Bu fonksiyon, Firestore'dan belirli bir mekanın hikayesini çeker.
+  Future<String?> _fetchStory(String placeTitle) async {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('places')
+          .doc(placeTitle)
+          .collection('story')
+          .doc('content') // 🔁 burası düzeltildi
+          .get();
+
+      if (doc.exists) {
+        return doc.data()?['text'] as String?;
+      }
+    } catch (e) {
+      print("Hikaye çekme hatası: $e");
+    }
+    return null;
   }
 }

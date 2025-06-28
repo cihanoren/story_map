@@ -267,80 +267,88 @@ class _CardDetailsState extends State<CardDetails> {
 
   // Keşfette paylaşma fonksiyonu
   Future<void> _shareRouteInExplore() async {
-    final docRef =
-        FirebaseFirestore.instance.collection('routes').doc(widget.routeId);
+  final docRef =
+      FirebaseFirestore.instance.collection('routes').doc(widget.routeId);
 
-    try {
-      final doc = await docRef.get();
-      if (!doc.exists) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Rota bulunamadı."),
-            backgroundColor: Colors.red,
-          ),
-        );
-        return;
-      }
-
-      final data = doc.data();
-      final isAlreadyShared = data?['isShared'] == true;
-
-      if (isAlreadyShared) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Bu rota zaten keşfette paylaşılmış."),
-            backgroundColor: Colors.orange,
-          ),
-        );
-        return;
-      }
-
-      // Firestore'da isShared flag'ini güncelle
-      await docRef.update({
-        'isShared': true,
-        'sharedAt': FieldValue.serverTimestamp(),
-      });
-
-      // explore_routes koleksiyonuna ekleme
-      final exploreRef = FirebaseFirestore.instance
-          .collection('explore_routes')
-          .doc(widget.routeId);
-
-      await exploreRef.set({
-        'routeId': widget.routeId,
-        'title': data?['title'] ?? 'Başlıksız',
-        'places': data?['places'] ?? [],
-        'mode': data?['mode'] ?? 'unknown',
-        'sharedBy': data?['userId'] ?? 'anon',
-        'sharedAt': FieldValue.serverTimestamp(),
-        'likeCount': 0,
-        'viewCount': 0,
-      });
-
+  try {
+    final doc = await docRef.get();
+    if (!doc.exists) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Row(
-            children: [
-              Icon(Icons.check_circle, color: Colors.green),
-              SizedBox(width: 8),
-              Text(
-                "Rota keşfet sayfasında paylaşıldı.",
-                style: TextStyle(color: Colors.black),
-              ),
-            ],
-          ),
-          backgroundColor: Colors.white,
-        ),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Hata oluştu: $e"),
+          content: Text("Rota bulunamadı."),
           backgroundColor: Colors.red,
         ),
       );
+      return;
     }
+
+    final data = doc.data();
+
+    final exploreRef = FirebaseFirestore.instance
+        .collection('explore_routes')
+        .doc(widget.routeId);
+    final exploreDoc = await exploreRef.get();
+
+    // Eğer explore_routes koleksiyonunda rota yok ama routes'da isShared true ise, isShared false yap
+    if (!exploreDoc.exists && data?['isShared'] == true) {
+      await docRef.update({'isShared': false});
+    }
+
+    final isAlreadyShared = data?['isShared'] == true && exploreDoc.exists;
+
+    if (isAlreadyShared) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Bu rota zaten keşfette paylaşılmış."),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
+
+    // Firestore'da isShared flag'ini güncelle
+    await docRef.update({
+      'isShared': true,
+      'sharedAt': FieldValue.serverTimestamp(),
+    });
+
+    // explore_routes koleksiyonuna ekleme
+    await exploreRef.set({
+      'routeId': widget.routeId,
+      'title': data?['title'] ?? 'Başlıksız',
+      'places': data?['places'] ?? [],
+      'mode': data?['mode'] ?? 'unknown',
+      'sharedBy': data?['userId'] ?? 'anon',
+      'sharedAt': FieldValue.serverTimestamp(),
+      'likeCount': 0,
+      'viewCount': 0,
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Row(
+          children: [
+            Icon(Icons.check_circle, color: Colors.green),
+            SizedBox(width: 8),
+            Text(
+              "Rota keşfet sayfasında paylaşıldı.",
+              style: TextStyle(color: Colors.black),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.white,
+      ),
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Hata oluştu: $e"),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
+}
+
 
   // Başlık düzenleme fonksiyonu
   void _editRouteTitle() async {

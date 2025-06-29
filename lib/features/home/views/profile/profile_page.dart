@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:story_map/features/home/views/card_details.dart';
 import 'package:story_map/features/home/views/profile/profile_settings.dart';
 
 String? _userProfileImageUrl;
@@ -30,16 +31,112 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _isUsingStaticLocation = false;
   LatLng? _staticLocation;
   bool _isGuest = false;
-  static int guestCounter = 1; // Misafir sayaç
   String? userId;
+
+  List<Map<String, dynamic>> _likedRoutes = [];
+  bool _isLoadingLikedRoutes = true;
+
+  bool showLikedRoutes = true;
+  List<Map<String, dynamic>> _userOwnRoutes = [];
+  bool _isLoadingOwnRoutes = true;
 
   @override
   void initState() {
     super.initState();
     _fetchUserEmail();
     _fetchCurrentLocation();
+    _fetchLikedRoutes();
+    _fetchUserOwnRoutes();
   }
 
+  // Beğendiğin Rotalar için (yönlendirme içerir)
+  Widget _buildLikedRouteList(List<Map<String, dynamic>> routes) {
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: routes.length,
+      separatorBuilder: (_, __) => const Divider(),
+      itemBuilder: (context, index) {
+        final route = routes[index];
+        return ListTile(
+          leading: route['imageUrl'] != null
+              ? CircleAvatar(backgroundImage: NetworkImage(route['imageUrl']))
+              : const CircleAvatar(child: Icon(Icons.map)),
+          title: Text(route['title'] ?? 'Başlıksız Rota'),
+          subtitle:
+              route['description'] != null ? Text(route['description']) : null,
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => CardDetails(
+                  routeId: route['routeId'],
+                  routeTitle: route['title'],
+                  placeNames: [],
+                  imagesUrls: [],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+// Paylaşılan Rotalar için (kaldırma içerir)
+  Widget _buildOwnRouteList(List<Map<String, dynamic>> routes) {
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: routes.length,
+      separatorBuilder: (_, __) => const Divider(),
+      itemBuilder: (context, index) {
+        final route = routes[index];
+        return ListTile(
+          leading: route['imageUrl'] != null
+              ? CircleAvatar(backgroundImage: NetworkImage(route['imageUrl']))
+              : const CircleAvatar(child: Icon(Icons.map)),
+          title: Text(route['title'] ?? 'Başlıksız Rota'),
+          subtitle:
+              route['description'] != null ? Text(route['description']) : null,
+          trailing: TextButton(
+            onPressed: () {
+              final exploreRouteId =
+                  route['routeId']; // explore_routes koleksiyondaki id              
+              _removeRouteFromExplore(exploreRouteId);
+            },
+            child: const Text(
+              "Keşfetten Kaldır",
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+// Rota keşfetten kaldırma işlemi
+  Future<void> _removeRouteFromExplore(String routeId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('explore_routes')
+          .doc(routeId)
+          .delete();
+
+      await _fetchUserOwnRoutes();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Rota keşfetten kaldırıldı.")),
+        );
+      }
+    } catch (e) {
+      print("Hata oluştu: $e");
+    }
+  }
+
+  // Kullanıcı e-postasını ve profil bilgilerini al
   Future<void> _fetchUserEmail() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -48,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (user.isAnonymous) {
         setState(() {
           _isGuest = true;
-          _username = "guest$userId"; // userId kullanıldı
+          _username = "guest$userId";
           _email = null;
         });
       } else {
@@ -66,7 +163,6 @@ class _ProfilePageState extends State<ProfilePage> {
             _userProfileImageUrl = data['profileImageUrl'];
           });
 
-          // Eğer username yoksa Firestore'a ekle
           if (data['username'] == null && _email != null) {
             await FirebaseFirestore.instance
                 .collection('users')
@@ -91,6 +187,56 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  // Kullanıcının beğendiği rotaları al
+  // Bu fonksiyon, kullanıcı oturum açtığında veya profil sayfası ilk yüklendiğinde çağrılır.
+  // Beğenilen rotalar, Firestore'dan alınır ve listeye eklenir.
+  Future<void> _fetchLikedRoutes() async {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    if (userId == null) return;
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('explore_routes')
+        .where('likedBy', arrayContains: userId)
+        .get();
+
+    final routes = snapshot.docs.map((doc) {
+      final data = doc.data();
+      data['routeId'] = doc.id;
+      return data;
+    }).toList();
+
+    setState(() {
+      _likedRoutes = routes;
+      _isLoadingLikedRoutes = false;
+    });
+  }
+
+  // Kullanıcının kendi oluşturduğu rotaları al
+  // Bu fonksiyon, kullanıcının kendi oluşturduğu rotaları Firestore'dan alır.
+  Future<void> _fetchUserOwnRoutes() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) return;
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('explore_routes')
+        .where('sharedBy', isEqualTo: uid)
+        .get();
+
+    final routes = snapshot.docs.map((doc) {
+      final data = doc.data();
+      data['routeId'] = doc.id;
+      return data;
+    }).toList();
+
+    setState(() {
+      _userOwnRoutes = routes;
+      _isLoadingOwnRoutes = false;
+    });
+  }
+
+  // Kullanıcının konumunu al
+  // Bu fonksiyon, kullanıcının cihazının konumunu alır ve eğerini günceller.
+  // Eğer kullanıcı konum izni vermemişse, izin istenir.
   Future<void> _fetchCurrentLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) return;
@@ -108,11 +254,9 @@ class _ProfilePageState extends State<ProfilePage> {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
-    // Firestore'dan kaydedilen konumu al
     await _loadSavedLocation();
 
     if (_locationDescription == null) {
-      // Kaydedilmiş bir konum yoksa anlık konumu al
       _updateLocation(position);
     }
   }
@@ -167,7 +311,6 @@ class _ProfilePageState extends State<ProfilePage> {
         await storageRef.putFile(file);
         final imageUrl = await storageRef.getDownloadURL();
 
-        // Firestore’a profil fotoğrafı URL’sini kaydet
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userId)
@@ -231,7 +374,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   _locationDescription = controller.text.trim();
                   _isUsingStaticLocation = true;
                 });
-                _saveLocation(); // Konumu kaydet
+                _saveLocation();
               }
               Navigator.pop(context);
             },
@@ -258,11 +401,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 color: Colors.white,
               ),
               onRefresh: () async {
-                await _fetchUserEmail(); // Kullanıcı bilgilerini güncelle
-                await _fetchCurrentLocation(); // Konum bilgisini güncelle
+                await _fetchUserEmail();
+                await _fetchCurrentLocation();
+                await _fetchLikedRoutes();
+                await _fetchUserOwnRoutes();
                 setState(() {
-                  _refreshController.refreshCompleted(); // Bunu ekle
-                }); // Yeniden çizim
+                  _refreshController.refreshCompleted();
+                });
               },
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(16, 20, 16, 30),
@@ -327,6 +472,73 @@ class _ProfilePageState extends State<ProfilePage> {
                       },
                       child: const Text("Anlık konuma geri dön"),
                     ),
+
+                  // -- Beğenilen Rotalar Bölümü --
+                  // --- Sekme Butonları ---
+                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            showLikedRoutes = true;
+                          });
+                        },
+                        child: Text(
+                          "Beğendiklerin",
+                          style: TextStyle(
+                            fontWeight: showLikedRoutes
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                            color: showLikedRoutes
+                                ? Colors.deepPurple
+                                : Colors.black,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            showLikedRoutes = false;
+                          });
+                        },
+                        child: Text(
+                          "Paylaşımların",
+                          style: TextStyle(
+                            fontWeight: !showLikedRoutes
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                            color: !showLikedRoutes
+                                ? Colors.deepPurple
+                                : Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 12),
+                  if (showLikedRoutes)
+                    _isLoadingLikedRoutes
+                        ? const Center(child: CircularProgressIndicator())
+                        : _likedRoutes.isEmpty
+                            ? const Text(
+                                "Henüz beğendiğin bir rota yok.",
+                                style:
+                                    TextStyle(fontSize: 16, color: Colors.grey),
+                              )
+                            : _buildLikedRouteList(_likedRoutes)
+                  else
+                    _isLoadingOwnRoutes
+                        ? const Center(child: CircularProgressIndicator())
+                        : _userOwnRoutes.isEmpty
+                            ? const Text(
+                                "Henüz rota paylaşmamışsın.",
+                                style:
+                                    TextStyle(fontSize: 16, color: Colors.grey),
+                              )
+                            : _buildOwnRouteList(_userOwnRoutes),
                 ],
               ),
             ),
@@ -356,3 +568,7 @@ class LatLng {
   final double longitude;
   LatLng(this.latitude, this.longitude);
 }
+
+//! Kullanıcının beğendiği rotalardan detay sayfasına gidildiğinde 
+//! keşfette paylaş gibi kısımların olmaması lazım sadece beğeniyi geri alabileceği
+//! bir sayfa olmalı. Bu yüzden CardDetails sayfasında keşfette paylaş gibi kısımlar kaldırılacak.

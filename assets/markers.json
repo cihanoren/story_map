@@ -158,7 +158,7 @@
       "lng": 27.1843112
     },
     "title": "Athena Tapınağı",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/athena_tapinagi.jpg",
     "iconPath": "assets/markers/temple.png"
   },
   {
@@ -167,7 +167,7 @@
       "lng": 41.2786844
     },
     "title": "Üç Kümbetler",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/uc_kumbetler.jpg",
     "iconPath": "assets/markers/tomb.png"
   },
   {
@@ -176,7 +176,7 @@
       "lng": 27.1838861
     },
     "title": "Zeus Sunağı",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/zeus_sunagi.jpg",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -185,7 +185,7 @@
       "lng": 27.183359438257074
     },
     "title": "Pergamon Amfi Tiyatro",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/21216_pergamon-anfi-tiyatro-bergama.jpg",
     "iconPath": "assets/markers/theatre.png"
   },
   {
@@ -221,7 +221,7 @@
       "lng": 32.64034971932075
     },
     "title": "Türk Tarih Müzesi ve Parkı",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/turk_tarih_muze_ve_parki.jpg",
     "iconPath": "assets/markers/park.png"
   },
   {
@@ -230,7 +230,7 @@
       "lng": 30.569245993367105
     },
     "title": "Beldibi Mağarası",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/beldibi_magarasi.jpg",
     "iconPath": "assets/markers/cave.png"
   },
   {
@@ -239,7 +239,7 @@
       "lng": 34.105754237453
     },
     "title": "Zeus Tapınağı ve Kilise",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/zeus_tapinagi_kilise.jpg",
     "iconPath": "assets/markers/temple.png"
   },
   {
@@ -248,17 +248,8 @@
       "lng": 34.143756532043255
     },
     "title": "Kız Kalesi",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/k%C4%B1z_kalesi.jpg",
     "iconPath": "assets/markers/castle.png"
-  },
-  {
-    "position": {
-      "lat": 36.75249041968157,
-      "lng": 32.746245339762126
-    },
-    "title": "Dometiopolis",
-    "image": "",
-    "iconPath": "assets/markers/ruins.png"
   },
   {
     "position": {
@@ -266,7 +257,7 @@
       "lng": 29.0419533
     },
     "title": "Hababam Sınıfı Müzesi",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/hababam_muzesi.jpg",
     "iconPath": "assets/markers/museum.png"
   },
   {
@@ -275,7 +266,7 @@
       "lng": 26.787475351441067
     },
     "title": "Teos Antik Tiyatro",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/teos_antik_tiyatro.jpg",
     "iconPath": "assets/markers/theatre.png"
   },
   {
@@ -284,7 +275,7 @@
       "lng": 27.18375205738672
     },
     "title": "Pergamon Antik Kenti",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/pergamon_antik_kenti.jpg",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -310,17 +301,17 @@
       "lat": 36.625020262072226,
       "lng": 29.115478783500688
     },
-    "title": "Uğur Mumcu Parkı",
-    "image": "",
-    "iconPath": "assets/markers/monument.png"
+    "title": "Fethiye Uğur Mumcu Parkı",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/ugur_mumcu_parki.jpg",
+    "iconPath": "assets/markers/park.png"
   },
   {
     "position": {
       "lat": 36.19902150648034,
       "lng": 29.639047744165385
     },
-    "title": "Helenistik Mabed",
-    "image": "",
+    "title": "Antiphellos Helenistik Mabed",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/helenistik_mabed.jpg",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -329,7 +320,7 @@
       "lng": 30.712254554066785
     },
     "title": "Midas Tahtı",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/midas_tahti.jpg",
     "iconPath": "assets/markers/monument.png"
   },
   {
@@ -338,7 +329,7 @@
       "lng": 30.47235141121867
     },
     "title": "Olimpos Antik Kenti",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/olimpos_antik_kenti.jpg",
     "iconPath": "assets/markers/ruins.png"
   },
   {

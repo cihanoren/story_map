@@ -6,6 +6,7 @@ import 'package:story_map/core/theme/theme_provider.dart';
 import 'package:story_map/features/auth/views/sing_in.dart';
 import 'package:story_map/features/home/views/profile/account__info.dart';
 import 'package:story_map/features/home/views/profile/change_password.dart';
+import 'package:story_map/features/home/views/profile/help_center.dart';
 import 'package:story_map/main.dart';
 
 class ProfileSettingPage extends ConsumerStatefulWidget {
@@ -85,6 +86,18 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
                   ? ThemeMode.light
                   : ThemeMode.dark;
               ref.read(themeProvider.notifier).state = newTheme;
+            },
+          ),ListTile(
+            leading: const Icon(Icons.help_rounded),
+            title: const Text("Yardım ve Destek"),
+            onTap: () {
+              // Hesap bilgileri ekranına yönlendirme yapar
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HelpCenter(),
+                ),
+              );
             },
           ),
 

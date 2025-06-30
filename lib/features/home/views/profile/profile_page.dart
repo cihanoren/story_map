@@ -8,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:story_map/features/home/views/card_details.dart';
+import 'package:story_map/features/home/views/explore_route_details.dart';
 import 'package:story_map/features/home/views/profile/profile_settings.dart';
 
 String? _userProfileImageUrl;
@@ -70,11 +71,9 @@ class _ProfilePageState extends State<ProfilePage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => CardDetails(
+                builder: (_) => ExploreRouteDetails(
                   routeId: route['routeId'],
                   routeTitle: route['title'],
-                  placeNames: [],
-                  imagesUrls: [],
                 ),
               ),
             );
@@ -103,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
           trailing: TextButton(
             onPressed: () {
               final exploreRouteId =
-                  route['routeId']; // explore_routes koleksiyondaki id              
+                  route['routeId']; // explore_routes koleksiyondaki id
               _removeRouteFromExplore(exploreRouteId);
             },
             child: const Text(
@@ -128,7 +127,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Rota keşfetten kaldırıldı.")),
+          const SnackBar(
+              backgroundColor: Colors.white,
+              content: Text(
+                " Rota keşfetten kaldırıldı.",
+                style: TextStyle(color: Colors.black),
+              )),
         );
       }
     } catch (e) {
@@ -568,7 +572,3 @@ class LatLng {
   final double longitude;
   LatLng(this.latitude, this.longitude);
 }
-
-//! Kullanıcının beğendiği rotalardan detay sayfasına gidildiğinde 
-//! keşfette paylaş gibi kısımların olmaması lazım sadece beğeniyi geri alabileceği
-//! bir sayfa olmalı. Bu yüzden CardDetails sayfasında keşfette paylaş gibi kısımlar kaldırılacak.

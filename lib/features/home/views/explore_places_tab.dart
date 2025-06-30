@@ -99,7 +99,7 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
       ..sort((a, b) => (b['averageRating'] as double)
           .compareTo(a['averageRating'] as double));
 
-    setState(() => _topRatedPlaces = results.take(5).toList());
+    setState(() => _topRatedPlaces = results.take(15).toList());
   }
 
   Future<void> _onRefresh() async {

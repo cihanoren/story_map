@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:story_map/core/theme/theme_provider.dart';
 import 'package:story_map/features/home/views/card_details.dart';
 import 'package:story_map/features/home/views/explore_page.dart';
 import 'package:story_map/features/home/views/map_view.dart';
@@ -29,112 +28,11 @@ class _HomeState extends ConsumerState<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final user = FirebaseAuth.instance.currentUser;
-
+    
     return Scaffold(
-      body: Stack(
-        children: [
-          IndexedStack(
-            index: _selectedIndex,
-            children: _pages,
-          ),
-          if (_selectedIndex == 0)
-            Positioned(
-              top: 45,
-              left: 10,
-              right: 10,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      FutureBuilder<DocumentSnapshot>(
-                        future: FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(user?.uid)
-                            .get(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            );
-                          }
-
-                          if (snapshot.hasError) {
-                            return Text('Hata: ${snapshot.error}');
-                          }
-
-                          if (snapshot.hasData && snapshot.data != null) {
-                            final data =
-                                snapshot.data!.data() as Map<String, dynamic>?;
-
-                            final displayName =
-                                data?['displayName'] ?? 'Kullanıcı';
-                            final profileImageUrl = data?['profileImageUrl'];
-
-                            return Row(
-                              children: [
-                                if (profileImageUrl != null &&
-                                    profileImageUrl.isNotEmpty)
-                                  CircleAvatar(
-                                    radius: 18,
-                                    backgroundImage:
-                                        NetworkImage(profileImageUrl),
-                                  )
-                                else
-                                  const SizedBox(width: 36),
-                                const SizedBox(width: 8),
-                                Text(
-                                  displayName,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.color,
-                                  ),
-                                ),
-                              ],
-                            );
-                          }
-
-                          return const Text('Kullanıcı bilgisi alınamadı');
-                        },
-                      ),
-                    ],
-                  ),
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 520),
-                    transitionBuilder: (child, animation) {
-                      return RotationTransition(
-                        turns: animation,
-                        child: FadeTransition(
-                          opacity: animation,
-                          child: child,
-                        ),
-                      );
-                    },
-                    child: IconButton(
-                      key: ValueKey<bool>(isDark),
-                      icon: Icon(
-                        isDark ? Icons.dark_mode : Icons.light_mode,
-                        size: 28,
-                        color: Theme.of(context).iconTheme.color,
-                      ),
-                      onPressed: () {
-                        ref.read(themeProvider.notifier).toggleTheme();
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        ],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
@@ -154,7 +52,7 @@ class _HomeState extends ConsumerState<Home> {
                 tabs: const [
                   GButton(icon: Icons.home, text: "Home"),
                   GButton(icon: Icons.public, text: "Explore"),
-                  GButton(icon: Icons.location_on, text: "Maps"),
+                  GButton(icon: Icons.location_on, text: "Map"),
                   GButton(icon: Icons.person, text: "Profile"),
                 ],
                 selectedIndex: _selectedIndex,
@@ -260,7 +158,7 @@ class _HomePageState extends State<HomePage> {
       child: isLoading
           ? const Center()
           : ListView.builder(
-              padding: const EdgeInsets.fromLTRB(16, 100, 16, 16),
+              padding: const EdgeInsets.fromLTRB(16, 50, 16, 16),
               physics: const AlwaysScrollableScrollPhysics(),
               itemCount: routeTitles.length,
               itemBuilder: (context, index) {

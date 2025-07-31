@@ -7,14 +7,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:story_map/features/home/views/card_details.dart';
 import 'package:story_map/features/home/views/explore_route_details.dart';
 import 'package:story_map/features/home/views/profile/profile_settings.dart';
 
 String? _userProfileImageUrl;
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -136,7 +135,17 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       }
     } catch (e) {
-      print("Hata oluştu: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(
+              "Hata: ${e.toString()}",
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        );
+      }
     }
   }
 

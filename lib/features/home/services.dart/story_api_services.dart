@@ -7,7 +7,8 @@ import 'package:story_map/core/config.dart';
 
 class StoryService {
   static const String _apiUrl = "https://api.openai.com/v1/chat/completions";
-  static const String _model = "gpt-4";
+  static const String _model = "gpt-3.5-turbo"; // Kullanılan openai modeli, ileride yükseltilebilir
+  // OpenAI API anahtarını Config sınıfından alıyoruz
 
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -38,7 +39,7 @@ class StoryService {
         body: jsonEncode({
           "model": _model,
           "messages": [
-            {"role": "system", "content": "Sen bir tarih uzmanısın."},
+            {"role": "system", "content": "Sen bir tarih ve coğrafya uzmanısın."},
             {
               "role": "user",
               "content": "$placeName hakkında kısa ve etkileyici bir şekilde hikayesini anlat."

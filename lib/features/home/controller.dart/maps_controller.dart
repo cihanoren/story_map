@@ -386,6 +386,24 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     }
   }
 
+// Zoom in ve zoom out fonksiyonları
+  double _currentZoom = 15;
+
+void zoomIn() {
+  _currentZoom += 1;
+  _googleMapController?.animateCamera(
+    CameraUpdate.zoomTo(_currentZoom),
+  );
+}
+
+void zoomOut() {
+  _currentZoom -= 1;
+  _googleMapController?.animateCamera(
+    CameraUpdate.zoomTo(_currentZoom),
+  );
+}
+
+
 // Polyline verisini decode eden fonksiyon
   List<LatLng> _decodePolyline(String encoded) {
     List<LatLng> polyline = [];

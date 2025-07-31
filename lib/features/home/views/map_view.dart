@@ -18,12 +18,13 @@ class MapView extends ConsumerWidget {
     MarkerIcons.loadIcons();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Harita")),
       body: mapState['location'] == null
           ? const Center(child: CircularProgressIndicator())
           : Stack(
               children: [
                 GoogleMap(
+                  mapType: MapType.normal, // Harita tipi
+                  compassEnabled: false, // Pusula butonu
                   polylines: mapState['polyline'] != null
                       ? {mapState['polyline']}
                       : {},
@@ -38,11 +39,56 @@ class MapView extends ConsumerWidget {
                       mapController.loadMarkers();
                     });
                   },
+                  zoomControlsEnabled: false, // Google Maps kendi zoom in out butonları
                   myLocationEnabled: true,
-                  myLocationButtonEnabled: true,
+                  myLocationButtonEnabled: false, // Google Maps kendi konum butonu
                   markers: mapState['markers'],
                   onTap: (LatLng position) {},
                 ),
+                // Harita üzerindeki konum butonu
+                Positioned(
+                  top: 40,
+                  right: 10,
+                  child: FloatingActionButton.small(
+                    backgroundColor: Colors.white,
+                    onPressed: () {
+                      mapController.moveToCurrentLocation();
+                    },
+                    child: const Icon(Icons.my_location, color: Colors.black),
+                  ),
+                ),
+
+                // Yakınlaştırma butonları
+                Positioned(
+                  bottom: 10,
+                  right: 10,
+                  child: Column(
+                    children: [
+                      FloatingActionButton.small(
+                        heroTag: 'zoom_in',
+                        backgroundColor: Colors.white,
+                        elevation: 2,
+                        onPressed: () {
+                          mapController.zoomIn();
+                        },
+                        child: const Icon(Icons.add,
+                            size: 20, color: Colors.black),
+                      ),
+                      const SizedBox(height: 5),
+                      FloatingActionButton.small(
+                        heroTag: 'zoom_out',
+                        backgroundColor: Colors.white,
+                        elevation: 2,
+                        onPressed: () {
+                          mapController.zoomOut();
+                        },
+                        child: const Icon(Icons.remove,
+                            size: 20, color: Colors.black),
+                      ),
+                    ],
+                  ),
+                ),
+
                 if (!isTourActive)
                   Positioned(
                     bottom: 20,

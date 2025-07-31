@@ -10,7 +10,7 @@ import 'package:story_map/features/home/views/profile/help_center.dart';
 import 'package:story_map/main.dart';
 
 class ProfileSettingPage extends ConsumerStatefulWidget {
-  const ProfileSettingPage({Key? key}) : super(key: key);
+  const ProfileSettingPage({super.key});
 
   @override
   ConsumerState<ProfileSettingPage> createState() => _ProfileSettingPageState();

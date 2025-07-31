@@ -356,7 +356,7 @@
       "lng": 42.3268592
     },
     "title": "Şavşat Kalesi",
-    "image": "",
+    "image": "https://www.normhaber.com/wp-content/uploads/2021/06/AW335186_04.jpg",
     "iconPath": "assets/markers/castle.png"
   },
   {
@@ -400,7 +400,7 @@
       "lat": 41.3043736,
       "lng": 42.3893632
     },
-    "title": "Tibet Kilisesi",
+    "title": "Şavşat Tibet Kilisesi",
     "image": "",
     "iconPath": "assets/markers/church.png"
   },
@@ -455,7 +455,7 @@
       "lng": 34.840210747947495
     },
     "title": "Özkonak Yeraltı Şehri",
-    "image": "",
+    "image": "https://gezbiraz.com/wp-content/uploads/2020/01/derinkuyu-yeralti-kenti8.jpg.webp",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -464,7 +464,7 @@
       "lng": 35.8271763632337
     },
     "title": "Amasya Kalesi",
-    "image": "",
+    "image": "https://www.kulturportali.gov.tr/contents/images/20180626151158924_AMASYA%20KALE%20GULCAN%20ACAR%20(1).jpg",
     "iconPath": "assets/markers/castle.png"
   },
   {
@@ -472,8 +472,8 @@
       "lat": 39.0482091,
       "lng": 43.4345389
     },
-    "title": "Ardzvaber Manastırı",
-    "image": "",
+    "title": "Van Ardzvaber Manastırı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npJiGdGna-ZUVFgEuXFWOno7pAUChPCoLiU1WTgrw26Wn1-CXcBX8PtGOrA_Zp2y4Lk5YJiqqB4TfjGsVw5ua2vPtRFDAUj1d0PuQkME9O1SvW3idqPjKMRfpuLOxcjPoYwQofo=s1360-w1360-h1020-rw",
     "iconPath": "assets/markers/church.png"
   },
   {
@@ -481,8 +481,8 @@
       "lat": 41.23782572764983,
       "lng": 42.074347970903084
     },
-    "title": "Porta Manastırı",
-    "image": "",
+    "title": "Artvin Porta Manastırı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqkZd_BJFCuIM01bQ_qillQg-0Y8hvKBBCmstwjz7Z8L9a_F_CZxE77jXfZwkPBjGDYxUzBtjXAXn9M5RG9sfeZDGXyK-PwtLC-rQX5C1zhnJVDl2gOLVeBDy3QGw-r7g8qk59E=s1360-w1360-h1020-rw",
     "iconPath": "assets/markers/church.png"
   },
   {
@@ -490,8 +490,8 @@
       "lat": 39.1066768,
       "lng": 30.4275569
     },
-    "title": "Aslankaya Açıkhava Tapınağı",
-    "image": "",
+    "title": "Afyon Aslankaya Tapınağı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqjhJVDPSv5sfEUt-AFM5fSTk_9O7RwbXp4jAQLlRgbBihPJ2TYW50ajx_NwNdOwB-ZZs3TaRAUcSjWBIL05IlgYCwGsr-wSNFaFbGVWXkxA5kn-nZLR9XOWYrGxcZeAaRTjjI2Sg=s1360-w1360-h1020-rw",
     "iconPath": "assets/markers/temple.png"
   },
   {
@@ -499,8 +499,8 @@
       "lat": 40.0981771,
       "lng": 26.2223338
     },
-    "title": "Son Ok Anıtı",
-    "image": "",
+    "title": "Çanakkale Son Ok Anıtı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr1ApNhOXExWdKG-SWQiiHKqHotJFnuMidGQRA17ycLJM6vScRb6sZNDrBu9vbfllI2NhhH8FOQqQ-g-2t_QUhcvE5zW0LcZaA9ZzZpaWidwcLHltHOatjayrRY1yEP3gTNPdgZ=s1360-w1360-h1020-rw",
     "iconPath": "assets/markers/monument.png"
   },
   {
@@ -508,26 +508,17 @@
       "lat": 37.93347665097826,
       "lng": 29.12106529319631
     },
-    "title": "Hierapolis Bazilika",
-    "image": "",
+    "title": "Denizli Hierapolis Bazilika",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr-IqOkLfQUdI3H2zZxfYPEd1yEUEYZKoFvjEyAka__odtrg6gRCuAloWlj4m8ovgRjkGFRdvPmCNoLi0k7b_Grmx_C5tvmkYD4y5fz55xwkoogA74mAulVggAC4EUc-YRPbfgY=s1360-w1360-h1020-rw",
     "iconPath": "assets/markers/ruins.png"
-  },
-  {
-    "position": {
-      "lat": 37.9305310355114,
-      "lng": 29.122951006237816
     },
-    "title": "Nordtor Hierapolis",
-    "image": "",
-    "iconPath": "assets/markers/ruins.png"
-  },
   {
     "position": {
       "lat": 37.926924555999186,
       "lng": 29.128998427358876
     },
-    "title": "Hierapolis Antik Tiyatrosu",
-    "image": "",
+    "title": "Denizli Hierapolis Antik Tiyatrosu",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrm7hWmzaQsf38i_uCDZYpZtqCtK5_x8DGD8sVoPW08h2gvtC0x99XcA6Lzg0TgUNhfV8wNn8fcbSoWj5hnKdaA7PyfoqaJamX-4OuEzMyZJSSYFlsDmKq38QYgdqJJ-D6SfDKP=w408-h306-k-no",
     "iconPath": "assets/markers/theatre.png"
   },
   {
@@ -536,7 +527,7 @@
       "lng": 29.12043464908928
     },
     "title": "Necropolis of Hierapolis",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nptfvPhMo-OQfhSceooGMcEYFmvHHuLaerma_RRw2E2T3zXUkoQBaHTtMOWXQtuA3O-UP9cXP2Ju8XVAumj7CTMrZvEhpC8s-PbGSMRdISdAQxLVFWzBzxf1vFiqOOaWsdP4zY=w408-h306-k-no",
     "iconPath": "assets/markers/tomb.png"
   },
   {
@@ -544,8 +535,8 @@
       "lat": 39.992992029757986,
       "lng": 26.186506585383636
     },
-    "title": "Orhaniye Tabyası",
-    "image": "",
+    "title": "Çanakkale Orhaniye Tabyası",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr6AVcV4u3YBRAwERg30Zho19UiFNvqcKdnCdFP8AlUdx8KZCHvmr-Sc-4lTBIxetg_l3h8ahK5z21ZeMC-vfCqX0WGkF8i6VW_ycKoIIL9XT_A99kzmvYezKcx74FgNQm2ZyC-=w270-h312-n-k-no",
     "iconPath": "assets/markers/monument.png"
   },
   {
@@ -553,8 +544,8 @@
       "lat": 37.498357521630844,
       "lng": 27.556434994986464
     },
-    "title": "Yediler Manastırı",
-    "image": "",
+    "title": "Milas Yediler Manastırı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noSdwdHQKt-0AA0G-6EwY-xP8jzuGoTR3zcQ-c1vGfTXI_gIGHyaB_brGC9ffyrR15yJ3nu9hAV2LzvBbDziCHoNvPe5IYYed568aBwaaLRbl5x8cGStAkC5mPnYKrxJ3TIzYkY9-byMSnt=s1360-w1360-h1020-rw",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -562,8 +553,8 @@
       "lat": 36.74312297100015,
       "lng": 34.539317042063196
     },
-    "title": "Soli-Pompeiopolis Antik Kenti",
-    "image": "",
+    "title": "Mersin Soli-Pompeiopolis Antik Kenti",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqitH65-GF9i9rXlmoRKnuIxJIp2H5caEhpvvx8GziMezaCfiekIs9jQf_EjxLOpOmYNrqeVKLCiZ9BcvULmTQYBa5vXZOOn5mhK1yqt_rzob35w0xiK0rZstf1zAslHW-mMvxffQ=w408-h306-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -572,7 +563,7 @@
       "lng": 31.99683071364508
     },
     "title": "Gordion Müzesi",
-    "image": "",
+    "image": "https://www.kulturportali.gov.tr/contents/images/20190201113128064_ANKARA%20Polatli%20Gordion%20Servet%20UYGUN%20(10)%20logolu(1).jpg",
     "iconPath": "assets/markers/museum.png"
   },
   {
@@ -580,8 +571,8 @@
       "lat": 38.419401233355515,
       "lng": 27.128414328756318
     },
-    "title": "İlk Kurşun Anıtı",
-    "image": "",
+    "title": "İzmir İlk Kurşun Anıtı",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXhljWNtN7s6tpkbetMudAaOSrJCNXrb4RZw&s",
     "iconPath": "assets/markers/memorial.png"
   },
   {
@@ -589,8 +580,8 @@
       "lat": 37.70918443635152,
       "lng": 28.722667943516893
     },
-    "title": "Piskapos Sarayı",
-    "image": "",
+    "title": "Aydın Piskapos Sarayı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noJkk16B_nENfeE3U5rqUmELB7pfai2pvILgOlfgm4cbPMDB-P8MVxmqDQKa8DU9X5VWrihasvBEnd5O6rWAPYCb6fEYStHax1cw3hJFLBZO1rH96btlRRaPEik7yqYRRFLriI3=w426-h240-k-no",
     "iconPath": "assets/markers/palace.png"
   },
   {

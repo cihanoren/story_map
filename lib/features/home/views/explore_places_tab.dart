@@ -27,6 +27,8 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
     await _loadMarkerImages();
     await _updateMissingImagesInFirestore();
     await _loadTopRatedPlaces();
+
+    if (!mounted) return;
     setState(() => _isLoading = false);
   }
 
@@ -99,6 +101,7 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
       ..sort((a, b) => (b['averageRating'] as double)
           .compareTo(a['averageRating'] as double));
 
+    if (!mounted) return;
     setState(() => _topRatedPlaces = results.take(15).toList());
   }
 

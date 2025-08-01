@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -251,38 +252,116 @@ class _ProfilePageState extends State<ProfilePage> {
   // Bu fonksiyon, kullanıcının cihazının konumunu alır ve eğerini günceller.
   // Eğer kullanıcı konum izni vermemişse, izin istenir.
   Future<void> _fetchCurrentLocation() async {
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) return;
-
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
-      permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.whileInUse &&
-          permission != LocationPermission.always) {
+    try {
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        if (context.mounted) {
+          _showDialog(
+            context: context,
+            title: 'Konum Servisi Kapalı',
+            content: 'Lütfen cihazınızın konum servisini açın.',
+            actionText: 'Ayarlar',
+            onPressed: () {
+              Geolocator.openLocationSettings();
+            },
+          );
+        }
         return;
       }
-    }
 
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        permission = await Geolocator.requestPermission();
+        if (permission != LocationPermission.whileInUse &&
+            permission != LocationPermission.always) {
+          if (context.mounted) {
+            _showDialog(
+              context: context,
+              title: 'Konum İzni Gerekli',
+              content:
+                  'Uygulamanın çalışabilmesi için konum izni vermelisiniz.',
+              actionText: 'Tamam',
+            );
+          }
+          return;
+        }
+      }
 
-    await _loadSavedLocation();
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
 
-    if (_locationDescription == null) {
-      _updateLocation(position);
+      await _loadSavedLocation();
+
+      if (_locationDescription == null) {
+        _updateLocation(position);
+      }
+    } catch (e) {
+      if (context.mounted) {
+        _showDialog(
+          context: context,
+          title: 'Konum Hatası',
+          content: 'Konum alınırken bir hata oluştu:\n${e.toString()}',
+          actionText: 'Tamam',
+        );
+      }
     }
   }
 
-  Future<void> _updateLocation(Position position) async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
-    final place = placemarks.first;
+  void _showDialog({
+    required BuildContext context,
+    required String title,
+    required String content,
+    required String actionText,
+    VoidCallback? onPressed,
+  }) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              if (onPressed != null) onPressed();
+            },
+            child: Text(actionText),
+          ),
+        ],
+      ),
+    );
+  }
 
-    setState(() {
-      _position = position;
-      _locationDescription = "${place.locality}, ${place.administrativeArea}";
-    });
+  Future<void> _updateLocation(Position position) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+
+    if (connectivityResult == ConnectivityResult.none) {
+      // İnternet yoksa konum çözümleme yapma
+      setState(() {
+        _position = position;
+        _locationDescription = "Bağlantı yok (konum alınamadı)";
+      });
+      return;
+    }
+
+    try {
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      final place = placemarks.first;
+
+      setState(() {
+        _position = position;
+        _locationDescription = "${place.locality}, ${place.administrativeArea}";
+      });
+    } catch (e) {
+      setState(() {
+        _position = position;
+        _locationDescription = "Konum çözümlenemedi";
+      });
+      print("Geocoding hatası: $e");
+    }
   }
 
   Future<void> _loadSavedLocation() async {

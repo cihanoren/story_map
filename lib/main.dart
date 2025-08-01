@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:story_map/core/theme/theme_provider.dart';
 import 'package:story_map/core/theme/app_theme.dart';
 import 'package:story_map/features/auth/views/sing_in.dart';
+import 'package:story_map/features/home/services.dart/connectivity_service.dart';
 import 'package:story_map/features/home/views/home.dart';
 import 'package:story_map/utils/marker_icons.dart';
 import 'firebase_options.dart';
@@ -25,10 +26,13 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Bu, servisi başlatır
+    ref.watch(connectivityServiceProvider);
+
     final themeMode = ref.watch(themeProvider);
 
     return MaterialApp(
-      navigatorKey: navigatorKey,
+      navigatorKey: navigatorKey, // SnackBar gösterebilmek için gerekli
       debugShowCheckedModeBanner: false,
       theme: AppThemes.lightTheme,
       darkTheme: AppThemes.darkTheme,
@@ -37,6 +41,7 @@ class MyApp extends ConsumerWidget {
     );
   }
 }
+
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);

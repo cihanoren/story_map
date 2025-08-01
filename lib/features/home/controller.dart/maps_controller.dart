@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,27 +38,98 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
   }
 
   Future<void> _determinePosition() async {
+    final context = navigatorKey.currentContext;
+
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) return;
+    if (!serviceEnabled) {
+      if (context != null) {
+        _showDialog(
+          context: context,
+          title: 'Konum Servisi Kapalı',
+          content: 'Konum servisleri kapalı. Lütfen cihaz ayarlarından açın.',
+          actionText: 'Ayarlar',
+          onPressed: () => Geolocator.openLocationSettings(),
+        );
+      }
+      return;
+    }
 
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.deniedForever) {
+      if (permission == LocationPermission.denied) {
+        if (context != null) {
+          _showDialog(
+            context: context,
+            title: 'İzin Gerekli',
+            content: 'Uygulamanın konum iznine ihtiyacı var.',
+            actionText: 'Tamam',
+          );
+        }
         return;
       }
     }
 
-    Position position = await Geolocator.getCurrentPosition();
-    LatLng currentLocation = LatLng(position.latitude, position.longitude);
+    if (permission == LocationPermission.deniedForever) {
+      if (context != null) {
+        _showDialog(
+          context: context,
+          title: 'İzin Verilmedi',
+          content:
+              'Konum izni kalıcı olarak reddedilmiş. Ayarlardan manuel olarak izin verin.',
+          actionText: 'Ayarlar',
+          onPressed: () => Geolocator.openAppSettings(),
+        );
+      }
+      return;
+    }
 
-    state = {
-      'location': currentLocation,
-      'markers': state['markers'],
-      'isTourActive': state['isTourActive'] ?? false, // <-- EKLE
-    };
+    try {
+      Position position = await Geolocator.getCurrentPosition();
+      LatLng currentLocation = LatLng(position.latitude, position.longitude);
 
-    moveToCurrentLocation();
+      state = {
+        'location': currentLocation,
+        'markers': state['markers'],
+        'isTourActive': state['isTourActive'] ?? false,
+      };
+
+      moveToCurrentLocation();
+    } catch (e) {
+      if (context != null) {
+        _showDialog(
+          context: context,
+          title: 'Konum Hatası',
+          content: 'Konum alınırken bir hata oluştu. Lütfen tekrar deneyin.',
+          actionText: 'Tamam',
+        );
+      }
+    }
+  }
+
+  void _showDialog({
+    required BuildContext context,
+    required String title,
+    required String content,
+    required String actionText,
+    VoidCallback? onPressed,
+  }) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(
+            child: Text(actionText),
+            onPressed: () {
+              Navigator.of(context).pop();
+              if (onPressed != null) onPressed();
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   void moveToCurrentLocation() {
@@ -358,51 +430,73 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
   }
 
 // Directions API'den veri çekiyoruz
-  Future<List<LatLng>> _getRouteFromApi(LatLng origin, LatLng destination,
-      String apiKey, String travelMode) async {
-    final url = "https://maps.googleapis.com/maps/api/directions/json"
-        "?origin=${origin.latitude},${origin.longitude}"
-        "&destination=${destination.latitude},${destination.longitude}"
-        "&mode=$travelMode"
-        "&key=$apiKey";
+  Future<List<LatLng>> _getRouteFromApi(
+    LatLng origin, LatLng destination, String apiKey, String travelMode) async {
+  // İnternet bağlantısı kontrolü
+  final hasConnection = await _checkInternetConnection();
+  if (!hasConnection) {
+    if (navigatorKey.currentContext != null) {
+      ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+        const SnackBar(
+          content: Text("İnternet bağlantısı yok. Rota oluşturulamadı."),
+        ),
+      );
+    }
+    return [];
+  }
 
+  final url = "https://maps.googleapis.com/maps/api/directions/json"
+      "?origin=${origin.latitude},${origin.longitude}"
+      "&destination=${destination.latitude},${destination.longitude}"
+      "&mode=$travelMode"
+      "&key=$apiKey";
+
+  try {
     final response = await http.get(Uri.parse(url));
+
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-
-      // --- Buraya kontrol ekliyoruz ---
       if (data['routes'] != null && (data['routes'] as List).isNotEmpty) {
         final points = data['routes'][0]['overview_polyline']['points'];
         return _decodePolyline(points);
       } else {
-        print(
-            'Directions API: No route found between ${origin.latitude},${origin.longitude} and ${destination.latitude},${destination.longitude}');
-        print('Fetching route: $url');
+        print("Google API route not found.");
         return [];
       }
     } else {
-      print('Directions API Error: ${response.body}');
+      print("Google API HTTP error: ${response.statusCode}");
       return [];
     }
+  } catch (e) {
+    print("Google API exception: $e");
+    return [];
   }
+}
+
+// İnternet bağlantısını kontrol eden fonksiyon
+Future<bool> _checkInternetConnection() async {
+  final connectivityResult = await Connectivity().checkConnectivity();
+  return connectivityResult != ConnectivityResult.none;
+}
+
+
 
 // Zoom in ve zoom out fonksiyonları
   double _currentZoom = 15;
 
-void zoomIn() {
-  _currentZoom += 1;
-  _googleMapController?.animateCamera(
-    CameraUpdate.zoomTo(_currentZoom),
-  );
-}
+  void zoomIn() {
+    _currentZoom += 1;
+    _googleMapController?.animateCamera(
+      CameraUpdate.zoomTo(_currentZoom),
+    );
+  }
 
-void zoomOut() {
-  _currentZoom -= 1;
-  _googleMapController?.animateCamera(
-    CameraUpdate.zoomTo(_currentZoom),
-  );
-}
-
+  void zoomOut() {
+    _currentZoom -= 1;
+    _googleMapController?.animateCamera(
+      CameraUpdate.zoomTo(_currentZoom),
+    );
+  }
 
 // Polyline verisini decode eden fonksiyon
   List<LatLng> _decodePolyline(String encoded) {

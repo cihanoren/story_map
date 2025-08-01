@@ -32,7 +32,7 @@
       "lng": 39.6583
     },
     "title": "Sümela Manastırı",
-    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/sumela.jpeg",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/sumela-manastiri.jpeg",
     "iconPath": "assets/markers/church.png"
   },
   {
@@ -283,8 +283,8 @@
       "lat": 39.1323505,
       "lng": 27.1825104
     },
-    "title": "Dionisos Tapınağı",
-    "image": "",
+    "title": "İzmir Dionisos Tapınağı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4np0q3SLBylrnWHHX0ND2KhT8a46voFL_nrPxLias032TSLwzTYvooKrlnuTnYPp_JBhBEzQwSRbczIfkR8CZ4CxKziejPesP75YA6xZBKLvt3Kym1Kpp7OfVNmFRREpc_YvIHWowQ=w408-h306-k-no",
     "iconPath": "assets/markers/temple.png"
   },
   {
@@ -292,8 +292,8 @@
       "lat": 36.44462801139077,
       "lng": 32.149875687338834
     },
-    "title": "Syedra Antik Kenti",
-    "image": "",
+    "title": "Antalya Syedra Antik Kenti",
+    "image": "https://lh3.googleusercontent.com/p/AF1QipPiYTjcv65ks8wltrhVpWdWEw6ikTAp3lt1LcYD=w408-h240-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -361,38 +361,39 @@
   },
   {
     "position": {
-      "lat": 39.3116963,
-      "lng": 26.6865586
-    },
-    "title": "İlk Kurşun Anıtı",
-    "image": "",
-    "iconPath": "assets/markers/memorial.png"
-  },
-  {
-    "position": {
-      "lat": 38.6591669,
-      "lng": 34.8492138
-    },
-    "title": "Üç Haçlı Kilise",
-    "image": "",
-    "iconPath": "assets/markers/church.png"
-  },
-  {
-    "position": {
       "lat": 40.042369,
       "lng": 26.1888382
     },
-    "title": "İlk Şehitler Anıtı",
-    "image": "",
+    "title": "Çanakkale İlk Şehitler Anıtı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noYWu5FguZ4QuY1S9EXqWs6JKBex2BI2sbaPWxtk0Db-7m0OwiFLfXZyAi1JTmfabmOH2KBxiPDS66-F4VP-HEckiyUmp9B6YVIA7qaRgrFV0FneCpJibACMqoWtbJs7Ut1y0w=w270-h312-n-k-no",
     "iconPath": "assets/markers/memorial.png"
+  },
+  {
+    "position": {
+      "lat": 40.05140519720595, 
+      "lng": 26.219422038620028
+    },
+    "title": "Çanakkale Şehitler Abidesi",
+    "image": "https://www.kulturportali.gov.tr/contents/images/Abide%20(10).jpg",
+    "iconPath": "assets/markers/memorial.png"
+  },
+  
+  {
+    "position": {
+      "lat": 40.04206173103862, 
+      "lng": 26.187843152385195
+    },
+    "title": "Seddülbahir Kalesi",
+    "image": "https://canakkaletarihialan.gov.tr/data/uploads/galery/csxccgbjv4e8Tf8TCgSyHHQ1cWrwxWgajHGFE92z.jpg",
+    "iconPath": "assets/markers/castle.png"
   },
   {
     "position": {
       "lat": 41.0160748,
       "lng": 28.9526349
     },
-    "title": "Hava Şehitleri Anıtı",
-    "image": "",
+    "title": "İstanbul Teyyare Şehitleri Anıtı",
+    "image": "https://www.turkiyenintarihieserleri.com/foto_y/2020/09/b/1599293947.jpg",
     "iconPath": "assets/markers/memorial.png"
   },
   {
@@ -401,7 +402,7 @@
       "lng": 42.3893632
     },
     "title": "Şavşat Tibet Kilisesi",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/p/AF1QipNxZbnsAFIRi5ak_z6nPshlim7mk6NwROM-iuR2=w408-h408-k-no",
     "iconPath": "assets/markers/church.png"
   },
   {
@@ -410,7 +411,7 @@
       "lng": 42.0549389
     },
     "title": "Ardanuç Kalesi",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr_bCiQ_nrXNcSlb3wDwj3Og0oq61pAY6ePg6ewH55cw1fbxlKT5_QnAJ5OYE7MuJEW6m3MscsQXofIdvMRoWs_uvGCufVMlpTvbj7XF7dk3YIByJQOtz7tzGMgfmNeTo6nFmXG=w408-h306-k-no",
     "iconPath": "assets/markers/castle.png"
   },
   {
@@ -419,7 +420,7 @@
       "lng": 32.86539971883819
     },
     "title": "Ankara Kalesi",
-    "image": "",
+    "image": "https://www.kulturportali.gov.tr/contents/images/ANKARA-HAVADAN%20ULUS-HAM%C4%B0T%20HAL%C3%87IN%20(3)%20logolu.jpg",
     "iconPath": "assets/markers/castle.png"
   },
   {
@@ -427,27 +428,9 @@
       "lat": 41.08572210619668,
       "lng": 31.093083441994267
     },
-    "title": "Ceneviz Kalesi",
-    "image": "",
+    "title": "Düzce Ceneviz Kalesi",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_zEVVgmwLnIqbHIXGwZXKDs5MdN1HcK3ucA&s",
     "iconPath": "assets/markers/castle.png"
-  },
-  {
-    "position": {
-      "lat": 36.1556423,
-      "lng": 32.4305655
-    },
-    "title": "Antiochia Athena Tapınağı",
-    "image": "",
-    "iconPath": "assets/markers/ruins.png"
-  },
-  {
-    "position": {
-      "lat": 38.7906123,
-      "lng": 34.8238063
-    },
-    "title": "Belha Manastırı",
-    "image": "",
-    "iconPath": "assets/markers/church.png"
   },
   {
     "position": {
@@ -589,8 +572,8 @@
       "lat": 37.707146392127186,
       "lng": 28.7251710765756
     },
-    "title": "Aphrodisias Amfitiyatro",
-    "image": "",
+    "title": "Aydın Aphrodisias Amfitiyatro",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nppf6I1ObNoPBIJhIib7Yi9G7MTWiAJPgvGr7v-QFWcPiokVEVyC7VTKHA1DFvXvhM6KhyGyAB3CGeAx6p6vw6NJzgaddRvPgGcIytZbHOX9QQcuO9JIMCccBtXlmPBHq1IEgP9ZA=w408-h272-k-no",
     "iconPath": "assets/markers/theatre.png"
   },
   {
@@ -598,8 +581,8 @@
       "lat": 37.310042764864455,
       "lng": 30.750232819173707
     },
-    "title": "Milyos",
-    "image": "",
+    "title": "Burdur Milyos(Milias) Antik Kenti",
+    "image": "https://listeleo.com.tr/img/1697745600781-hy-Milyos%20Antik%20Kenti-5.jpg",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -607,26 +590,17 @@
       "lat": 40.37982140995481,
       "lng": 28.881704590508797
     },
-    "title": "Mütakere Anıtı",
-    "image": "",
+    "title": "Bursa Mütakere Anıtı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqIngAlqLG4HbfAoWz62sGKbNlkhhNGZ2s8ZyFKplnCXnb4Gs3StinG8w1fwB9v58Ds_DEJakC8QVlZGtZdgYROiPb0VXRdwha6ELo6QZQnwgqSFBYQ1Xcqt8-STwROo8NcGkS5iKmPubfP=s1360-w1360-h1020-rw",
     "iconPath": "assets/markers/memorial.png"
-  },
-  {
-    "position": {
-      "lat": 36.2442234382636,
-      "lng": 29.945066843755324
-    },
-    "title": "Sura",
-    "image": "",
-    "iconPath": "assets/markers/ruins.png"
   },
   {
     "position": {
       "lat": 41.01413036496179,
       "lng": 28.921874661628248
     },
-    "title": "Surdibi Bostanları",
-    "image": "",
+    "title": "İstanbul Surdibi Bostanları",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqAWLNlSIWFvU9P4m44km-K1UxGc2_WxDF_zlNq7PH4RUG6B5c4YvCzKkm3aK-twzIgnmeXC9aykDPA-2C_mdh5HHTItBUthygIkIBn9GpAwTHwZS51sy2zu8sYWph7a_E7akzECg=s1360-w1360-h1020-rw",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -635,44 +609,17 @@
       "lng": 28.63511858183705
     },
     "title": "Kaunos Kral Mezarları",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrYaP218bbYxde2QTlVOmN-Pfzzhu5XOkM9HOr1d5uAWxLzBd5PynIaAo1YAqWP7vaZZtBoT2QNhF_12lXlZTaUabBsPUGZ5DwtY9YV97LsGlFHDf7uZ4EA8-jz2ZPEpoVCah52bg=w270-h312-n-k-no",
     "iconPath": "assets/markers/tomb.png"
-  },
-  {
-    "position": {
-      "lat": 38.36163732090213,
-      "lng": 26.89469820814029
-    },
-    "title": "Berkin Elvan Parkı",
-    "image": "",
-    "iconPath": "assets/markers/park.png"
   },
   {
     "position": {
       "lat": 37.666473194025635,
       "lng": 32.82567060458204
     },
-    "title": "Çatal Höyük",
-    "image": "",
+    "title": "Çatalhöyük",
+    "image": "https://www.atlasdergisi.com/wp-content/uploads/2015/09/271AT%C3%87atalh%C3%B6y%C3%BCk_03_TTT_9489-1200x900.jpg",
     "iconPath": "assets/markers/ruins.png"
-  },
-  {
-    "position": {
-      "lat": 36.43136014390807,
-      "lng": 30.456378017888905
-    },
-    "title": "Chimaera Kilise Kalıntıları",
-    "image": "",
-    "iconPath": "assets/markers/ruins.png"
-  },
-  {
-    "position": {
-      "lat": 36.620495890858514,
-      "lng": 29.11746924856596
-    },
-    "title": "Lycian Sarcophagi",
-    "image": "",
-    "iconPath": "assets/markers/tomb.png"
   },
   {
     "position": {
@@ -680,7 +627,7 @@
       "lng": 28.99806423831994
     },
     "title": "Şerife Bacı Anıtı",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqADfGNcZy6PtkV7x1CJZ6-Zrfci0q712jUC7O0yY3yk8WDBg9WQdMkZq0FBoXOWiuLEqBpnmGq3X5dwxeUBVs0mba5KQvt57-vLuzmsNJYcNN9uNc0NrU2jZBSy01rkQt8Si4J=s1360-w1360-h1020-rw",
     "iconPath": "assets/markers/monument.png"
   },
   {
@@ -689,7 +636,7 @@
       "lng": 28.964832700325257
     },
     "title": "Beyazit Kulesi",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/beyazit-kulesi.jpg",
     "iconPath": "assets/markers/tower.png"
   },
   {
@@ -697,27 +644,9 @@
       "lat": 37.65940448944244,
       "lng": 27.29649682260816
     },
-    "title": "Priene Athena Tapınağı",
-    "image": "",
+    "title": "Aydın Priene Athena Tapınağı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqSdQibLzFPxt_Wl5O_tXdeNyFwSYirai5MlH2C_U-6xjvOpukAuve3sdgmerfPOljry2E90mEnI1q8mXakyLygmAf2-v3M0-G6owmTWKa3ppLnc-Baey8EfFonxWztItE7kYp1VSINnGcD=w408-h306-k-no",
     "iconPath": "assets/markers/temple.png"
-  },
-  {
-    "position": {
-      "lat": 37.65923461817029,
-      "lng": 27.297880842484158
-    },
-    "title": "Bouleuterion of Priene",
-    "image": "",
-    "iconPath": "assets/markers/monument.png"
-  },
-  {
-    "position": {
-      "lat": 37.65969317849421,
-      "lng": 27.297904278735412
-    },
-    "title": "Bishop’s Church",
-    "image": "",
-    "iconPath": "assets/markers/church.png"
   },
   {
     "position": {
@@ -725,7 +654,7 @@
       "lng": 28.99561321743919
     },
     "title": "Henry Bulwer Şatosu",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/henry-bulwer-satosu.png",
     "iconPath": "assets/markers/castle.png"
   },
   {
@@ -733,26 +662,17 @@
       "lat": 37.05736055749511,
       "lng": 37.87068124675483
     },
-    "title": "Zeugma Müzesi",
-    "image": "",
+    "title": "Zeugma Mozaik Müzesi",
+    "image": "https://gizatur.com.tr/wp-content/uploads/2023/03/7-20.jpg",
     "iconPath": "assets/markers/museum.png"
   },
   {
     "position": {
-      "lat": 36.39623579844896,
-      "lng": 30.473782326872097
+      "lat": 36.39567811651981,
+      "lng":  30.472614232904608
     },
-    "title": "Olympos Liman Anıt Mezarları",
-    "image": "",
-    "iconPath": "assets/markers/ruins.png"
-  },
-  {
-    "position": {
-      "lat": 36.62257989641741,
-      "lng": 29.111844118451597
-    },
-    "title": "Likya Lahiti (Lycian Sarcophagus)",
-    "image": "",
+    "title": "Antalya Olympos Ören Yeri",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrznXkmIfJK9foPtAnn_MHevWQGdUwoZmVD5vik00z-T6D7GjqUmtGu4_8bdu9JOa9EExUYX6G0AsBwfFm2gJWzouKe1uALk3uT-gdEhHyqqxF0qyizeSEZObDdEzgiflVnc_xm=w427-h240-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -760,8 +680,8 @@
       "lat": 36.44591453085198,
       "lng": 32.148272206998485
     },
-    "title": "Syedra",
-    "image": "",
+    "title": "Antalya Syedra Antik Kenti",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqh-nUqIerADx7fEQDCDjCcQ8Fr64MtPhexvXMPInwaqUg3ASRuQyBCNKFMWc5PVJpOJ3KjbfOduezlLjRo4Um1cVbUGOVow0zath52TXAgH2kf_kpExlfXS6kgLfUkwyKVnOBjidO69KAQ=w408-h306-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -769,8 +689,8 @@
       "lat": 39.127244644684446,
       "lng": 27.18418933766468
     },
-    "title": "Demeter Tapınağı",
-    "image": "",
+    "title": "Demeter Kutsal Alanı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npYATVUoDhaSVaRfhbDkcMysxLezbSo3KDbPpGleY_Sk2UlEQ5er9FsKouOBOb9YDzWBTB98u8M0OlBj1WqZk7W_1eV8byHAsNYxM0ST1NazJycjbYybDJ1xsno_XBeD0SPpxlofw=w408-h305-k-no",
     "iconPath": "assets/markers/temple.png"
   },
   {
@@ -778,8 +698,8 @@
       "lat": 40.98560633828206,
       "lng": 29.229697967163336
     },
-    "title": "Samandıra Saat Kulesi",
-    "image": "",
+    "title": "İstanbul Samandıra Saat Kulesi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrYnVvOxwYSSi6dhKAsaScByJ2VoFRjObPhF4-9rzQrfS2LRL0dlSEBXhtIZn16vHkBX-EfFTCmjPGYCdrzhTfI_J9-3JyCx0p5W1meq-RK-vDqESAb6gyu9BYOnCyh-wNOXF0=w408-h408-k-no",
     "iconPath": "assets/markers/tower.png"
   },
   {
@@ -787,8 +707,8 @@
       "lat": 41.1414674,
       "lng": 36.1163641
     },
-    "title": "Çakallı Han",
-    "image": "",
+    "title": "Samsun Çakallı Hanı",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRepAY43-UF7VrwK7c0WiaZflClPgx_yqisJg&s",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -796,53 +716,26 @@
       "lat": 38.43539682409753,
       "lng": 27.164624963332002
     },
-    "title": "9 Eylül Anıtı",
-    "image": "",
+    "title": "İzmir 9 Eylül Şehitliği",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/9_Eyl%C3%BCl_%C5%9Eehitler_Abidesi%2C_Bornova%2C_%C4%B0zmir.jpg/960px-9_Eyl%C3%BCl_%C5%9Eehitler_Abidesi%2C_Bornova%2C_%C4%B0zmir.jpg",
     "iconPath": "assets/markers/monument.png"
-  },
-  {
-    "position": {
-      "lat": 40.43183860864557,
-      "lng": 29.1554537696053
-    },
-    "title": "Gemlik Meydanı ve Saat Kulesi",
-    "image": "",
-    "iconPath": "assets/markers/tower.png"
   },
   {
     "position": {
       "lat": 38.575217899556364,
       "lng": 34.87197309937783
     },
-    "title": "St Basil Kilisesi",
-    "image": "",
+    "title": "Nevşehir St Basil Kilisesi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqKGGQyD8wb0EHdmAU9_IPabFujBF2Kk5VXOLosgWVyZ0NXKBqAyrDtXuyi1UDSRWXhpezElx74id2_Ldu0RhSCZyMMOIeCApos4JoIIOOuthNuZpZ4wVZEqsp37sO644aJI8ETnw=w425-h240-k-no",
     "iconPath": "assets/markers/church.png"
-  },
-  {
-    "position": {
-      "lat": 36.154667714861084,
-      "lng": 32.42772048379762
-    },
-    "title": "Antiochia ad Cragum",
-    "image": "",
-    "iconPath": "assets/markers/ruins.png"
-  },
-  {
-    "position": {
-      "lat": 36.15561625362416,
-      "lng": 32.43058807481248
-    },
-    "title": "Antiochia Athena Tapınağı",
-    "image": "",
-    "iconPath": "assets/markers/temple.png"
   },
   {
     "position": {
       "lat": 36.794966321402654,
       "lng": 34.62661407731779
     },
-    "title": "Atatürk Evi Müzesi",
-    "image": "",
+    "title": "Mersin Atatürk Evi Müzesi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noomzQEw_NnBXAqhPNbNBHxKK6q4WNQvV_Q2ixK-uOZEMWCHCa5I2ptgAm_f1o5hfn-7FNYDxEBfPJ4TMGjH443Y-Qn8VzB9YfRmKgZUODcoFDKStaVSyDupF02Ec7w2Jzswx5KXQ=w408-h296-k-no",
     "iconPath": "assets/markers/museum.png"
   },
   {
@@ -850,8 +743,8 @@
       "lat": 37.38531899794396,
       "lng": 27.256725548671195
     },
-    "title": "Apollon Tapınağı",
-    "image": "",
+    "title": "Aydın Apollon Tapınağı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrmwsV0lYFUFIAjEkO096LFMZC0SqBMU8vx0nD-VXsMXm1gUvTxkyiCl1h6oGf1ofj2OOPPD6QE5TJFlSnx7b00qWimZY6BsX113vRAVxvqqGT5aTOdsJKWkQErVFps_v5AhfBg=w408-h306-k-no",
     "iconPath": "assets/markers/temple.png"
   },
   {
@@ -868,8 +761,8 @@
       "lat": 39.9157706,
       "lng": 41.3017661
     },
-    "title": "Nene Hatun Heykeli",
-    "image": "",
+    "title": "Erzurum Nene Hatun Heykeli",
+    "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhIeWwdo4o8SfthB3rnS1yxdeQBWTVtlYdf1NhBr8YYHJpwNNTBRVppVWTPrDvGRkhdjdnkriso0SYyPiIHTCMmtm8ehvXpT-6fCaz1L69dwG5gzhoeLY7rKcHnMMOPe2SclGm9hr2EGmY/s1600/nenehatunheykeli1.jpg",
     "iconPath": "assets/markers/memorial.png"
   },
   {
@@ -877,8 +770,8 @@
       "lat": 40.387788290038515,
       "lng": 27.870827865040596
     },
-    "title": "Kyzikos Antik Kenti",
-    "image": "",
+    "title": "Balıkesir Kyzikos Antik Kenti",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/Kyzikos-Antik-Kenti.jpg",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -887,43 +780,16 @@
       "lng": 36.95522799869492
     },
     "title": "Niksar Kalesi",
-    "image": "",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/niksar-kalesi.jpg",
     "iconPath": "assets/markers/castle.png"
-  },
-  {
-    "position": {
-      "lat": 36.60211292274539,
-      "lng": 30.559553066861657
-    },
-    "title": "Kemer Saat Kulesi",
-    "image": "",
-    "iconPath": "assets/markers/tower.png"
-  },
-  {
-    "position": {
-      "lat": 36.645287214408114,
-      "lng": 31.673825116791722
-    },
-    "title": "Kibyra Minor Antik Limanı",
-    "image": "",
-    "iconPath": "assets/markers/ruins.png"
-  },
-  {
-    "position": {
-      "lat": 41.28213676804225,
-      "lng": 31.41654127596973
-    },
-    "title": "Karadeniz Ereğli Müzesi",
-    "image": "",
-    "iconPath": "assets/markers/museum.png"
   },
   {
     "position": {
       "lat": 36.48949005837884,
       "lng": 29.25831119450364
     },
-    "title": "Pınara Antik Kenti",
-    "image": "",
+    "title": "Muğla Pınara Antik Kenti",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr70-EUl1q8cL8dtal_cCKIYBbewd-njZkVh3oDIsAs71yARH0_4kRbP1p4eKB1ahdcClX5glecFW722wx3c_vwfn9GatoJonk2FFvC5qPS2XXE04Z3Ih4EGpFPj8xGKRsVvXk=w408-h272-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -931,8 +797,8 @@
       "lat": 37.05269863422349,
       "lng": 37.86637182731653
     },
-    "title": "Belkıs Tepesi Tapınağı",
-    "image": "",
+    "title": "Gaziantep Belkıs Tepesi Tapınağı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrx0ecoxoFvH-Z_Nh-1P_uQmfNohXEFoMAxOLG2XBTbBAeglbI1pOHhfITiiBtkA45sg3ppJjC_ILVW6yNEN1VfvW6qui8kYRk_kXHflv7rA5wyC6BlGgog7SL813clpBDYIb6tKQ=w408-h272-k-no",
     "iconPath": "assets/markers/temple.png"
   },
   {
@@ -941,25 +807,16 @@
       "lng": 41.41025570036605
     },
     "title": "Hasankeyf Kalesi",
-    "image": "",
+    "image": "https://www.kulturportali.gov.tr/contents/images/SS%20216%20BATMAN-HASANKEYF%20SERVET%20UYGUN%20(4)%20kopya.jpg",
     "iconPath": "assets/markers/ruins.png"
-  },
-  {
-    "position": {
-      "lat": 37.65970579269807,
-      "lng": 27.2979084910422
-    },
-    "title": "Rahip Priene Kilisesi",
-    "image": "",
-    "iconPath": "assets/markers/church.png"
   },
   {
     "position": {
       "lat": 39.5364467093159,
       "lng": 26.117092724786385
     },
-    "title": "Apollon Smintheion",
-    "image": "",
+    "title": "Çanakkale Apollon Smintheion",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noBHC8wLCCDihuXFwfcbbYgJcnzu_TbJkn6iDMb6f_HsI0mxcFKH-INguFkNrIWXImDqbK5nHPzEoGua93cnEAFMqwHjW2KZzE0nBkEAsTdI92Q_hac7KRH0ZFjzEx3tAAM-vkb=w408-h306-k-no",
     "iconPath": "assets/markers/temple.png"
   },
   {
@@ -967,26 +824,17 @@
       "lat": 39.089256197261484,
       "lng": 30.419707178805698
     },
-    "title": "Kral Midas'ın Hazine Odaları, Frig Vadisi",
-    "image": "",
+    "title": "Afyon Frig Vadisi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noUgxP5EtwbbIE9Hf5YgsQy0M894gt2mywC0f6LDsjKm3ihSE45WJEbuM4RbYFd4bR5SLnCKEXnL32YsFjAum_KBT-2R3iP3zXdJVyjcBuUXLoBLG6HFb5iqCVuHpSND0jhxsgL=w408-h306-k-no",
     "iconPath": "assets/markers/ruins.png"
-  },
-  {
-    "position": {
-      "lat": 41.02041918166857,
-      "lng": 29.645828025454403
-    },
-    "title": "Sarıkavak Kalesi",
-    "image": "",
-    "iconPath": "assets/markers/castle.png"
   },
   {
     "position": {
       "lat": 38.96078651100591,
       "lng": 41.191806847351074
     },
-    "title": "Surp Garabet Manastırı",
-    "image": "",
+    "title": "Muş Surp Garabet Manastırı",
+    "image": "https://collectif2015.blob.core.windows.net/web/Projects/1024_8167a932-fb96-4161-a17c-6d68793ec2e1.jpeg",
     "iconPath": "assets/markers/church.png"
   },
   {
@@ -994,8 +842,8 @@
       "lat": 39.296067854761134,
       "lng": 36.91391301929004
     },
-    "title": "Suppitassu Gölü",
-    "image": "",
+    "title": "Sivas Suppitassu Gölü",
+    "image": "https://static.daktilo.com/sites/1567/uploads/2024/10/07/suppitassu-kral-golu-sivas.png",
     "iconPath": "assets/markers/lake.png"
   },
   {
@@ -1004,7 +852,7 @@
       "lng": 29.234912180367058
     },
     "title": "Eğrigöz Kalesi",
-    "image": "",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaexGEwTlv0ijzs9KTEDDj1Lhbu8MVbpremg&s",
     "iconPath": "assets/markers/castle.png"
   },
   {
@@ -1012,8 +860,8 @@
       "lat": 38.427355450166246,
       "lng": 35.73789902769183
     },
-    "title": "Eski Pusatlı Yeraltı Şehri",
-    "image": "",
+    "title": "Kayseri Eski Pusatlı Yeraltı Şehri",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqdXvRcw8-iztuR4Nuopp0l3s5fCF9vW7Pt0cvVinZjVLQiCEWQdzahVbtsNOkE09-SXbPOtNqmPodjEiSUCiZtguRN7Hpgf14N7pUmH6jKpC71f-xjC2UXEM8UO3vk1FaON8s=w408-h266-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -1021,8 +869,8 @@
       "lat": 38.53765144022774,
       "lng": 29.07212148681025
     },
-    "title": "Mesotimelos Antik Kenti",
-    "image": "",
+    "title": "Uşak Mesotimelos Antik Kenti",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nroLunp50yXxFeRuABHazndZwXuZrdpJ6mbzD3MDfL79WsyuqXGFrJ1aJN1svwRs86xGjpv_VxRmrE3eI8I3HH-XRTaJagKMcUxOUGezIAJ8YLJtlbNcyZfXO6vjNONfPuaWhu7=w408-h272-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -1030,26 +878,17 @@
       "lat": 41.0812158,
       "lng": 39.5035414
     },
-    "title": "Akçakale",
-    "image": "",
+    "title": "Trabzon Akçakale",
+    "image": "https://www.akcaabat.bel.tr/uploads/TurizmRehberi/5/akcakale-4.jpg",
     "iconPath": "assets/markers/castle.png"
   },
   {
     "position": {
-      "lat": 37.94612933309645,
-      "lng": 27.346277315286248
+      "lat": 37.941232467268996, 
+      "lng": 27.34238119577742
     },
     "title": "Ephesus Hipodromu",
-    "image": "",
-    "iconPath": "assets/markers/ruins.png"
-  },
-  {
-    "position": {
-      "lat": 38.415998495068635,
-      "lng": 27.14395104007066
-    },
-    "title": "Smyrna Tiyatrosu",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrXt7SidDPkxSAW9EWIF99dFZVppzidQuVL73ze9vRouD5kwjx4tO3X3pL1NDQjZ5_BMGn50aY7976q3hZ0TZnAsyFA7SJuZstxzF2i8VId0bpyl6VJepF1IWsgkD7NxQRFZJomdw=w408-h544-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -1057,8 +896,8 @@
       "lat": 39.1405681,
       "lng": 42.5472171
     },
-    "title": "1071 Zafer Anıtı",
-    "image": "",
+    "title": "Muş 1071 Malazgirt Zafer Anıtı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npvEDJx4wcIA3xfZni6KiSiOg81-mkc_q0C4LcwMfgNGzmRES2T4h8T-3C4AAK967Uo28THJxI1g9knK3QmYwxRmstdm8pyEbwswNjShRcZiR2cCGmc0Q_S-7T7PK01NVjDIy0=w408-h290-k-no",
     "iconPath": "assets/markers/memorial.png"
   },
   {
@@ -1066,8 +905,8 @@
       "lat": 36.37596882754123,
       "lng": 33.93013277431614
     },
-    "title": "Roma Tapınağı Müzesi",
-    "image": "",
+    "title": "Mersin Roma Tapınağı Müzesi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npzCEHZJJBDayEVvb9o6C_6SmXZB_hA5NaGJHZ-uJ-80y3LvB7h9R-RYWxMBPe15Cmede6OKDcLPlaK2EVnySnjfFXFZ_Art7Gehc8o0SkKQ1ngfi0-i5oAq9-tsU5UgOdwHqe7=w408-h306-k-no",
     "iconPath": "assets/markers/monument.png"
   },
   {
@@ -1075,8 +914,8 @@
       "lat": 41.0346712,
       "lng": 28.8968447
     },
-    "title": "Altıntepsi Su Terazisi",
-    "image": "",
+    "title": "İstanbul Altıntepsi Su Terazisi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq4gnNh5aoXve3WEHDVrJzW_0G1OHz_4CR_NkvVjdEHwKCNe_1EvJ_Z9j8ffR1lOCoPgdGyMxZTEr7fMBFc1a5OTMP3dFd-7o7INpySwU0d_c_eOYpzE8vOHp8PtnSaSen1exUkisqkgkIl=w408-h544-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -1084,8 +923,8 @@
       "lat": 41.037076966839294,
       "lng": 29.041669217371066
     },
-    "title": "15 Temmuz Müzesi",
-    "image": "",
+    "title": "İstanbul 15 Temmuz Müzesi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nowYtMSiV0jjaDMgm7i757jym4YZ-aAHrb7UmWawmSRm9SmXoc2nXKLpwvNBckL6wwv_M8bMrHKA1RE2cI_O_c4OZQ8Y2ehXvgMR0cgF6bEcqmqCxuKobF4KtF6K5bWbvFLWIla8g=w408-h305-k-no",
     "iconPath": "assets/markers/museum.png"
   },
   {
@@ -1093,8 +932,8 @@
       "lat": 36.7563136138696,
       "lng": 28.264877793886892
     },
-    "title": "Amos Antik Kenti",
-    "image": "",
+    "title": "Muğla Amos Antik Kenti",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrgSRfrXk9ozxo0gOVTcBG2CEiPGa76uu58aeq0lMuSSK5c531cQQ4-dm1NqioFTH-1ottdSua3WMImMkfPaN32I4nnNtIWJ6Oh4NKOLzKHT4Xvf7EccVQ7a0WD-H-_e2zXAeU=w426-h240-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -1103,8 +942,26 @@
       "lng": 28.9370228
     },
     "title": "Fatih Sultan Mehmet Parkı",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npgW5A9uYnXQofxMOcL_UHVqaBKTmvbT6y6cCUjngTipvgrLvFrq_vWQQTOIQlV8BCbSkaAMWW5YD_TQBPhRH0kzQWFusTH2FuXVpPUJb6eZA6BNVq7mQielBCPq_of3sGMpSZw=w408-h544-k-no",
     "iconPath": "assets/markers/park.png"
+  },
+  {
+    "position": {
+      "lat": 41.030436135396656, 
+      "lng": 28.93546448890327
+    },
+    "title": "Edirnekapı Surları",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noazi7eMUFuEYQ3Domus57cFUUM-FtBj9IW5z3k_-tAXFtGnLmu7AKR9EBqYT-B-K2tUXcVji-OLRKCXC0943OBWcY8vpb9Mj6_WvD_Scgo5f4yBAs39FAy5PpJx67hO4RGpUml0A=w408-h306-k-no",
+    "iconPath": "assets/markers/ruins.png"
+  },
+  {
+    "position": {
+      "lat": 41.03170678929018, 
+      "lng": 28.93635498231186
+    },
+    "title": "İstanbul Surları",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqrOu9lvFcNRrkr9sDmOhWR0vad4dfHfmlvLhlQwai2jOb2zCKSTktKKKb5LxaOFYDUwnGcG_lxFlvODyyPRtvXq2UpUzrepq6g2c954nEkKFo7TZJfmyiV5595MeHqU74ud8ya=w408-h306-k-no",
+    "iconPath": "assets/markers/ruins.png"
   },
   {
     "position": {
@@ -1112,7 +969,7 @@
       "lng": 28.93922317813593
     },
     "title": "Kariye Camii",
-    "image": "",
+    "image": "https://sozcuo01.sozcucdn.com/wp-content/uploads/2020/08/21/iecrop/kariye-camii-nerede-depo-1_4_3_1598030606.jpg",
     "iconPath": "assets/markers/mosque.png"
   },
   {
@@ -1120,8 +977,8 @@
       "lat": 41.013167172481836,
       "lng": 28.957745224187757
     },
-    "title": "İstanbul’un Orta Noktası",
-    "image": "",
+    "title": "İstanbul’un Orta Noktası Sütunu",
+    "image": "https://cdn.kulturenvanteri.com/wp-content/uploads/2020/05/D%C3%B6ner-S%C3%BCtun.jpg?_gl=1*1gzxeb4*_ga*MTY2NTQxMzk2Ni4xNzQ2NDc5OTMw*_ga_TV1YB45K0M*czE3NTQwNjY3NzMkbzIkZzAkdDE3NTQwNjY3NzMkajYwJGwwJGgw",
     "iconPath": "assets/markers/memorial.png"
   },
   {
@@ -1129,8 +986,8 @@
       "lat": 41.01336351469912,
       "lng": 28.9576459580592
     },
-    "title": "Şehzade Mehmet Türbesi",
-    "image": "",
+    "title": "İstanbul Şehzade Mehmet Türbesi",
+    "image": "https://www.turkiyenintarihieserleri.com/foto_y/2021/04/b/1618851526.jpg",
     "iconPath": "assets/markers/monument.png"
   },
   {
@@ -1138,8 +995,8 @@
       "lat": 36.73303727056656,
       "lng": 31.96246441676595
     },
-    "title": "Colybrassus Antik Kenti",
-    "image": "",
+    "title": "Antalya Colybrassus Antik Kenti",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqk2W48lOyjSotNU53F5ZeUeNFCUzxkcDamh3D2a3zCkMxtuEp9QlxSxXrY_Gz_BrI1x-2skD1ltAF64_2ZHAJSbGXXlBR-wB_BSkTneTvZ_tIB3zL_SXdXM0CsNhK9pRBmh3WSXg=w408-h544-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -1148,7 +1005,7 @@
       "lng": 34.3318328
     },
     "title": "Şehit P.ASB.KD.BÇVŞ  Ömer Halisdemir Şehitliği",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqK7qfjN2i7KvadGSuEZXm_aMouFow_8QlOE7VeS4srgRBwqQO_X0iqUSPKda9jutCLY0iJ3lT5jcyqboh7xezxMb2LqGdwF7cYSMhxef-16QpuXX5REKz8e23Um_jJKeQFZNY=w408-h544-k-no",
     "iconPath": "assets/markers/memorial.png"
   },
   {
@@ -1156,8 +1013,8 @@
       "lat": 41.71386969096118,
       "lng": 27.82552484960896
     },
-    "title": "Cehennem Şelaleleri",
-    "image": "",
+    "title": "Edirne Cehennem Şelaleleri",
+    "image": "https://www.trakyagezi.com/wp-content/uploads/2019/10/Cehennem-%C5%9Eelaleleri-800x445.jpg",
     "iconPath": "assets/markers/tomb.png"
   },
   {
@@ -1166,25 +1023,16 @@
       "lng": 26.2947007
     },
     "title": "Mesudiye Topu",
-    "image": "",
+    "image": "https://lh6.googleusercontent.com/proxy/weCr-YUda3mwdo98RrrE3vPLshFDA6d7v0kLaJ3hZbseJLCjhRy7K3j9Pc1Kf81QY1mRlnyOROYCCYush8Zgoy-7mSFRiUCfStH9SFk5Ccu_X2wdOhjPNPjxgHp4",
     "iconPath": "assets/markers/ruins.png"
-  },
-  {
-    "position": {
-      "lat": 40.2525008,
-      "lng": 26.3081938
-    },
-    "title": "Conkbayiri Askerler Anıtı",
-    "image": "",
-    "iconPath": "assets/markers/monument.png"
   },
   {
     "position": {
       "lat": 37.91294010287889,
       "lng": 40.218635850118154
     },
-    "title": "Sümer Park",
-    "image": "",
+    "title": "Diyarbakır Sümer Park",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npFnCYc74nt66KwnyhjAzz0ODWviI3Ay9Cn2W6zq_IOBFzwxS-2l3M_a_HHymNXU_4ns96girJ4Qezj1KTKPSF2RBrAxCmI88drN1z55EcvDu7Reirlt_JMIr-8TjdemcmjuZtL=w426-h240-k-no",
     "iconPath": "assets/markers/park.png"
   },
   {
@@ -1192,35 +1040,17 @@
       "lat": 40.23452784282659,
       "lng": 26.27732588306423
     },
-    "title": "Anzak Koyu",
-    "image": "",
+    "title": "Anzak Koyu Yazıtı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4no78IGmWPb6me5Th5XDiNiVCechdZPNpJ8m-f9LlHE_F31e7IBBPialy8gqJ6gs4jRFJBNxBc-NLv4Q3TXOSi_P6dYz4aDD8j9U-BmtfTvWx8gMQVpwQraEHQurWhh4L3uAmVAg=w408-h306-k-no",
     "iconPath": "assets/markers/memorial.png"
-  },
-  {
-    "position": {
-      "lat": 41.73386788948173,
-      "lng": 27.219611620600023
-    },
-    "title": "Zübeyde Hanım Heykeli",
-    "image": "",
-    "iconPath": "assets/markers/memorial.png"
-  },
-  {
-    "position": {
-      "lat": 41.0345631,
-      "lng": 28.9332608
-    },
-    "title": "Buharizade Mustafa Efendi (Itri)",
-    "image": "",
-    "iconPath": "assets/markers/tomb.png"
   },
   {
     "position": {
       "lat": 41.00193137095831,
       "lng": 28.932709596540178
     },
-    "title": "Surp Kevork Kilisesi",
-    "image": "",
+    "title": "Surp Kevork Ermeni Kilisesi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrdMIzTkIQHRp59Upst0bFB-xMtUcUty3R2EBc9Cm6FyDsz18sfJojc8C33cK9Xwhp96MxQQtQBdsBi3Jt9_sBslCG9BKf7GE0gKe5xNT3OAHEhEwp-OYQAHIdKkA2aGSMsOq3DAw=w408-h544-k-no",
     "iconPath": "assets/markers/church.png"
   },
   {
@@ -1229,34 +1059,16 @@
       "lng": 28.8264748
     },
     "title": "İstanbul Hava Kuvvetleri Müzesi",
-    "image": "",
-    "iconPath": "assets/markers/memorial.png"
-  },
-  {
-    "position": {
-      "lat": 36.7029097,
-      "lng": 28.1393514
-    },
-    "title": "Kızılköy Kalesi",
-    "image": "",
-    "iconPath": "assets/markers/castle.png"
-  },
-  {
-    "position": {
-      "lat": 36.74006070588039,
-      "lng": 28.121235053700875
-    },
-    "title": "Hygassos",
-    "image": "",
-    "iconPath": "assets/markers/ruins.png"
+    "image": "https://lh3.googleusercontent.com/p/AF1QipNuaEEGNED-4F4ANASlo4LvjZPvCPSsgW1xAgiB=w408-h272-k-no",
+    "iconPath": "assets/markers/museum.png"
   },
   {
     "position": {
       "lat": 40.50865878307581,
       "lng": 43.5706578297262
     },
-    "title": "Apostol Kilisesi",
-    "image": "",
+    "title": "Kars Apostol Kilisesi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npGS5vOEX-CiSjMpZ9nsOF6EkXEj3dx-c71MPeIL5bTHg6n1mt4HaZBHbBWlSUZhYrQOMWDwQ318o_4AHfqsnyeMnNZFFQ-3yJziRUFNEDjOs9d5Ary6vZUD32lwHGniYZSxhKP=w408-h306-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -1264,17 +1076,17 @@
       "lat": 37.847698815138756,
       "lng": 27.524857349557173
     },
-    "title": "Magnesia Antik Tiyatro",
-    "image": "",
+    "title": "Aydın Magnesia Antik Tiyatro",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr-ySwCZQV4qlH6iUS_vHQ-QZFJPPSjZ1kFmUEzYl8mgAhvWTsLcEhG9ZLjh6KuFhGvGTvHa1EuQSg-jU8iSbYw9abdpF5O_fOLqbYTL_mZHeOvjgdQ__Vk3TWwI-RLl4knlrd7dlYt051R=w408-h306-k-no",
     "iconPath": "assets/markers/theatre.png"
   },
   {
     "position": {
-      "lat": 41.2939343624792,
-      "lng": 36.340311225082374
+      "lat": 41.29300735672163, 
+      "lng": 36.34028973896001
     },
     "title": "Tütün İskelesi",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npMcQcOfw8ghroNQnxjKGsfz4ZAZ0YoHfz6xmls9g2UkAarS5cXGfh82jyfBmhvyXz7u6NPwUx4K19Wl-GiccXptxO1ALv_x94tz0KTAzMJs_33wX5Lz2Xpl2hKwLU3r4z-OPtq3A=w408-h306-k-no",
     "iconPath": "assets/markers/museum.png"
   },
   {
@@ -1282,26 +1094,17 @@
       "lat": 40.23291052296751,
       "lng": 26.437753195635533
     },
-    "title": "Akbaş Kalesi",
-    "image": "",
+    "title": "Akbaş Şehitliği",
+    "image": "https://www.canakkaleharbi.com/wp-content/uploads/2019/05/eceabat-akbas-sehitligi-04-1.jpg",
     "iconPath": "assets/markers/memorial.png"
-  },
-  {
-    "position": {
-      "lat": 38.6394746,
-      "lng": 34.8454642
-    },
-    "title": "Rahibe Manastırı",
-    "image": "",
-    "iconPath": "assets/markers/church.png"
   },
   {
     "position": {
       "lat": 38.6387519,
       "lng": 34.8460417
     },
-    "title": "Aziz Katarina Şapeli",
-    "image": "",
+    "title": "Nevşehir Aziz Katarina Şapeli",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrJ4xQOfxi7_QD77Mw-YbZKL6xzwu-K6F2YB0KOOn0aXmIpNzhhWYdivuc71xNzkos63nb0QEFkiVo971sl1Q5A6-zT6t8wEhyHf5EZaszC4vsK-Ye-2hnT0j2UPyWUn1z-3yew=w408-h272-k-no",
     "iconPath": "assets/markers/church.png"
   },
   {
@@ -1309,8 +1112,8 @@
       "lat": 38.6395574,
       "lng": 34.8450167
     },
-    "title": "Aziz Basil Şapeli",
-    "image": "",
+    "title": "Nevşehir Aziz Basil Şapeli",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npC4ELEpbk7UWGx_5chwZnFF3-1GUlDPBd7HsQIuplc3nIv4Acr0MXJ_TgdZdjkm3ZF76hSUm5XaqEOzS3kbdBWF8eLoAIqjqoa90zhrQdq4wl8J-jDbcR2TwZn4OUY6qOU1dqN=w408-h409-k-no",
     "iconPath": "assets/markers/church.png"
   },
   {
@@ -1319,7 +1122,7 @@
       "lng": 41.41189311436898
     },
     "title": "Hasankeyf Eski Köprü",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/proxy/r6zoX3IFjp1JNKyfJjawEv_Tsfnt5i_e-Vv6tmjvwPYbIDZ6hauqqtS8fWNPw0k2c8lLV4gH-H0tDPkfq0vM77jc4-xqsRK14nQwzABL2XOxfIjG6tvxeAKlF9WcXokm",
     "iconPath": "assets/markers/bridge.png"
   },
   {
@@ -1328,7 +1131,7 @@
       "lng": 26.281437932747693
     },
     "title": "Anzak Koyu Tören Alanı",
-    "image": "",
+    "image": "https://canakkale.com.tr/assets/upload/fotograflar/canakkale_anzak-koyu-1_1.jpg",
     "iconPath": "assets/markers/memorial.png"
   },
   {
@@ -1336,9 +1139,19 @@
       "lat": 37.18139683541897,
       "lng": 30.472345486849203
     },
-    "title": "Ariassos",
-    "image": "",
+    "title": "Antalya Ariassos",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr5XkRlk0q5xp9sCcpdWx0W1ig3Wxk_pStUjn97Ta1PbtQbrrtIKHVvA8WuCoYRJWRPo3fBfHQP68dm4O0qRKyvVn-wRxvriuHjptPBuOb09juJVkEZzP1B0VYdTRxElvy9LGxyyQ=w408-h306-k-no",
     "iconPath": "assets/markers/ruins.png"
+  },
+  
+  {
+    "position": {
+      "lat": 37.18139683541897,
+      "lng": 30.472345486849203
+    },
+    "title": "Kars Horomos Manastırı",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrTQqgp4MvYIayOYiI7kKQ5D2r9_aI8rkeotgMRNVch75_YtqXNt-FGmq8qv_HVbq-yRiUEj-rhlwyIFWGUQ0LE8dMs_IE3_FsWBGcoW19pCSpWLeI3Xy_Zfhtvdf3kKHmrxiPmvA=w426-h240-k-no",
+    "iconPath": "assets/markers/church.png"
   },
   {
     "position": {
@@ -1346,7 +1159,7 @@
       "lng": 43.57307804291206
     },
     "title": "Ani Katedrali",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noueqJV8Idj-91oikN1Sc6JE1zLTtmkj3tpRSa5tSvE8mwIvCfo1-c2BDaIRBUGscJt09KkFOT4GYKJlHlgq4gLUQhQrClgae7PCSdCi2-HhWBDNxi8rpXPsPTzzxTz1SyLS70C=w408-h306-k-no",
     "iconPath": "assets/markers/church.png"
   },
   {
@@ -1354,8 +1167,8 @@
       "lat": 40.506556385726114,
       "lng": 43.57836105035769
     },
-    "title": "Tigran Honents Kilisesi",
-    "image": "",
+    "title": "Kars Tigran Honents Kilisesi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr-vff0jO28yaP3tZBYMSDSE-hB6QZN50dpufhEECtrIaOnDzvWBNRHRkf3h9ht5WTCrQyExlErcqshE4X71BK4CsiUklo3KWKgHXb259KH6--L7ohl5WgBYSOBYdsvUHRURPJucA=w408-h306-k-no",
     "iconPath": "assets/markers/church.png"
   },
   {
@@ -1363,8 +1176,8 @@
       "lat": 40.510232313261916,
       "lng": 43.56870911005402
     },
-    "title": "St. Gregory of Gagik Kilisesi",
-    "image": "",
+    "title": "Kars St. Gregory of Gagik Kilisesi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrpoNbHBGzXeWVBM3MFtvHgKH_B_devErBCYiMEawqealjj4xQX3Qu5IcJTFtSDv3ZXnfsrrISabKIalzJrxuBlSjNa2pFVVHU11tk-VasY8-u0VFke4vAQbMC_JI3W3xFVqtSd=w408-h306-k-no",
     "iconPath": "assets/markers/church.png"
   },
   {
@@ -1372,8 +1185,8 @@
       "lat": 40.50794643225154,
       "lng": 43.569143790522716
     },
-    "title": "St. Gregory (Abughamrents) Kilisesi",
-    "image": "",
+    "title": "Kars St. Gregory (Abughamrents) Kilisesi",
+    "image": "https://attarmenia.com/upload/2019/10/up285Zhr.jpeg",
     "iconPath": "assets/markers/church.png"
   },
   {
@@ -1382,7 +1195,7 @@
       "lng": 43.572549372127824
     },
     "title": "Ani Harabeleri",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npdGe5Sw8BF-RNVuqV4IMSXmPi4k5JEASCSSyy17gwWek8Au_fvTaBBs9iAaMyvB_QuThMSqS0yvE-8aUq4tiqrIrnAN2XwUsikW9PMDI6oHZcdxlp6YcBqzOezMZrRgVeAe-X_2w=w408-h544-k-no",
     "iconPath": "assets/markers/ruins.png"
   },
   {
@@ -1390,8 +1203,8 @@
       "lat": 40.508464230156804,
       "lng": 43.573079840772934
     },
-    "title": "Zerdust Tapınağı",
-    "image": "",
+    "title": "Kars Ateş Tapınağı(Ateşgede)",
+    "image": "https://www.kulturportali.gov.tr/contents/images/Ani%20%c3%96renyeri%20(1)%20kopya.jpg",
     "iconPath": "assets/markers/temple.png"
   },
   {
@@ -1405,20 +1218,11 @@
   },
   {
     "position": {
-      "lat": 40.1906844,
-      "lng": 29.046268
-    },
-    "title": "Şehzade Ahmet Türbesi",
-    "image": "",
-    "iconPath": "assets/markers/tomb.png"
-  },
-  {
-    "position": {
       "lat": 40.1905532,
       "lng": 29.0461205
     },
     "title": "II.Murat Türbesi",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqEw17oJ2lx4fwaZ2ouj-pHBakm1lBYn1-VsH_pdEEbR-9ef0lb84bwiHFluBqDJ4kDQ8_4PHpOREYaUFggf5Z-sDUOdNDwdoiSxWTbWEC5tPiiRR1emWnS7lhGWEIgWQjCPG4=w426-h240-k-no",
     "iconPath": "assets/markers/tomb.png"
   },
   {
@@ -1426,8 +1230,8 @@
       "lat": 40.1905553,
       "lng": 29.0456297
     },
-    "title": "Cem Sultan Türbesi",
-    "image": "",
+    "title": "Bursa Cem Sultan Türbesi",
+    "image": "https://www.kulturportali.gov.tr/repoKulturPortali/large/04022013/36ec1f6f-51ed-4702-888a-012fbb8bfec3.JPG?format=jpg&quality=50",
     "iconPath": "assets/markers/tomb.png"
   },
   {
@@ -1436,16 +1240,25 @@
       "lng": 29.0458281
     },
     "title": "Şehzade Mustafa Türbesi",
-    "image": "",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nraGMvmR57ql_hQ5koBJN-rR_2L11Pfw9pOTbBMQFobLspRVU5nrf6Ne28pj6Ta4X7EWTIEF0kql6FSGZxQS5zLBWGfxY8rNcCUAitGo5CU1j29d9skIYodFicIDhwjGIOxCE4=s1360-w1360-h1020-rw",
     "iconPath": "assets/markers/tomb.png"
+  },
+  {
+    "position": {
+      "lat": 40.190670030319794, 
+      "lng": 29.045972935864757
+    },
+    "title": "Muradiye Külliyesi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq1ZHMHdT69DgT3YBnbh4IaS7ypCCksaKAOyJTJA8bfigI89lTAeC60LfyZquB68CIFjEYb_zHuBA-vlhbZdibT-1AfLg8KsTZ3Uv1kbnSNYKTRRSyV30eG4BHB4xX-Cij7zv4=w408-h271-k-no",
+    "iconPath": "assets/markers/palace.png"
   },
   {
     "position": {
       "lat": 41.012473857472045,
       "lng": 28.983337340622487
     },
-    "title": "Adalet Kulesi",
-    "image": "",
+    "title": "Topkapı Adalet Kulesi",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noaRoMH6QH6Kwyl4Gqsm7YE1adINBC6Fqo-zKObeQnaQnNFIyRGZ97yn9e3d5ItRldspZHDtEu1LxG0jDZhLdGOvu4etCMIDF1tNWD3ylPBXRcWSbbPrZ9ANtJNsXY8v2jjc-U=w408-h307-k-no",
     "iconPath": "assets/markers/tower.png"
   },
   {
@@ -1453,8 +1266,8 @@
       "lat": 41.01455237277495,
       "lng": 28.985565458081194
     },
-    "title": "Gotlar Sütunu",
-    "image": "",
+    "title": "Topkapı Gotlar Sütunu",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Gothic_Column.JPG/500px-Gothic_Column.JPG",
     "iconPath": "assets/markers/memorial.png"
   },
   {
@@ -1463,7 +1276,7 @@
       "lng": 28.98132287824452
     },
     "title": "İstanbul Arkeoloji Müzeleri",
-    "image": "",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/%C4%B0stanbul_Arkeoloji_M%C3%BCzeleri_%28collage%29_-_Arkeoloji_M%C3%BCzesi_%28%C3%BCstte%29%2C_Eski_%C5%9Eark_Eserleri_M%C3%BCzesi_%28solda%29%2C_%C3%87inili_K%C3%B6%C5%9Fk_M%C3%BCzesi_%28sa%C4%9Fda%29.jpg/800px-%C4%B0stanbul_Arkeoloji_M%C3%BCzeleri_%28collage%29_-_Arkeoloji_M%C3%BCzesi_%28%C3%BCstte%29%2C_Eski_%C5%9Eark_Eserleri_M%C3%BCzesi_%28solda%29%2C_%C3%87inili_K%C3%B6%C5%9Fk_M%C3%BCzesi_%28sa%C4%9Fda%29.jpg",
     "iconPath": "assets/markers/museum.png"
   },
   {
@@ -1528,15 +1341,6 @@
     "title": "Theodosius Dikilitaşı",
     "image": "https://storymap-images.s3.us-east-1.amazonaws.com/Theodosius-Dikilitasi1.jpg",
     "iconPath": "assets/markers/tower.png"
-  },
-  {
-    "position": {
-      "lat": 40.959791,
-      "lng": 29.1918835
-    },
-    "title": "Seyit Onbaşı Heykeli",
-    "image": "",
-    "iconPath": "assets/markers/monument.png"
   },
   {
     "position": {

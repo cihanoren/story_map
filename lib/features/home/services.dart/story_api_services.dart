@@ -42,7 +42,7 @@ class StoryService {
             {"role": "system", "content": "Sen bir tarih ve coğrafya uzmanısın."},
             {
               "role": "user",
-              "content": "$placeName hakkında kısa ve etkileyici bir şekilde hikayesini anlat."
+              "content": "$placeName hakkında kısa ve etkileyici bir şekilde yaklaşık 200 kelime ile hikayesini anlat."
             }
           ],
         }),

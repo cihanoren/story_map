@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:story_map/features/home/services.dart/connectivity_service.dart';
 import 'package:story_map/features/home/views/card_details.dart';
 import 'package:story_map/features/home/views/explore_page.dart';
 import 'package:story_map/features/home/views/map_view.dart';
@@ -14,6 +15,29 @@ class Home extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<Home> createState() => _HomeState();
+}
+
+class ConnectionBanner extends ConsumerWidget {
+  const ConnectionBanner({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isOffline = ref.watch(connectivityServiceProvider).isOffline;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      height: isOffline ? 100 : 0,
+      width: double.infinity,
+      color: Colors.grey,
+      alignment: Alignment.center,
+      child: isOffline
+          ? const Text(
+              'İnternet bağlantısı yok',
+              style: TextStyle(color: Colors.white, fontSize: 15),
+            )
+          : const SizedBox.shrink(),
+    );
+  }
 }
 
 class _HomeState extends ConsumerState<Home> {
@@ -28,11 +52,17 @@ class _HomeState extends ConsumerState<Home> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _pages,
+      body: Column(
+        children: [
+          const ConnectionBanner(),
+          Expanded(
+            child: IndexedStack(
+              index: _selectedIndex,
+              children: _pages,
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
@@ -192,33 +222,36 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            children: List.generate(4, (i) {
-                              final imageUrl = i < placeImageUrls.length
-                                  ? placeImageUrls[i]
-                                  : null;
+                            children: List.generate(
+                              4,
+                              (i) {
+                                final imageUrl = i < placeImageUrls.length
+                                    ? placeImageUrls[i]
+                                    : null;
 
-                              return Expanded(
-                                child: Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 4),
-                                  height: 80,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(8),
-                                    image:
-                                        imageUrl != null && imageUrl.isNotEmpty
-                                            ? DecorationImage(
-                                                image: NetworkImage(imageUrl),
-                                                fit: BoxFit.cover,
-                                              )
-                                            : null,
+                                return Expanded(
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 4),
+                                    height: 80,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(8),
+                                      image: imageUrl != null &&
+                                              imageUrl.isNotEmpty
+                                          ? DecorationImage(
+                                              image: NetworkImage(imageUrl),
+                                              fit: BoxFit.cover,
+                                            )
+                                          : null,
+                                    ),
+                                    child: imageUrl == null || imageUrl.isEmpty
+                                        ? const Center(child: Text("Boş"))
+                                        : null,
                                   ),
-                                  child: imageUrl == null || imageUrl.isEmpty
-                                      ? const Center(child: Text("Boş"))
-                                      : null,
-                                ),
-                              );
-                            }),
+                                );
+                              },
+                            ),
                           ),
                           const SizedBox(height: 16),
                           Center(

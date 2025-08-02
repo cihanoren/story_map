@@ -24,7 +24,19 @@ class ReportIssuePage extends StatelessWidget {
     final TextEditingController controller = TextEditingController();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Sorun Bildir")),
+      appBar: AppBar(
+        title: const Text(
+          "Sorun Bildir",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+              color: Theme.of(context).textTheme.bodyLarge?.color),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -49,12 +61,16 @@ class ReportIssuePage extends StatelessWidget {
                 if (message.isNotEmpty) {
                   _sendEmail(message);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Mail uygulaması açılıyor...")),
+                    const SnackBar(
+                        content: Text("Mail uygulaması açılıyor...")),
                   );
                   Navigator.pop(context);
                 }
               },
-              child: const Text("Gönder", style: TextStyle(color: Colors.black),),
+              child: const Text(
+                "Gönder",
+                style: TextStyle(color: Colors.black),
+              ),
             ),
           ],
         ),

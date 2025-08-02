@@ -390,28 +390,43 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _pickImage(ImageSource source) async {
-    final pickedFile = await picker.pickImage(source: source);
-    if (pickedFile != null) {
-      final file = File(pickedFile.path);
-      setState(() {
-        _imageFile = file;
-      });
+  final user = FirebaseAuth.instance.currentUser;
 
-      if (userId != null) {
-        final storageRef =
-            FirebaseStorage.instance.ref().child('profile_images/$userId.jpg');
-        await storageRef.putFile(file);
-        final imageUrl = await storageRef.getDownloadURL();
-
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
-            .update({
-          'profileImageUrl': imageUrl,
-        });
-      }
+  if (user == null || user.isAnonymous) {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Profil resmi sadece giriş yapmış kullanıcılar için değiştirilebilir."),
+      ));
     }
+    return;
   }
+
+  final pickedFile = await picker.pickImage(source: source);
+  if (pickedFile != null) {
+    final file = File(pickedFile.path);
+    setState(() {
+      _imageFile = file;
+    });
+
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child('profile_images/${user.uid}.jpg');
+    await storageRef.putFile(file);
+    final imageUrl = await storageRef.getDownloadURL();
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .update({
+      'profileImageUrl': imageUrl,
+    });
+
+    setState(() {
+      _userProfileImageUrl = imageUrl;
+    });
+  }
+}
+
 
   void _showImagePickerOptions() {
     showModalBottomSheet(

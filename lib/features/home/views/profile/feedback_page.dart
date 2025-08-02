@@ -23,7 +23,22 @@ class FeedbackPage extends StatelessWidget {
     final TextEditingController controller = TextEditingController();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Geri Bildirim")),
+      appBar: AppBar(
+        title: Text(
+          "Geri Bildirim",
+          style: TextStyle(
+            color: Theme.of(context).textTheme.titleLarge?.color,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+              color: Theme.of(context).textTheme.bodyLarge?.color),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -48,7 +63,8 @@ class FeedbackPage extends StatelessWidget {
                 if (message.isNotEmpty) {
                   _sendEmail(message);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Mail uygulaması açılıyor...")),
+                    const SnackBar(
+                        content: Text("Mail uygulaması açılıyor...")),
                   );
                   Navigator.pop(context);
                 }

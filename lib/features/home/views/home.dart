@@ -186,96 +186,110 @@ class _HomePageState extends State<HomePage> {
       ),
       onRefresh: _loadPageData,
       child: isLoading
-          ? const Center()
-          : ListView.builder(
-              padding: const EdgeInsets.fromLTRB(16, 50, 16, 16),
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: routeTitles.length,
-              itemBuilder: (context, index) {
-                final routeTitle = routeTitles[index];
-                final placeImageUrls = placeImageUrlsList[index];
-                final placeNames = placeNamesList[index];
-                final routeId = routeIds[index];
-
-                return InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CardDetails(
-                        routeId:
-                            routeId, // Veya uygun routeId'yi burada kullanın
-                        routeTitle: routeTitle,
-                        placeNames: placeNames,
-                        imagesUrls: placeImageUrls,
-                      ),
+          ? const Center(
+              child: CircularProgressIndicator()) // Yükleme sırasında spinner
+          : routeTitles.isEmpty
+              ? const Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 80),
+                    child: Text(
+                      "Henüz kaydedilmiş bir rotanız yok.\nYeni bir rota oluşturmak için haritayı kullanabilirsiniz.",
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                  child: Card(
-                    elevation: 4,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: List.generate(
-                              4,
-                              (i) {
-                                final imageUrl = i < placeImageUrls.length
-                                    ? placeImageUrls[i]
-                                    : null;
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(16, 50, 16, 16),
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: routeTitles.length,
+                  itemBuilder: (context, index) {
+                    final routeTitle = routeTitles[index];
+                    final placeImageUrls = placeImageUrlsList[index];
+                    final placeNames = placeNamesList[index];
+                    final routeId = routeIds[index];
 
-                                return Expanded(
-                                  child: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 4),
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
-                                      borderRadius: BorderRadius.circular(8),
-                                      image: imageUrl != null &&
-                                              imageUrl.isNotEmpty
-                                          ? DecorationImage(
-                                              image: NetworkImage(imageUrl),
-                                              fit: BoxFit.cover,
-                                            )
-                                          : null,
-                                    ),
-                                    child: imageUrl == null || imageUrl.isEmpty
-                                        ? const Center(child: Text("Boş"))
-                                        : null,
-                                  ),
-                                );
-                              },
-                            ),
+                    return InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CardDetails(
+                            routeId:
+                                routeId, // Veya uygun routeId'yi burada kullanın
+                            routeTitle: routeTitle,
+                            placeNames: placeNames,
+                            imagesUrls: placeImageUrls,
                           ),
-                          const SizedBox(height: 16),
-                          Center(
-                            child: Text(
-                              routeTitle,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      child: Card(
+                        elevation: 4,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: List.generate(
+                                  4,
+                                  (i) {
+                                    final imageUrl = i < placeImageUrls.length
+                                        ? placeImageUrls[i]
+                                        : null;
+
+                                    return Expanded(
+                                      child: Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 4),
+                                        height: 80,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          image: imageUrl != null &&
+                                                  imageUrl.isNotEmpty
+                                              ? DecorationImage(
+                                                  image: NetworkImage(imageUrl),
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : null,
+                                        ),
+                                        child: imageUrl == null ||
+                                                imageUrl.isEmpty
+                                            ? const Center(child: Text("Boş"))
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
-                            ),
+                              const SizedBox(height: 16),
+                              Center(
+                                child: Text(
+                                  routeTitle,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                placeNames.skip(1).join(' - '),
+                                style: const TextStyle(fontSize: 14),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            placeNames.skip(1).join(' - '),
-                            style: const TextStyle(fontSize: 14),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-            ),
+                    );
+                  },
+                ),
     );
   }
 }

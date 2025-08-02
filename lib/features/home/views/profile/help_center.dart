@@ -41,7 +41,16 @@ class _HelpCenterState extends State<HelpCenter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Yardım Merkezi")),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: const Text("Yardım Merkezi", style: TextStyle(color: Colors.black),),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+              color: Theme.of(context).textTheme.bodyLarge?.color),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(

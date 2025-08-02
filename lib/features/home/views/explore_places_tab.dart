@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:story_map/features/home/services.dart/InterstitialAdManager.dart';
 
 class ExplorePlacesTab extends StatefulWidget {
   const ExplorePlacesTab({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
   List<Map<String, dynamic>> _topRatedPlaces = [];
   Map<String, String> _titleToImageMap = {};
   bool _isLoading = true;
+  int _tapCount = 0;
 
   @override
   void initState() {
@@ -148,60 +150,74 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
             ),
             child: ListTile(
               onTap: () async {
-                final storyText = await _fetchStory(title);
+                _tapCount++;
 
-                if (context.mounted) {
-                  showModalBottomSheet(
-                    context: context,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(20)),
-                    ),
-                    isScrollControlled: true,
-                    backgroundColor: Colors.white,
-                    builder: (context) {
-                      return DraggableScrollableSheet(
-                        initialChildSize: 0.7, // Başlangıçta %70
-                        minChildSize: 0.3, // En az %30
-                        maxChildSize: 0.95, // En fazla %95
-                        expand: false,
-                        builder: (context, scrollController) {
-                          return SingleChildScrollView(
-                            controller: scrollController,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 24),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Center(
-                                  child: Text(
-                                    title,
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
+                final showAd = _tapCount % 2 == 0; // Her 2 tıklamada bir göster
+
+                showBottomSheet() async {
+                  final storyText = await _fetchStory(title);
+
+                  if (context.mounted) {
+                    showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(20)),
+                      ),
+                      isScrollControlled: true,
+                      backgroundColor: Colors.white,
+                      builder: (context) {
+                        return DraggableScrollableSheet(
+                          initialChildSize: 0.7,
+                          minChildSize: 0.3,
+                          maxChildSize: 0.95,
+                          expand: false,
+                          builder: (context, scrollController) {
+                            return SingleChildScrollView(
+                              controller: scrollController,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 24),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      title,
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 16),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: imageUrl != null
-                                      ? Image.network(imageUrl)
-                                      : Image.asset("assets/images/avatar.jpg"),
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  storyText ??
-                                      "Bu mekan için bir hikaye bulunamadı.",
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                                const SizedBox(height: 24),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  );
+                                  const SizedBox(height: 16),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: imageUrl != null
+                                        ? Image.network(imageUrl)
+                                        : Image.asset(
+                                            "assets/images/avatar.jpg"),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    storyText ??
+                                        "Bu mekan için bir hikaye bulunamadı.",
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                  const SizedBox(height: 24),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    );
+                  }
+                }
+
+                if (showAd) {
+                  final adManager = InterstitialAdManager();
+                  adManager.loadAndShowAd(() => showBottomSheet());
+                } else {
+                  await showBottomSheet();
                 }
               },
               leading: ClipRRect(

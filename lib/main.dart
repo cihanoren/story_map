@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:story_map/core/theme/theme_provider.dart';
 import 'package:story_map/core/theme/app_theme.dart';
@@ -17,6 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await MarkerIcons.loadIcons(); // ikonları önceden yükle
+  await MobileAds.instance.initialize(); // Reklam SDK'sını başlat
 
   runApp(const ProviderScope(child: MyApp()));
 }

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:story_map/features/home/controller.dart/predefined_markers.dart';
 import 'package:story_map/features/home/models.dart/route_model.dart';
+import 'package:story_map/features/home/services.dart/InterstitialAdManager.dart';
 import 'package:story_map/features/home/services.dart/route_service.dart';
 import 'package:story_map/features/home/views/bottom_sheet.dart';
 import 'package:story_map/main.dart';
@@ -23,6 +24,7 @@ final mapControllerProvider =
 
 class MapController extends StateNotifier<Map<String, dynamic>> {
   GoogleMapController? _googleMapController;
+  int _markerClickCounter = 0;
 
   MapController()
       : super({
@@ -37,6 +39,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     _googleMapController = controller;
   }
 
+  // Konumun doğruluğunu kontrol et ve kullanıcıya izin iste
   Future<void> _determinePosition() async {
     final context = navigatorKey.currentContext;
 
@@ -107,6 +110,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     }
   }
 
+  // Kullanıcıya konum izni verildiğinde çağrılır
   void _showDialog({
     required BuildContext context,
     required String title,
@@ -245,6 +249,22 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     final context = navigatorKey.currentContext;
     if (context == null || _googleMapController == null) return;
 
+    _markerClickCounter++;
+
+    // Her 2 tıklamadan 1'inde reklam göster
+    if (_markerClickCounter % 2 == 0) {
+      final adManager = InterstitialAdManager();
+      adManager.loadAndShowAd(() {
+        _openStoryBottomSheet(
+            context, title, imageUrl); // Reklam kapandıktan sonra
+      });
+    } else {
+      _openStoryBottomSheet(context, title, imageUrl); // Direkt göster
+    }
+  }
+
+  void _openStoryBottomSheet(
+      BuildContext context, String title, String imageUrl) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -430,56 +450,54 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
   }
 
 // Directions API'den veri çekiyoruz
-  Future<List<LatLng>> _getRouteFromApi(
-    LatLng origin, LatLng destination, String apiKey, String travelMode) async {
-  // İnternet bağlantısı kontrolü
-  final hasConnection = await _checkInternetConnection();
-  if (!hasConnection) {
-    if (navigatorKey.currentContext != null) {
-      ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
-        const SnackBar(
-          content: Text("İnternet bağlantısı yok. Rota oluşturulamadı."),
-        ),
-      );
-    }
-    return [];
-  }
-
-  final url = "https://maps.googleapis.com/maps/api/directions/json"
-      "?origin=${origin.latitude},${origin.longitude}"
-      "&destination=${destination.latitude},${destination.longitude}"
-      "&mode=$travelMode"
-      "&key=$apiKey";
-
-  try {
-    final response = await http.get(Uri.parse(url));
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      if (data['routes'] != null && (data['routes'] as List).isNotEmpty) {
-        final points = data['routes'][0]['overview_polyline']['points'];
-        return _decodePolyline(points);
-      } else {
-        print("Google API route not found.");
-        return [];
+  Future<List<LatLng>> _getRouteFromApi(LatLng origin, LatLng destination,
+      String apiKey, String travelMode) async {
+    // İnternet bağlantısı kontrolü
+    final hasConnection = await _checkInternetConnection();
+    if (!hasConnection) {
+      if (navigatorKey.currentContext != null) {
+        ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+          const SnackBar(
+            content: Text("İnternet bağlantısı yok. Rota oluşturulamadı."),
+          ),
+        );
       }
-    } else {
-      print("Google API HTTP error: ${response.statusCode}");
       return [];
     }
-  } catch (e) {
-    print("Google API exception: $e");
-    return [];
+
+    final url = "https://maps.googleapis.com/maps/api/directions/json"
+        "?origin=${origin.latitude},${origin.longitude}"
+        "&destination=${destination.latitude},${destination.longitude}"
+        "&mode=$travelMode"
+        "&key=$apiKey";
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['routes'] != null && (data['routes'] as List).isNotEmpty) {
+          final points = data['routes'][0]['overview_polyline']['points'];
+          return _decodePolyline(points);
+        } else {
+          print("Google API route not found.");
+          return [];
+        }
+      } else {
+        print("Google API HTTP error: ${response.statusCode}");
+        return [];
+      }
+    } catch (e) {
+      print("Google API exception: $e");
+      return [];
+    }
   }
-}
 
 // İnternet bağlantısını kontrol eden fonksiyon
-Future<bool> _checkInternetConnection() async {
-  final connectivityResult = await Connectivity().checkConnectivity();
-  return connectivityResult != ConnectivityResult.none;
-}
-
-
+  Future<bool> _checkInternetConnection() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    return connectivityResult != ConnectivityResult.none;
+  }
 
 // Zoom in ve zoom out fonksiyonları
   double _currentZoom = 15;

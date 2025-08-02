@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:story_map/core/theme/theme_provider.dart';
 import 'package:story_map/features/auth/views/sing_in.dart';
+import 'package:story_map/features/home/services.dart/delete_user.dart';
 import 'package:story_map/features/home/views/profile/account__info.dart';
 import 'package:story_map/features/home/views/profile/change_password.dart';
 import 'package:story_map/features/home/views/profile/help_center.dart';
+import 'package:story_map/features/home/views/profile/privacy_policy.dart';
 import 'package:story_map/main.dart';
 
 class ProfileSettingPage extends ConsumerStatefulWidget {
@@ -87,7 +89,21 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
                   : ThemeMode.dark;
               ref.read(themeProvider.notifier).state = newTheme;
             },
-          ),ListTile(
+          ),
+          ListTile(
+            leading: const Icon(Icons.policy_rounded),
+            title: const Text("Gizlilik Politikası"),
+            onTap: () {
+              // Gizlilik Politikası ekranına yönlendirme yapar
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PrivacyPolicyPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.help_rounded),
             title: const Text("Yardım ve Destek"),
             onTap: () {
@@ -147,7 +163,17 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
                 );
               }
             },
-          ),
+          ),/*
+          ListTile(
+            leading: const Icon(Icons.delete_forever, color: Colors.red),
+            title: const Text(
+              "Hesabı Sil",
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
+            ),
+            onTap: () async {
+              await deleteUserAccount(context);
+            },
+          ),*/
         ],
       ),
     );

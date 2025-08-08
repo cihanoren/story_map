@@ -6,9 +6,10 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:story_map/core/theme/theme_provider.dart';
 import 'package:story_map/core/theme/app_theme.dart';
-import 'package:story_map/features/auth/views/sing_in.dart';
+import 'package:story_map/features/auth/views/sign_in.dart';
 import 'package:story_map/features/home/services.dart/connectivity_service.dart';
 import 'package:story_map/features/home/views/home.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 import 'package:story_map/utils/marker_icons.dart';
 import 'firebase_options.dart';
 
@@ -40,13 +41,15 @@ class MyApp extends ConsumerWidget {
       darkTheme: AppThemes.darkTheme,
       themeMode: themeMode,
       home: const SplashPage(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale('en'), // İstersen default dil için kullan
     );
   }
 }
 
-
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key}) : super(key: key);
+  const SplashPage({super.key});
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -70,12 +73,12 @@ class _SplashPageState extends State<SplashPage> {
       await prefs.setBool("is_logged_in", true);
     }
 
-    await Future.delayed(const Duration(seconds: 2)); 
+    await Future.delayed(const Duration(seconds: 2));
 
     if (isLoggedIn) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const Home()), 
+        MaterialPageRoute(builder: (_) => const Home()),
       );
     } else {
       Navigator.pushReplacement(
@@ -90,10 +93,10 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Image.asset("assets/images/StoryMap_splash.png", 
-          fit: BoxFit.cover),
-        ));
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child:
+          Image.asset("assets/images/StoryMap_splash.png", fit: BoxFit.cover),
+    ));
   }
 }

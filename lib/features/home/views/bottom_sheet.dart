@@ -5,6 +5,7 @@ import 'package:story_map/features/home/models.dart/comment_model.dart';
 import 'package:story_map/features/home/services.dart/comment_service.dart';
 import 'package:story_map/features/home/services.dart/rating_service.dart';
 import 'package:story_map/features/home/services.dart/story_api_services.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 
 class StoryBottomSheet extends StatelessWidget {
   final String title;
@@ -70,10 +71,12 @@ class StoryBottomSheet extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return _buildLoadingAnimation();
               } else if (snapshot.hasError) {
-                return Text("Hikaye yüklenirken hata oluştu.",
+                return Text(AppLocalizations.of(context)!.storyLoadingError,
                     style: TextStyle(fontSize: 16));
               } else {
-                return Text(snapshot.data ?? "Hikaye bulunamadı.",
+                return Text(
+                    snapshot.data ??
+                        AppLocalizations.of(context)!.storyNotFound,
                     style: TextStyle(fontSize: 16));
               }
             },
@@ -98,7 +101,9 @@ class StoryBottomSheet extends StatelessWidget {
                   children: [
                     Icon(Icons.star, color: Colors.yellow),
                     SizedBox(width: 10),
-                    Text("Puan Ver", style: TextStyle(color: Colors.black)),
+                    Text(AppLocalizations.of(context)!.evaluate,
+                        style: TextStyle(
+                            color: Colors.black)), // "Değerlendir" metni
                   ],
                 ),
               ),
@@ -122,7 +127,7 @@ class StoryBottomSheet extends StatelessWidget {
                         final countText =
                             snapshot.hasData ? " (${snapshot.data})" : "";
                         return Text(
-                          "Yorumlar$countText",
+                          "${AppLocalizations.of(context)!.comments} + $countText",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 14,
@@ -157,7 +162,7 @@ class StoryBottomSheet extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text("Bu mekana kaç puan verirsiniz?",
+                  Text(AppLocalizations.of(context)!.ratePlace,
                       style: TextStyle(fontSize: 18)),
                   SizedBox(height: 16),
                   Slider(
@@ -177,7 +182,7 @@ class StoryBottomSheet extends StatelessWidget {
                   ElevatedButton.icon(
                     icon: Icon(Icons.star, color: Colors.yellow),
                     label: Text(
-                      "Puanı Gönder (${rating.toStringAsFixed(0)})",
+                      "${AppLocalizations.of(context)!.sendEvaluate} (${rating.toStringAsFixed(0)})",
                       style: TextStyle(color: Colors.black),
                     ),
                     onPressed: () async {
@@ -200,7 +205,9 @@ class StoryBottomSheet extends StatelessWidget {
                                 children: [
                                   Icon(Icons.check, color: Colors.green),
                                   SizedBox(width: 10),
-                                  Text("Puanınız başarıyla gönderildi",
+                                  Text(
+                                      AppLocalizations.of(context)!
+                                          .sendEvaluateSuccessfuly, // "Puan gönderildi" mesajı 
                                       style: TextStyle(color: Colors.black)),
                                 ],
                               )),
@@ -208,8 +215,12 @@ class StoryBottomSheet extends StatelessWidget {
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                              duration: Duration(seconds: 2),
-                              content: Text("Puan gönderilirken hata oluştu")),
+                            duration: Duration(seconds: 2),
+                            content: Text(
+                              AppLocalizations.of(context)!
+                                  .sendEvaluateUnSuccessfuly,   // "Puan gönderilemedi" mesajı
+                            ), 
+                          ),
                         );
                       }
                       print("Puan gönderildi: $rating");
@@ -252,7 +263,7 @@ class StoryBottomSheet extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Text("Yorumlar",
+                  Text(AppLocalizations.of(context)!.comments,
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   SizedBox(height: 12),
@@ -264,10 +275,10 @@ class StoryBottomSheet extends StatelessWidget {
                             ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         } else if (snapshot.hasError) {
-                          return Center(child: Text("Yorumlar yüklenemedi."));
+                          return Center(child: Text(AppLocalizations.of(context)!.commentsLoadingError)); // "Yorumlar yüklenirken hata oluştu" mesajı
                         } else if (!snapshot.hasData ||
                             snapshot.data!.isEmpty) {
-                          return Center(child: Text("Henüz yorum yapılmamış."));
+                          return Center(child: Text(AppLocalizations.of(context)!.noCommentsYet)); // "Henüz yorum yok" mesajı
                         } else {
                           final comments = snapshot.data!;
                           return ListView.builder(
@@ -299,7 +310,7 @@ class StoryBottomSheet extends StatelessWidget {
                         child: TextField(
                           controller: _commentController,
                           decoration: InputDecoration(
-                            hintText: "Yorumunuzu yazın...",
+                            hintText: AppLocalizations.of(context)!.writeComment, // "Yorumunuzu yazın" mesajı
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
@@ -316,7 +327,7 @@ class StoryBottomSheet extends StatelessWidget {
 
                           final comment = CommentModel(
                             userId: user.uid,
-                            userName: user.email?.split('@').first ?? "Anonim",
+                            userName: user.email?.split('@').first ?? AppLocalizations.of(context)!.anonim, // "Anonim Kullanıcı" mesajı
                             comment: text,
                             timestamp: Timestamp.now(),
                           );
@@ -418,7 +429,7 @@ class _AnimatedLoadingTextState extends State<_AnimatedLoadingText>
       child: Padding(
         padding: const EdgeInsets.only(top: 10),
         child: Text(
-          "Hikaye yükleniyor...",
+          AppLocalizations.of(context)!.storyLoading, // "Yükleniyor..." mesajı
           style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,

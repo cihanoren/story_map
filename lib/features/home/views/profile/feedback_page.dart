@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FeedbackPage extends StatelessWidget {
   const FeedbackPage({super.key});
 
-  Future<void> _sendEmail(String message) async {
+  Future<void> _sendEmail(BuildContext context, String message) async {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
       path: 'orencihan31@gmail.com', // kendi mailini yazabilirsin
@@ -14,7 +15,7 @@ class FeedbackPage extends StatelessWidget {
     if (await canLaunchUrl(emailLaunchUri)) {
       await launchUrl(emailLaunchUri);
     } else {
-      debugPrint("Mail uygulaması açılamadı.");
+      debugPrint(AppLocalizations.of(context)!.notOpenMailApp);
     }
   }
 
@@ -25,7 +26,7 @@ class FeedbackPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Geri Bildirim",
+          AppLocalizations.of(context)!.feedback,
           style: TextStyle(
             color: Theme.of(context).textTheme.titleLarge?.color,
           ),
@@ -43,13 +44,13 @@ class FeedbackPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const Text("Uygulama hakkındaki düşüncelerini paylaş:"),
+            Text(AppLocalizations.of(context)!.feedbackMessageInfo),
             const SizedBox(height: 10),
             TextField(
               controller: controller,
               maxLines: 6,
-              decoration: const InputDecoration(
-                hintText: "Örn: Arayüz çok hoşuma gitti...",
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.feedbackHintText, // "Geri bildirim mesajınızı buraya yazın..."
                 border: OutlineInputBorder(),
               ),
             ),
@@ -61,16 +62,18 @@ class FeedbackPage extends StatelessWidget {
               onPressed: () {
                 final message = controller.text.trim();
                 if (message.isNotEmpty) {
-                  _sendEmail(message);
+                  _sendEmail(context, message);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text("Mail uygulaması açılıyor...")),
+                    SnackBar(
+                      content:
+                          Text(AppLocalizations.of(context)!.openingMailApp), // "Mail uygulaması açılıyor..."
+                    ),
                   );
                   Navigator.pop(context);
                 }
               },
-              child: const Text(
-                "Gönder",
+              child: Text(
+                AppLocalizations.of(context)!.send, // "Gönder"
                 style: TextStyle(color: Colors.black),
               ),
             ),

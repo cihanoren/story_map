@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 
 String? _userProfileImageUrl; // class'ın en üstüne ekle
 
@@ -89,7 +90,9 @@ class _AccountInfoState extends State<AccountInfo> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.yellow[700],
           content: Text(
-              "Bu kullanıcı adı zaten kullanımda. Lütfen başka bir ad seçin."),
+            AppLocalizations.of(context)!
+                .usernameWasTaken, // "Kullanıcı adı zaten alınmış"
+          ),
         ));
         return;
       }
@@ -106,14 +109,22 @@ class _AccountInfoState extends State<AccountInfo> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           backgroundColor: Colors.green,
-          content: Text("Bilgiler başarıyla güncellendi")),
+          content: Text(
+            AppLocalizations.of(context)!
+                .updateInfoSuccessfuly, // "Bilgiler başarıyla güncellendi"
+          ),
+        ),
       );
     } catch (e) {
       print("Profil güncelleme hatası: $e");
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Bilgiler güncellenirken hata oluştu")),
+        SnackBar(
+          content: Text(
+            AppLocalizations.of(context)!.errorOccurredWhenInfoUpdate, // "Bilgiler güncellenirken bir hata oluştu"
+          ),
+        ),
       );
     }
   }
@@ -138,7 +149,8 @@ class _AccountInfoState extends State<AccountInfo> {
           children: [
             ListTile(
               leading: const Icon(Icons.photo_library),
-              title: const Text("Galeriden Seç"),
+              title: Text(AppLocalizations.of(context)!
+                  .chooseFromGallery), // "Galeriden Seç"
               onTap: () {
                 Navigator.pop(context);
                 _pickImage(ImageSource.gallery);
@@ -146,7 +158,8 @@ class _AccountInfoState extends State<AccountInfo> {
             ),
             ListTile(
               leading: const Icon(Icons.camera_alt),
-              title: const Text("Kamera ile Çek"),
+              title: Text(
+                  AppLocalizations.of(context)!.takePhoto), // "Fotoğraf Çek"
               onTap: () {
                 Navigator.pop(context);
                 _pickImage(ImageSource.camera);
@@ -164,7 +177,7 @@ class _AccountInfoState extends State<AccountInfo> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(
-          "Hesap Bilgileri",
+          AppLocalizations.of(context)!.accountInfo, // "Hesap Bilgileri"
           style:
               TextStyle(color: Theme.of(context).textTheme.titleLarge?.color),
         ),
@@ -199,7 +212,7 @@ class _AccountInfoState extends State<AccountInfo> {
                 ),
                 const SizedBox(height: 20),
                 _buildEditableField(
-                  label: "Adı",
+                  label: AppLocalizations.of(context)!.name, // "Ad"
                   controller: _nameController,
                   isEditing: _isEditingName,
                   onEdit: () {
@@ -208,7 +221,8 @@ class _AccountInfoState extends State<AccountInfo> {
                 ),
                 const SizedBox(height: 16),
                 _buildEditableField(
-                  label: "Kullanıcı Adı",
+                  label:
+                      AppLocalizations.of(context)!.username, // "Kullanıcı Adı"
                   controller: _usernameController,
                   isEditing: _isEditingUsername,
                   onEdit: () {
@@ -217,7 +231,7 @@ class _AccountInfoState extends State<AccountInfo> {
                 ),
                 const SizedBox(height: 16),
                 _buildEditableField(
-                  label: "E-posta",
+                  label: AppLocalizations.of(context)!.email, // "E-posta"
                   controller: _emailController,
                   isEditing: _isEditingEmail,
                   onEdit: () {

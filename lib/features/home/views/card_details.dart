@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 
 class CardDetails extends StatefulWidget {
   final String routeId;
@@ -68,8 +69,9 @@ class _CardDetailsState extends State<CardDetails> {
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: _placesFuture,
       builder: (context, snapshot) {
-        final title =
-            _routeTitleFromFirestore ?? widget.routeTitle ?? "Rota Detayları";
+        final title = _routeTitleFromFirestore ??
+            widget.routeTitle ??
+            AppLocalizations.of(context)!.routeDetails;
 
         return Scaffold(
           appBar: AppBar(
@@ -117,10 +119,10 @@ class _CardDetailsState extends State<CardDetails> {
                     child: SizedBox(
                       width: 180,
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.edit, color: Colors.purple),
                           SizedBox(width: 10),
-                          Text('Rotayı Düzenle'),
+                          Text(AppLocalizations.of(context)!.editRoute),
                         ],
                       ),
                     ),
@@ -130,11 +132,11 @@ class _CardDetailsState extends State<CardDetails> {
                     child: SizedBox(
                       width: 180, // genişlik artırıldı
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.switch_access_shortcut_outlined,
                               color: Colors.blue),
                           SizedBox(width: 10),
-                          Text('Keşfette Paylaş'),
+                          Text(AppLocalizations.of(context)!.shareInExplore),
                         ],
                       ),
                     ),
@@ -144,10 +146,10 @@ class _CardDetailsState extends State<CardDetails> {
                     child: SizedBox(
                       width: 180,
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.share, color: Colors.green),
                           SizedBox(width: 10),
-                          Text('Rotayı Paylaş'),
+                          Text(AppLocalizations.of(context)!.share),
                         ],
                       ),
                     ),
@@ -157,10 +159,10 @@ class _CardDetailsState extends State<CardDetails> {
                     child: SizedBox(
                       width: 180,
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.delete, color: Colors.red),
                           SizedBox(width: 10),
-                          Text('Rotayı Sil'),
+                          Text(AppLocalizations.of(context)!.deleteRoute),
                         ],
                       ),
                     ),
@@ -175,7 +177,8 @@ class _CardDetailsState extends State<CardDetails> {
             }
 
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(child: Text("Hiç mekan bulunamadı."));
+              return Center(
+                  child: Text(AppLocalizations.of(context)!.notFoundAnyPlace));
             }
 
             final places = snapshot.data!;
@@ -186,8 +189,10 @@ class _CardDetailsState extends State<CardDetails> {
               itemBuilder: (context, index) {
                 final place = places[index];
                 final imageUrl = place['image'] as String?;
-                final name = place['name'] ?? 'İsim yok';
-                final mode = place['mode'] ?? 'Bilinmiyor';
+                final name =
+                    place['name'] ?? AppLocalizations.of(context)!.noName;
+                final mode =
+                    place['mode'] ?? AppLocalizations.of(context)!.unKnown;
                 final lat = place['lat']?.toStringAsFixed(5) ?? '-';
                 final lng = place['lng']?.toStringAsFixed(5) ?? '-';
                 final createdAt = formatTimestamp(place['createdAt']);
@@ -228,7 +233,8 @@ class _CardDetailsState extends State<CardDetails> {
                               const SizedBox(height: 6),
                               Row(
                                 children: [
-                                  const Text("Ulaşım: ",
+                                  Text(
+                                      "${AppLocalizations.of(context)!.transport}: ",
                                       style: TextStyle(color: Colors.black87)),
                                   if (mode == "driving")
                                     const Icon(Icons.directions_car,
@@ -245,10 +251,12 @@ class _CardDetailsState extends State<CardDetails> {
                                 ],
                               ),
                               const SizedBox(height: 6),
-                              Text("Konum: $lat, $lng",
+                              Text(
+                                  "${AppLocalizations.of(context)!.location}: $lat, $lng",
                                   style:
                                       const TextStyle(color: Colors.black54)),
-                              Text("Tarih: $createdAt",
+                              Text(
+                                  "${AppLocalizations.of(context)!.date}: $createdAt",
                                   style:
                                       const TextStyle(color: Colors.black54)),
                             ],
@@ -276,8 +284,8 @@ class _CardDetailsState extends State<CardDetails> {
       final doc = await docRef.get();
       if (!doc.exists) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Rota bulunamadı."),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.routeNotFound),
             backgroundColor: Colors.red,
           ),
         );
@@ -300,8 +308,9 @@ class _CardDetailsState extends State<CardDetails> {
 
       if (isAlreadyShared) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Bu rota zaten keşfette paylaşılmış."),
+          SnackBar(
+            content:
+                Text(AppLocalizations.of(context)!.alreadyRouteSharedExplore),
             backgroundColor: Colors.orange,
           ),
         );
@@ -355,13 +364,13 @@ class _CardDetailsState extends State<CardDetails> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Row(
             children: [
               Icon(Icons.check_circle, color: Colors.green),
               SizedBox(width: 8),
               Text(
-                "Rota keşfet sayfasında paylaşıldı.",
+                AppLocalizations.of(context)!.routeSharedInExplore,
                 style: TextStyle(color: Colors.black),
               ),
             ],
@@ -372,7 +381,7 @@ class _CardDetailsState extends State<CardDetails> {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Hata oluştu: $e"),
+          content: Text("${AppLocalizations.of(context)!.errorOccured}: $e"),
           backgroundColor: Colors.red,
         ),
       );
@@ -388,13 +397,15 @@ class _CardDetailsState extends State<CardDetails> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text("Rota Adını Düzenle"),
+        title: Text(AppLocalizations.of(context)!
+            .editRouteTitle), // Başlık düzenleme başlığı
         content: TextField(
           controller: _titleController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.blue, width: 2)),
-            labelText: "Yeni Rota Başlığı",
+            labelText: AppLocalizations.of(context)!
+                .newRouteTitle, // Yeni rota başlığı
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(15)),
             ),
@@ -403,7 +414,9 @@ class _CardDetailsState extends State<CardDetails> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("İptal"),
+            child: Text(
+              AppLocalizations.of(context)!.cancel,
+            ),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -422,7 +435,9 @@ class _CardDetailsState extends State<CardDetails> {
               }
               Navigator.pop(context);
             },
-            child: const Text("Kaydet"),
+            child: Text(
+              AppLocalizations.of(context)!.save,
+            ),
           ),
         ],
       ),
@@ -433,15 +448,17 @@ class _CardDetailsState extends State<CardDetails> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Rotayı Sil'),
-        content: const Text(
-          'Bu rotayı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.',
+        title: Text(AppLocalizations.of(context)!.deleteRoute),
+        content: Text(
+          AppLocalizations.of(context)!.deleteRouteConfirmation,
           style: TextStyle(fontSize: 15),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('İptal'),
+            child: Text(
+              AppLocalizations.of(context)!.cancel,
+            ),
           ),
           TextButton(
             style: TextButton.styleFrom(backgroundColor: Colors.red),
@@ -449,7 +466,7 @@ class _CardDetailsState extends State<CardDetails> {
               Navigator.of(context).pop(); // dialogu kapat
               _deleteRoute(); // silme işlemini başlat
             },
-            child: Text('Sil',
+            child: Text(AppLocalizations.of(context)!.delete,
                 style: TextStyle(
                     color: Colors.white, fontWeight: FontWeight.bold)),
           ),
@@ -467,8 +484,8 @@ class _CardDetailsState extends State<CardDetails> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Rota başarıyla silindi'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.routeDeletedSuccessfuly),
             backgroundColor: Colors.red,
           ),
         );
@@ -480,7 +497,7 @@ class _CardDetailsState extends State<CardDetails> {
           content: Row(
             children: [
               Icon(Icons.error, color: Colors.red),
-              Text('Silme işlemi başarısız: $e'),
+              Text('${AppLocalizations.of(context)!.routeDeleteUnsuccessfuly}: $e'),
             ],
           ),
         ),

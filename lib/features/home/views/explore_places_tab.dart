@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:story_map/features/home/services.dart/InterstitialAdManager.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 
 class ExplorePlacesTab extends StatefulWidget {
-  const ExplorePlacesTab({Key? key}) : super(key: key);
+  const ExplorePlacesTab({super.key});
 
   @override
   State<ExplorePlacesTab> createState() => _ExplorePlacesTabState();
@@ -199,7 +200,8 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
                                   const SizedBox(height: 16),
                                   Text(
                                     storyText ??
-                                        "Bu mekan için bir hikaye bulunamadı.",
+                                        AppLocalizations.of(context)!
+                                            .noStoryAvailable, // Hikaye yoksa mesaj
                                     style: const TextStyle(fontSize: 16),
                                   ),
                                   const SizedBox(height: 24),
@@ -230,7 +232,9 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
               ),
               title: Text(title,
                   style: const TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text("Ortalama Puan: $rating ($count oy)"),
+              subtitle: Text(
+                "${AppLocalizations.of(context)!.averageScore} $rating (${count} ${AppLocalizations.of(context)!.ratingsCount})", // Ortalama puan ve oy sayısı
+              ),
               trailing: const Icon(Icons.star, color: Colors.amber),
             ),
           );

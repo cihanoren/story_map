@@ -5,6 +5,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:story_map/features/home/views/explore_route_details.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 
 class ExploreRoutesTab extends StatefulWidget {
   const ExploreRoutesTab({super.key});
@@ -159,8 +160,8 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
   child: Row(
     children: [
-      const Text(
-        "Bölge:",
+      Text(
+        AppLocalizations.of(context)!.region + ":",
         style: TextStyle(fontWeight: FontWeight.w600),
       ),
       const SizedBox(width: 10),
@@ -183,7 +184,7 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
               : 'all',
           items: _availableRegions.map((region) {
             String displayText =
-                region == 'all' ? 'Tüm Ülkeler' : region.toUpperCase();
+                region == 'all' ? AppLocalizations.of(context)!.allCountries : region.toUpperCase(); // Tüm ülkeler için özel metin
             return DropdownMenuItem<String>(
               value: region,
               child: Text(
@@ -241,9 +242,9 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
                   ),
                   child: ListView(
                     physics: const AlwaysScrollableScrollPhysics(),
-                    children: const [
+                    children: [
                       SizedBox(height: 150),
-                      Center(child: Text("Henüz paylaşılmış rota yok.")),
+                      Center(child: Text(AppLocalizations.of(context)!.notSharedRouteYet)),
                     ],
                   ),
                 );
@@ -308,7 +309,7 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18)),
                                   const SizedBox(height: 4),
-                                  Text("Paylaşıldı: $sharedAt",
+                                  Text(AppLocalizations.of(context)!.shared + ": $sharedAt", // Paylaşım tarihi mesajı 
                                       style:
                                           const TextStyle(color: Colors.grey)),
                                   const SizedBox(height: 12),
@@ -351,8 +352,8 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
                                         color: Colors.grey.shade300,
                                       ),
                                       alignment: Alignment.center,
-                                      child: const Text(
-                                        "Resim yok",
+                                      child: Text(
+                                        AppLocalizations.of(context)!.noImage, // Resim yok mesajı
                                         style: TextStyle(color: Colors.grey),
                                       ),
                                     ),

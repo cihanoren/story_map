@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:story_map/features/home/views/explore_routes_tab.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 import 'explore_places_tab.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -12,11 +13,14 @@ class ExplorePage extends StatefulWidget {
 class _ExplorePageState extends State<ExplorePage> {
   int selectedIndex = 0;
 
-  final List<String> tabTitles = ['Mekanlar', 'Rotalar'];
   final List<Widget> tabViews = const [ExplorePlacesTab(), ExploreRoutesTab()];
 
   @override
   Widget build(BuildContext context) {
+    final List<String> tabTitles = [
+      AppLocalizations.of(context)!.exploreTabPlaceTitle, // Mekanlar sekmesi başlığı
+      AppLocalizations.of(context)!.exploreTabRouteTitle // Rotalar sekmesi başlığı
+    ];
     return Column(
       children: [
         const SizedBox(height: 48), // status bar + boşluk
@@ -39,7 +43,8 @@ class _ExplorePageState extends State<ExplorePage> {
                       tabTitles[index],
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                        fontWeight:
+                            isSelected ? FontWeight.bold : FontWeight.normal,
                         color: isSelected ? Colors.deepPurple : Colors.grey,
                       ),
                     ),
@@ -49,7 +54,8 @@ class _ExplorePageState extends State<ExplorePage> {
                       height: 3,
                       width: 60,
                       decoration: BoxDecoration(
-                        color: isSelected ? Colors.deepPurple : Colors.transparent,
+                        color:
+                            isSelected ? Colors.deepPurple : Colors.transparent,
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),

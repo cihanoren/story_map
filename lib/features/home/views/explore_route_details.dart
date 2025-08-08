@@ -2,16 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 
 class ExploreRouteDetails extends StatefulWidget {
   final String routeId;
   final String routeTitle;
 
   const ExploreRouteDetails({
-    Key? key,
+    super.key,
     required this.routeId,
     required this.routeTitle,
-  }) : super(key: key);
+  });
 
   @override
   State<ExploreRouteDetails> createState() => _ExploreRouteDetailsState();
@@ -170,7 +171,9 @@ class _ExploreRouteDetailsState extends State<ExploreRouteDetails> {
                   }
 
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text("Hiç mekan bulunamadı."));
+                    return Center(
+                        child: Text(
+                            AppLocalizations.of(context)!.notFoundAnyPlace));
                   }
 
                   final places = snapshot.data!;
@@ -181,8 +184,10 @@ class _ExploreRouteDetailsState extends State<ExploreRouteDetails> {
                     itemBuilder: (context, index) {
                       final place = places[index];
                       final imageUrl = place['image'] as String?;
-                      final name = place['name'] ?? 'İsim yok';
-                      final mode = place['mode'] ?? 'Bilinmiyor';
+                      final name =
+                          place['name'] ?? AppLocalizations.of(context)!.noName;
+                      final mode = place['mode'] ??
+                          AppLocalizations.of(context)!.unKnown;
                       final lat = place['lat']?.toStringAsFixed(5) ?? '-';
                       final lng = place['lng']?.toStringAsFixed(5) ?? '-';
                       final sharedAt = formatTimestamp(place['sharedAt']);
@@ -225,7 +230,10 @@ class _ExploreRouteDetailsState extends State<ExploreRouteDetails> {
                                     const SizedBox(height: 6),
                                     Row(
                                       children: [
-                                        const Text("Ulaşım: ",
+                                        Text(
+                                            AppLocalizations.of(context)!
+                                                    .transport +
+                                                ": ",
                                             style: TextStyle(
                                                 color: Colors.black87)),
                                         if (mode == "driving")
@@ -243,10 +251,14 @@ class _ExploreRouteDetailsState extends State<ExploreRouteDetails> {
                                       ],
                                     ),
                                     const SizedBox(height: 6),
-                                    Text("Konum: $lat, $lng",
+                                    Text(
+                                        AppLocalizations.of(context)!.location +
+                                            ": $lat, $lng",
                                         style: const TextStyle(
                                             color: Colors.black54)),
-                                    Text("Paylaşım: $sharedAt",
+                                    Text(
+                                        AppLocalizations.of(context)!.sharing +
+                                            ": $sharedAt",
                                         style: const TextStyle(
                                             color: Colors.black54)),
                                   ],

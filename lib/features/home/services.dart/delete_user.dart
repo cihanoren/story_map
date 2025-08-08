@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:story_map/features/auth/views/sing_in.dart';
+import 'package:story_map/features/auth/views/sign_in.dart';
 import 'package:story_map/main.dart';
 
 Future<void> deleteUserAccount(BuildContext context) async {

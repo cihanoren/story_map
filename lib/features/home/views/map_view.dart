@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:story_map/core/config.dart';
 import 'package:story_map/features/home/controller.dart/maps_controller.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 import 'package:story_map/utils/marker_icons.dart';
 
 class MapView extends ConsumerWidget {
@@ -39,9 +40,11 @@ class MapView extends ConsumerWidget {
                       mapController.loadMarkers();
                     });
                   },
-                  zoomControlsEnabled: false, // Google Maps kendi zoom in out butonları
+                  zoomControlsEnabled:
+                      false, // Google Maps kendi zoom in out butonları
                   myLocationEnabled: true,
-                  myLocationButtonEnabled: false, // Google Maps kendi konum butonu
+                  myLocationButtonEnabled:
+                      false, // Google Maps kendi konum butonu
                   markers: mapState['markers'],
                   onTap: (LatLng position) {},
                 ),
@@ -117,8 +120,9 @@ class MapView extends ConsumerWidget {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        const Text(
-                                          "Kaç lokasyon gezmek istiyorsunuz?",
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .howManyLocationTripQuestion, // "Kaç konumlu gezi yapmak istersiniz?"
                                           style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold),
@@ -154,14 +158,17 @@ class MapView extends ConsumerWidget {
                                           ],
                                         ),
                                         const SizedBox(height: 20),
-                                        const Text(
-                                          "Ulaşım Modu Seçin",
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .selectTransportMode, // "Seyahat modu seçin:"
                                           style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         RadioListTile(
-                                          title: const Text('Araç (Driving)'),
+                                          title: Text(AppLocalizations.of(
+                                                  context)!
+                                              .driving), // "Araba (Driving)"
                                           value: 'driving',
                                           groupValue: selectedTravelMode,
                                           onChanged: (value) {
@@ -171,8 +178,9 @@ class MapView extends ConsumerWidget {
                                           },
                                         ),
                                         RadioListTile(
-                                          title:
-                                              const Text('Yürüyüş (Walking)'),
+                                          title: Text(AppLocalizations.of(
+                                                  context)!
+                                              .walking), // "Yürüyüş (Walking)"
                                           value: 'walking',
                                           groupValue: selectedTravelMode,
                                           onChanged: (value) {
@@ -182,8 +190,9 @@ class MapView extends ConsumerWidget {
                                           },
                                         ),
                                         RadioListTile(
-                                          title: const Text(
-                                              'Bisiklet (Bicycling)'),
+                                          title: Text(AppLocalizations.of(
+                                                  context)!
+                                              .bicycling), // "Bisiklet (Bicycling)"
                                           value: 'bicycling',
                                           groupValue: selectedTravelMode,
                                           onChanged: (value) {
@@ -230,7 +239,8 @@ class MapView extends ConsumerWidget {
                                                 horizontal: 32, vertical: 16),
                                           ),
                                           child: Text(
-                                            "Başla",
+                                            AppLocalizations.of(context)!
+                                                .start, // "Geziye Başla"
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
@@ -255,7 +265,8 @@ class MapView extends ConsumerWidget {
                         ),
                       ),
                       child: Text(
-                        "Geziye Başla",
+                        AppLocalizations.of(context)!
+                            .startTrip, // "Geziye Başla"
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -295,7 +306,9 @@ class MapView extends ConsumerWidget {
                                     child: Column(
                                       children: [
                                         const SizedBox(height: 20),
-                                        const Text("Gezi Rotası",
+                                        Text(
+                                            AppLocalizations.of(context)!
+                                                .tripRoute, // "Gezi Rotası mesajı"
                                             style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold)),
@@ -324,15 +337,18 @@ class MapView extends ConsumerWidget {
                                                   context: context,
                                                   builder: (context) {
                                                     return AlertDialog(
-                                                      title: const Text(
-                                                          "Rota Başlığı"),
+                                                      title: Text(AppLocalizations
+                                                              .of(context)!
+                                                          .routeTitle), // "Rota Başlığı"
                                                       content: TextField(
                                                         controller:
                                                             titleController,
                                                         decoration:
-                                                            const InputDecoration(
-                                                                hintText:
-                                                                    "Örn: Sultanahmet Gezisi"),
+                                                            InputDecoration(
+                                                          hintText: AppLocalizations
+                                                                  .of(context)!
+                                                              .tripHintText, // "Gezi başlığı girin örnek metni"
+                                                        ),
                                                       ),
                                                       actions: [
                                                         TextButton(
@@ -340,8 +356,11 @@ class MapView extends ConsumerWidget {
                                                               Navigator.of(
                                                                       context)
                                                                   .pop(),
-                                                          child: const Text(
-                                                              "İptal"),
+                                                          child: Text(
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .cancel, // "İptal"
+                                                          ),
                                                         ),
                                                         TextButton(
                                                           onPressed: () async {
@@ -371,12 +390,14 @@ class MapView extends ConsumerWidget {
                                                               ScaffoldMessenger
                                                                       .of(context)
                                                                   .showSnackBar(
-                                                                const SnackBar(
+                                                                SnackBar(
                                                                   backgroundColor:
                                                                       Colors
                                                                           .green,
                                                                   content: Text(
-                                                                    "Tur başarıyla kaydedildi!",
+                                                                    AppLocalizations.of(
+                                                                            context)!
+                                                                        .tourSavedSuccessfuly, // "Rota kaydedildi"
                                                                     style: TextStyle(
                                                                         color: Colors
                                                                             .white),
@@ -385,8 +406,10 @@ class MapView extends ConsumerWidget {
                                                               );
                                                             }
                                                           },
-                                                          child: const Text(
-                                                              "Kaydet"),
+                                                          child: Text(
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .save), // "Kaydet"
                                                         ),
                                                       ],
                                                     );
@@ -402,7 +425,9 @@ class MapView extends ConsumerWidget {
                                                         horizontal: 40,
                                                         vertical: 12),
                                               ),
-                                              child: const Text("Turu Kaydet"),
+                                              child: Text(AppLocalizations.of(
+                                                      context)!
+                                                  .saveTour), // "Rota Kaydet"
                                             ),
 
                                             // Tur Bitir Butonu
@@ -420,7 +445,9 @@ class MapView extends ConsumerWidget {
                                                         horizontal: 40,
                                                         vertical: 12),
                                               ),
-                                              child: const Text("Turu Bitir"),
+                                              child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .endTour), // "Turu Bitir"
                                             ),
                                           ],
                                         ),
@@ -440,7 +467,8 @@ class MapView extends ConsumerWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
                       ),
-                      child: const Text("Rotaları Gör / Turu Bitir",
+                      child: Text(
+                          "${AppLocalizations.of(context)!.seeTours} / ${AppLocalizations.of(context)!.endTour}", // "Turları Görüntüle / Turu Bitir"
                           style: TextStyle(fontSize: 16, color: Colors.white)),
                     ),
                   ),

@@ -10,6 +10,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:story_map/features/home/views/explore_route_details.dart';
 import 'package:story_map/features/home/views/profile/profile_settings.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 
 String? _userProfileImageUrl;
 
@@ -62,8 +63,9 @@ class _ProfilePageState extends State<ProfilePage> {
         return ListTile(
           leading: route['imageUrl'] != null
               ? CircleAvatar(backgroundImage: NetworkImage(route['imageUrl']))
-              : const CircleAvatar(child: Icon(Icons.map)),
-          title: Text(route['title'] ?? 'Başlıksız Rota'),
+              : CircleAvatar(child: Icon(Icons.map)),
+          title: Text(
+              route['title'] ?? AppLocalizations.of(context)!.unnamedRoute),
           subtitle:
               route['description'] != null ? Text(route['description']) : null,
           trailing: const Icon(Icons.chevron_right),
@@ -95,8 +97,9 @@ class _ProfilePageState extends State<ProfilePage> {
         return ListTile(
           leading: route['imageUrl'] != null
               ? CircleAvatar(backgroundImage: NetworkImage(route['imageUrl']))
-              : const CircleAvatar(child: Icon(Icons.map)),
-          title: Text(route['title'] ?? 'Başlıksız Rota'),
+              : CircleAvatar(child: Icon(Icons.map)),
+          title: Text(
+              route['title'] ?? AppLocalizations.of(context)!.unnamedRoute),
           subtitle:
               route['description'] != null ? Text(route['description']) : null,
           trailing: TextButton(
@@ -105,8 +108,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   route['routeId']; // explore_routes koleksiyondaki id
               _removeRouteFromExplore(exploreRouteId);
             },
-            child: const Text(
-              "Keşfetten Kaldır",
+            child: Text(
+              AppLocalizations.of(context)!.removeFromExplore,
               style: TextStyle(color: Colors.red),
             ),
           ),
@@ -127,12 +130,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              backgroundColor: Colors.white,
-              content: Text(
-                " Rota keşfetten kaldırıldı.",
-                style: TextStyle(color: Colors.black),
-              )),
+          SnackBar(
+            backgroundColor: Colors.white,
+            content: Text(
+              AppLocalizations.of(context)!.removeFromExploreSuccess,
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
         );
       }
     } catch (e) {
@@ -258,9 +262,9 @@ class _ProfilePageState extends State<ProfilePage> {
         if (context.mounted) {
           _showDialog(
             context: context,
-            title: 'Konum Servisi Kapalı',
-            content: 'Lütfen cihazınızın konum servisini açın.',
-            actionText: 'Ayarlar',
+            title: AppLocalizations.of(context)!.locationServiceDisable,
+            content: AppLocalizations.of(context)!.openLocationServiceMessage,
+            actionText: AppLocalizations.of(context)!.settings,
             onPressed: () {
               Geolocator.openLocationSettings();
             },
@@ -278,10 +282,10 @@ class _ProfilePageState extends State<ProfilePage> {
           if (context.mounted) {
             _showDialog(
               context: context,
-              title: 'Konum İzni Gerekli',
-              content:
-                  'Uygulamanın çalışabilmesi için konum izni vermelisiniz.',
-              actionText: 'Tamam',
+              title: AppLocalizations.of(context)!
+                  .requiredAppLocationPermissionMessage,
+              content: AppLocalizations.of(context)!.openLocationServiceMessage,
+              actionText: AppLocalizations.of(context)!.actionOK,
             );
           }
           return;
@@ -301,9 +305,10 @@ class _ProfilePageState extends State<ProfilePage> {
       if (context.mounted) {
         _showDialog(
           context: context,
-          title: 'Konum Hatası',
-          content: 'Konum alınırken bir hata oluştu:\n${e.toString()}',
-          actionText: 'Tamam',
+          title: AppLocalizations.of(context)!.locationError,
+          content:
+              '${AppLocalizations.of(context)!.getLocationError}:\n${e.toString()}',
+          actionText: AppLocalizations.of(context)!.actionOK,
         );
       }
     }
@@ -341,7 +346,7 @@ class _ProfilePageState extends State<ProfilePage> {
       // İnternet yoksa konum çözümleme yapma
       setState(() {
         _position = position;
-        _locationDescription = "Bağlantı yok (konum alınamadı)";
+        _locationDescription = AppLocalizations.of(context)!.noConnection;
       });
       return;
     }
@@ -390,43 +395,42 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _pickImage(ImageSource source) async {
-  final user = FirebaseAuth.instance.currentUser;
+    final user = FirebaseAuth.instance.currentUser;
 
-  if (user == null || user.isAnonymous) {
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Profil resmi sadece giriş yapmış kullanıcılar için değiştirilebilir."),
-      ));
+    if (user == null || user.isAnonymous) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.profilPhotoChangeRule),
+        ));
+      }
+      return;
     }
-    return;
+
+    final pickedFile = await picker.pickImage(source: source);
+    if (pickedFile != null) {
+      final file = File(pickedFile.path);
+      setState(() {
+        _imageFile = file;
+      });
+
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('profile_images/${user.uid}.jpg');
+      await storageRef.putFile(file);
+      final imageUrl = await storageRef.getDownloadURL();
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .update({
+        'profileImageUrl': imageUrl,
+      });
+
+      setState(() {
+        _userProfileImageUrl = imageUrl;
+      });
+    }
   }
-
-  final pickedFile = await picker.pickImage(source: source);
-  if (pickedFile != null) {
-    final file = File(pickedFile.path);
-    setState(() {
-      _imageFile = file;
-    });
-
-    final storageRef = FirebaseStorage.instance
-        .ref()
-        .child('profile_images/${user.uid}.jpg');
-    await storageRef.putFile(file);
-    final imageUrl = await storageRef.getDownloadURL();
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .update({
-      'profileImageUrl': imageUrl,
-    });
-
-    setState(() {
-      _userProfileImageUrl = imageUrl;
-    });
-  }
-}
-
 
   void _showImagePickerOptions() {
     showModalBottomSheet(
@@ -436,7 +440,7 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             ListTile(
               leading: const Icon(Icons.photo_library),
-              title: const Text("Galeriden Seç"),
+              title: Text(AppLocalizations.of(context)!.chooseFromGallery),
               onTap: () {
                 Navigator.pop(context);
                 _pickImage(ImageSource.gallery);
@@ -444,7 +448,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             ListTile(
               leading: const Icon(Icons.camera_alt),
-              title: const Text("Kamera ile Çek"),
+              title: Text(AppLocalizations.of(context)!.takePhoto),
               onTap: () {
                 Navigator.pop(context);
                 _pickImage(ImageSource.camera);
@@ -462,17 +466,17 @@ class _ProfilePageState extends State<ProfilePage> {
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Konum Bilgisi Gir"),
+        title: Text(AppLocalizations.of(context)!.enterLocationInfo),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(
-            hintText: "Örn: Artvin, Merkez",
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!.locationHintText,
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("İptal"),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -485,7 +489,9 @@ class _ProfilePageState extends State<ProfilePage> {
               }
               Navigator.pop(context);
             },
-            child: const Text("Kaydet"),
+            child: Text(
+              AppLocalizations.of(context)!.save,
+            ),
           ),
         ],
       ),
@@ -494,7 +500,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final displayLocation = _locationDescription ?? "Konum alınıyor...";
+    final displayLocation =
+        _locationDescription ?? AppLocalizations.of(context)!.gettingLocation;
 
     return Scaffold(
       body: SafeArea(
@@ -536,7 +543,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        _username ?? "Kullanıcı Adı",
+                        _username ?? AppLocalizations.of(context)!.username,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -546,7 +553,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       const SizedBox(height: 6),
                       if (!_isGuest)
                         Text(
-                          _email ?? "E-posta yükleniyor...",
+                          _email ?? AppLocalizations.of(context)!.loadingEmail,
                           style:
                               const TextStyle(fontSize: 16, color: Colors.grey),
                           textAlign: TextAlign.center,
@@ -577,7 +584,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         });
                         _fetchCurrentLocation();
                       },
-                      child: const Text("Anlık konuma geri dön"),
+                      child: Text(
+                          AppLocalizations.of(context)!.returnCurrentLocation),
                     ),
 
                   // -- Beğenilen Rotalar Bölümü --
@@ -593,7 +601,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           });
                         },
                         child: Text(
-                          "Beğendiklerin",
+                          AppLocalizations.of(context)!.liked,
                           style: TextStyle(
                             fontWeight: showLikedRoutes
                                 ? FontWeight.bold
@@ -611,7 +619,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           });
                         },
                         child: Text(
-                          "Paylaşımların",
+                          AppLocalizations.of(context)!.shared,
                           style: TextStyle(
                             fontWeight: !showLikedRoutes
                                 ? FontWeight.bold
@@ -630,8 +638,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     _isLoadingLikedRoutes
                         ? const Center(child: CircularProgressIndicator())
                         : _likedRoutes.isEmpty
-                            ? const Text(
-                                "Henüz beğendiğin bir rota yok.",
+                            ? Text(
+                                AppLocalizations.of(context)!.noLikedRouteYet,
                                 style:
                                     TextStyle(fontSize: 16, color: Colors.grey),
                               )
@@ -640,8 +648,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     _isLoadingOwnRoutes
                         ? const Center(child: CircularProgressIndicator())
                         : _userOwnRoutes.isEmpty
-                            ? const Text(
-                                "Henüz rota paylaşmamışsın.",
+                            ? Text(
+                                AppLocalizations.of(context)!.notSharedRouteYet,
                                 style:
                                     TextStyle(fontSize: 16, color: Colors.grey),
                               )

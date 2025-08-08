@@ -1,18 +1,52 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 import 'package:story_map/features/auth/controller/auth_controller.dart';
-import 'package:story_map/features/auth/views/sing_in.dart';
+import 'package:story_map/features/auth/controller/auth_google.dart';
+import 'package:story_map/features/auth/views/sign_up.dart';
+import 'package:story_map/features/home/views/home.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 
-class SignUp extends ConsumerWidget {
-  SignUp({super.key});
+class SignIn extends ConsumerStatefulWidget {
+  final bool showVerificationMessage;
 
+  const SignIn({super.key, this.showVerificationMessage = false});
+
+  @override
+  ConsumerState<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends ConsumerState<SignIn> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  bool _shouldShowVerification = false;
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    super.initState();
+    _shouldShowVerification = widget.showVerificationMessage;
+    if (_shouldShowVerification) {
+      Future.microtask(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content:
+                Text(AppLocalizations.of(context)!.sendEmailVerification), // "E-posta doğrulama gönderildi"
+            backgroundColor: Colors.orange,
+          ),
+        );
+        setState(() {
+          _shouldShowVerification = false; // Bir kez gösterdikten sonra sıfırla
+        });
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         alignment: Alignment.bottomCenter,
@@ -44,7 +78,7 @@ class SignUp extends ConsumerWidget {
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.3),
+                    color: Colors.white.withOpacity(0.1),
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(25),
                       topRight: Radius.circular(25),
@@ -56,10 +90,10 @@ class SignUp extends ConsumerWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Align(
+                        Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            "Sign Up",
+                            AppLocalizations.of(context)!.signIn, // "Giriş Yap"
                             style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                         ),
@@ -75,12 +109,12 @@ class SignUp extends ConsumerWidget {
                               controller: _emailController,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Email is required";
+                                  return AppLocalizations.of(context)!.emailRequired; // "E-posta gerekli"
                                 }
                                 return null;
                               },
-                              decoration: const InputDecoration(
-                                labelText: "E-mail",
+                              decoration: InputDecoration(
+                                labelText: AppLocalizations.of(context)!.email, // "E-posta"
                                 prefixIcon: Icon(Icons.email),
                                 border: InputBorder.none,
                               ),
@@ -88,6 +122,7 @@ class SignUp extends ConsumerWidget {
                             ),
                           ),
                         ),
+
                         const SizedBox(height: 10),
 
                         // Password Input
@@ -100,14 +135,12 @@ class SignUp extends ConsumerWidget {
                               controller: _passwordController,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Password is required";
-                                } else if (value.length < 6) {
-                                  return "Password must be at least 6 characters";
+                                  return AppLocalizations.of(context)!.passwordRequired; // "Şifre gerekli"
                                 }
                                 return null;
                               },
-                              decoration: const InputDecoration(
-                                labelText: "Password",
+                              decoration: InputDecoration(
+                                labelText: AppLocalizations.of(context)!.password, // "Şifre"
                                 prefixIcon: Icon(Icons.lock),
                                 border: InputBorder.none,
                               ),
@@ -115,32 +148,32 @@ class SignUp extends ConsumerWidget {
                             ),
                           ),
                         ),
+
                         const SizedBox(height: 10),
 
-                        // Sign Up Button
+                        // Sign In Button
                         ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               try {
                                 await ref
                                     .read(authControllerProvider.notifier)
-                                    .signUpWithEmailAndPassword(
+                                    .signInWithEmailAndPassword(
                                       email: _emailController.text,
                                       password: _passwordController.text,
                                     );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text("Succes Register"),
-                                  backgroundColor: Colors.green,
-                                ));
 
-                                // Başarılı kayıt sonrası Sign In sayfasına yönlendir ve mesaj göster
-                                Navigator.pushReplacement(
+                                // ✅ SharedPreferences: Oturum bilgisini sakla
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                await prefs.setBool("is_logged_in", true);
+
+                                // Ana sayfaya yönlendir
+                                Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) =>
-                                        SignIn(showVerificationMessage: true),
-                                  ),
+                                      builder: (_) => const Home()),
+                                  (route) => false,
                                 );
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -159,36 +192,96 @@ class SignUp extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          child: const Padding(
+                          child: Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 40, vertical: 15),
-                            child: Text("Sign Up"),
+                            child: Text(AppLocalizations.of(context)!.signIn), // "Giriş Yap"
                           ),
                         ),
 
                         const SizedBox(height: 15),
-                        
 
-                        // Sign In Link
+                        // Google İle Giriş Butonu
+                        SignInButton(
+                          Buttons.google,
+                          text: AppLocalizations.of(context)!.continueWithGoogle, // "Google ile Giriş Yap"
+                          onPressed: () async {
+                            final googleAuthService = GoogleAuthService();
+                            final userCredential =
+                                await googleAuthService.signInWithGoogle();
+
+                            if (userCredential != null) {
+                              // ✅ Oturum bilgisini sakla
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.setBool("is_logged_in", true);
+
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Home()),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(AppLocalizations.of(context)!.googleSignInFailed), // "Google ile giriş başarısız"
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          elevation: 3,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                        ),
+
+                        SizedBox(height: 5),
+
+                        // 📌 Anonim Giriş Butonu
+                        ElevatedButton(
+                          onPressed: () async {
+                            await ref
+                                .read(authControllerProvider.notifier)
+                                .signInAnonymously();
+
+                            // ✅ Oturum bilgisini sakla
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setBool("is_logged_in", true);
+
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Home()),
+                              (route) => false,
+                            );
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.signInAnonymously, // "Anonim Giriş Yap"
+                            style: TextStyle(color: Colors.black87),
+                          ),
+                        ),
+
+                        // Register Link
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              "Already have an account?",
+                            Text(
+                              AppLocalizations.of(context)!.dontHaveAccount, // "Hesabın yok mu?"
                               style: TextStyle(fontSize: 17),
                             ),
                             TextButton(
                               onPressed: () {
-                                Navigator.pushReplacement(
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignIn(
-                                            showVerificationMessage: true,
-                                          )),
+                                      builder: (context) => SignUp()),
                                 );
                               },
-                              child: const Text(
-                                "Sign In",
+                              child: Text(
+                                AppLocalizations.of(context)!.signUp, // "Kayıt Ol"
                                 style: TextStyle(
                                   fontSize: 17,
                                   color: Colors.indigoAccent,

@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:story_map/core/theme/theme_provider.dart';
-import 'package:story_map/features/auth/views/sing_in.dart';
-import 'package:story_map/features/home/services.dart/delete_user.dart';
+import 'package:story_map/features/auth/views/sign_in.dart';
+// import 'package:story_map/features/home/services.dart/delete_user.dart';
 import 'package:story_map/features/home/views/profile/account__info.dart';
 import 'package:story_map/features/home/views/profile/change_password.dart';
 import 'package:story_map/features/home/views/profile/help_center.dart';
 import 'package:story_map/features/home/views/profile/privacy_policy.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 import 'package:story_map/main.dart';
 
 class ProfileSettingPage extends ConsumerStatefulWidget {
@@ -27,7 +28,7 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(
-          "Ayarlar",
+          AppLocalizations.of(context)!.settings, // "Ayarlar"
           style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
         ),
         centerTitle: true,
@@ -41,7 +42,7 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
         children: [
           ListTile(
             leading: const Icon(Icons.manage_accounts_rounded),
-            title: const Text("Hesap Bilgileri"),
+            title: Text(AppLocalizations.of(context)!.accountInfo), // "Hesap Bilgileri"
             onTap: () {
               // Hesap bilgileri ekranına yönlendirme yapar
               Navigator.push(
@@ -54,7 +55,7 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
           ),
           ListTile(
             leading: const Icon(Icons.lock),
-            title: const Text("Şifreyi Değiştir"),
+            title: Text(AppLocalizations.of(context)!.changePassword), // "Şifre Değiştir"
             onTap: () {
               // Şifre değiştir ekranına yönlendirme yapar
               Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -64,14 +65,14 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
           ),
           ListTile(
             leading: const Icon(Icons.notifications),
-            title: const Text("Bildirim Ayarları"),
+            title: Text(AppLocalizations.of(context)!.notificationSettings), // "Bildirim Ayarları"
             onTap: () {
               // Bildirim ayarları ekranına yönlendirme yapılabilir
             },
           ),
           ListTile(
             leading: const Icon(Icons.language),
-            title: const Text("Dil Seçenekleri"),
+            title: Text(AppLocalizations.of(context)!.languageOptions), // "Dil Seçenekleri"
             onTap: () {
               // Dil seçimi ekranına yönlendirme yapılabilir
             },
@@ -81,8 +82,8 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
           ListTile(
             leading: const Icon(Icons.dark_mode),
             title: Text(currentTheme == ThemeMode.dark
-                ? "Açık Temaya Geç"
-                : "Koyu Temaya Geç"),
+                ? AppLocalizations.of(context)!.lightMode // "Açık Temaya Geç"
+                : AppLocalizations.of(context)!.darkMode), // "Koyu Temaya Geç"
             onTap: () {
               final newTheme = currentTheme == ThemeMode.dark
                   ? ThemeMode.light
@@ -92,7 +93,7 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
           ),
           ListTile(
             leading: const Icon(Icons.policy_rounded),
-            title: const Text("Gizlilik Politikası"),
+            title: Text(AppLocalizations.of(context)!.privacyPolicy), // "Gizlilik Politikası"
             onTap: () {
               // Gizlilik Politikası ekranına yönlendirme yapar
               Navigator.push(
@@ -105,7 +106,7 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
           ),
           ListTile(
             leading: const Icon(Icons.help_rounded),
-            title: const Text("Yardım ve Destek"),
+            title: Text(AppLocalizations.of(context)!.helpAndSupport), // "Yardım Merkezi"
             onTap: () {
               // Hesap bilgileri ekranına yönlendirme yapar
               Navigator.push(
@@ -125,25 +126,25 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
               Icons.logout_outlined,
               color: Colors.red,
             ),
-            title: const Text(
-              "Çıkış Yap",
+            title: Text(
+              AppLocalizations.of(context)!.logOut, // "Çıkış Yap"
               style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
             ),
             onTap: () async {
               final shouldLogout = await showDialog<bool>(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: const Text("Çıkış Yap"),
-                  content: const Text(
-                      "Oturumunuzu kapatmak istediğinizden emin misiniz?"),
+                  title: Text(AppLocalizations.of(context)!.logOut), 
+                  content: Text(AppLocalizations.of(context)!.logOutConfirmation), // "Çıkış yapmak istediğinize emin misiniz?"
+                      
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context, false),
-                      child: const Text("İptal"),
+                      child: Text(AppLocalizations.of(context)!.cancel), // "İptal"
                     ),
                     TextButton(
                       onPressed: () => Navigator.pop(context, true),
-                      child: const Text("Çıkış Yap"),
+                      child: Text(AppLocalizations.of(context)!.logOut),
                     ),
                   ],
                 ),
@@ -166,8 +167,8 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
           ),/*
           ListTile(
             leading: const Icon(Icons.delete_forever, color: Colors.red),
-            title: const Text(
-              "Hesabı Sil",
+            title: Text(
+              AppLocalizations.of(context)!.deleteAccount, // "Hesabı Sil"
               style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
             ),
             onTap: () async {

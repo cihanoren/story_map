@@ -9,6 +9,7 @@ import 'package:story_map/features/home/views/explore_page.dart';
 import 'package:story_map/features/home/views/map_view.dart';
 import 'package:story_map/features/home/views/profile/profile_page.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});
@@ -31,8 +32,8 @@ class ConnectionBanner extends ConsumerWidget {
       color: Colors.grey,
       alignment: Alignment.center,
       child: isOffline
-          ? const Text(
-              'İnternet bağlantısı yok',
+          ? Text(
+              AppLocalizations.of(context)!.noConnection, // İnternet bağlantısı yok mesajı
               style: TextStyle(color: Colors.white, fontSize: 15),
             )
           : const SizedBox.shrink(),
@@ -79,11 +80,11 @@ class _HomeState extends ConsumerState<Home> {
                 color: Colors.grey,
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 tabBackgroundColor: Colors.deepPurple,
-                tabs: const [
-                  GButton(icon: Icons.home, text: "Home"),
-                  GButton(icon: Icons.public, text: "Explore"),
-                  GButton(icon: Icons.location_on, text: "Map"),
-                  GButton(icon: Icons.person, text: "Profile"),
+                tabs: [
+                  GButton(icon: Icons.home, text: AppLocalizations.of(context)!.homeTitle),
+                  GButton(icon: Icons.public, text: AppLocalizations.of(context)!.exploreTitle),
+                  GButton(icon: Icons.location_on, text: AppLocalizations.of(context)!.mapTitle),
+                  GButton(icon: Icons.person, text: AppLocalizations.of(context)!.profileTitle),
                 ],
                 selectedIndex: _selectedIndex,
                 onTabChange: (index) {
@@ -146,7 +147,7 @@ class _HomePageState extends State<HomePage> {
             final routeData = routeDoc.data();
             final List<dynamic> places = routeData['places'];
 
-            allRouteTitles.add(routeData['title'] ?? 'İsimsiz Rota');
+            allRouteTitles.add(routeData['title'] ?? AppLocalizations.of(context)!.unnamedRoute);
             allRouteIds.add(routeDoc.id);
 
             allPlaceImageUrls.add(places
@@ -189,11 +190,11 @@ class _HomePageState extends State<HomePage> {
           ? const Center(
               child: CircularProgressIndicator()) // Yükleme sırasında spinner
           : routeTitles.isEmpty
-              ? const Center(
+              ? Center(
                   child: Padding(
                     padding: EdgeInsets.only(top: 80),
                     child: Text(
-                      "Henüz kaydedilmiş bir rotanız yok.\nYeni bir rota oluşturmak için haritayı kullanabilirsiniz.",
+                      AppLocalizations.of(context)!.noRoutesMessage, // Henüz kaydedilmiş bir rotanız yok mesajı
                       style: TextStyle(fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
@@ -260,7 +261,8 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         child: imageUrl == null ||
                                                 imageUrl.isEmpty
-                                            ? const Center(child: Text("Boş"))
+                                            ? Center(child: Text(
+                                              AppLocalizations.of(context)!.emptyImageText)) // Boş resim mesajı
                                             : null,
                                       ),
                                     );

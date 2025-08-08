@@ -14,6 +14,7 @@ import 'package:story_map/features/home/models.dart/route_model.dart';
 import 'package:story_map/features/home/services.dart/InterstitialAdManager.dart';
 import 'package:story_map/features/home/services.dart/route_service.dart';
 import 'package:story_map/features/home/views/bottom_sheet.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 import 'package:story_map/main.dart';
 import 'package:story_map/utils/marker_icons.dart';
 
@@ -48,9 +49,9 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
       if (context != null) {
         _showDialog(
           context: context,
-          title: 'Konum Servisi Kapalı',
-          content: 'Konum servisleri kapalı. Lütfen cihaz ayarlarından açın.',
-          actionText: 'Ayarlar',
+          title: AppLocalizations.of(context)!.locationServiceDisable, // Konum servisleri kapalı mesajı
+          content: AppLocalizations.of(context)!.openLocationServiceMessage, // Konum servisini açın mesajı
+          actionText: AppLocalizations.of(context)!.settings, // Ayarlar mesajı
           onPressed: () => Geolocator.openLocationSettings(),
         );
       }
@@ -64,9 +65,9 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
         if (context != null) {
           _showDialog(
             context: context,
-            title: 'İzin Gerekli',
-            content: 'Uygulamanın konum iznine ihtiyacı var.',
-            actionText: 'Tamam',
+            title: AppLocalizations.of(context)!.requiredPermission, // Konum izni verilmedi mesajı
+            content: AppLocalizations.of(context)!.requiredAppLocationPermissionMessage, // Konum izni mesajı
+            actionText: AppLocalizations.of(context)!.actionOK, // Tamam mesajı
           );
         }
         return;
@@ -77,10 +78,10 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
       if (context != null) {
         _showDialog(
           context: context,
-          title: 'İzin Verilmedi',
+          title: AppLocalizations.of(context)!.noLocationPermission, // İzin verilmedi mesajı
           content:
-              'Konum izni kalıcı olarak reddedilmiş. Ayarlardan manuel olarak izin verin.',
-          actionText: 'Ayarlar',
+              AppLocalizations.of(context)!.rejectedLocationPermissionMessage, // Konum izni kalıcı olarak reddedildi mesajı
+          actionText: AppLocalizations.of(context)!.settings, // Ayarlar mesajı
           onPressed: () => Geolocator.openAppSettings(),
         );
       }
@@ -102,9 +103,9 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
       if (context != null) {
         _showDialog(
           context: context,
-          title: 'Konum Hatası',
-          content: 'Konum alınırken bir hata oluştu. Lütfen tekrar deneyin.',
-          actionText: 'Tamam',
+          title: AppLocalizations.of(context)!.locationError, // Konum hatası mesajı
+          content: AppLocalizations.of(context)!.getLocationError, // Konum alınamadı mesajı
+          actionText: AppLocalizations.of(context)!.actionOK, // Tamam mesajı
         );
       }
     }
@@ -342,7 +343,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
           (m) => m.position == point,
           orElse: () => Marker(markerId: MarkerId('')),
         );
-        return marker.infoWindow.title ?? 'Başlangıç Noktası';
+        return marker.infoWindow.title ?? AppLocalizations.of(navigatorKey.currentContext!)!.startingPoint; // Başlangıç noktası için varsayılan metin
       }).toList(),
     );
 
@@ -456,12 +457,16 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     final hasConnection = await _checkInternetConnection();
     if (!hasConnection) {
       if (navigatorKey.currentContext != null) {
-        ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
-          const SnackBar(
-            content: Text("İnternet bağlantısı yok. Rota oluşturulamadı."),
+        final context = navigatorKey.currentContext!;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)!.connectionErrorRoute,
+            ),
           ),
         );
       }
+
       return [];
     }
 
@@ -614,7 +619,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     final route = RouteModel(
       id: '',
       userId: userId,
-      title: customTitle ?? 'İsimsiz Rota',
+      title: customTitle ?? AppLocalizations.of(navigatorKey.currentContext!)!.unnamedRoute, // İsimlendirilmemiş rota
       description: _tourTitles.join(' - '),
       places: places,
       mode:

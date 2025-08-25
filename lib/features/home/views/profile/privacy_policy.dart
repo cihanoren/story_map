@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {
   const PrivacyPolicyPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final titleStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
+    final sectionTitleStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w600);
+    final bodyStyle = TextStyle(fontSize: 16, height: 1.4); // daha okunabilir
+    final greyStyle = TextStyle(fontSize: 14, color: Colors.grey);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: const Text(
-          'Gizlilik Politikası',
-          style: TextStyle(color: Colors.black),
+        title: Text(
+          AppLocalizations.of(context)!.privacyPolicyTitle,
+          style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back,
@@ -21,110 +27,93 @@ class PrivacyPolicyPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Story Map - Gizlilik Politikası',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              AppLocalizations.of(context)!.privacyPolicyTextTitle,
+              style: titleStyle,
             ),
             SizedBox(height: 4),
             Text(
-              'Son güncelleme tarihi: 01.08.2025',
-              style: TextStyle(color: Colors.grey),
+              AppLocalizations.of(context)!.privacyPolicyLastUpdate,
+              style: greyStyle,
             ),
             SizedBox(height: 16),
             Text(
-              '1. Giriş',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              AppLocalizations.of(context)!.privacyPolicyIntroTitle,
+              style: sectionTitleStyle,
             ),
-            Text(
-              'Bu gizlilik politikası, Story Map adlı mobil uygulamanın kullanıcı verilerini nasıl topladığını, kullandığını ve koruduğunu açıklamaktadır. '
-              'Uygulamayı kullanarak bu politikayı kabul etmiş sayılırsınız.',
-            ),
+            Text(AppLocalizations.of(context)!.privacyPolicyIntroText, style: bodyStyle),
             SizedBox(height: 16),
             Text(
-              '2. Toplanan Veriler',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              AppLocalizations.of(context)!.privacyPolicyCollectedDataTitle,
+              style: sectionTitleStyle,
             ),
-            Text('📍 Konum Verisi'),
+            Text(AppLocalizations.of(context)!.privacyPolicyLocationData, style: bodyStyle),
             Text(
-              '- Kullanıcının mevcut konumunu alarak harita üzerinde konuma dayalı rotalar ve hikayeler sunar.\n'
-              '- Konum yalnızca kullanıcı izniyle alınır ve arka planda izleme yapılmaz.',
+              "${AppLocalizations.of(context)!.privacyPolicyLocationDataText}\n"
+              "${AppLocalizations.of(context)!.privacyPolicyLocationDataText2}",
+              style: bodyStyle,
             ),
             SizedBox(height: 8),
+            Text(AppLocalizations.of(context)!.privacyPolicyUserDataTitle, style: bodyStyle.copyWith(fontWeight: FontWeight.w600)),
             Text(
-                '👤 Kullanıcı Bilgileri (Google hesabı ile giriş yapıldığında)'),
-            Text('- Ad, soyad, e-posta adresi\n- Profil fotoğrafı'),
+              "${AppLocalizations.of(context)!.privacyPolicyUserDataText}\n"
+              "${AppLocalizations.of(context)!.privacyPolicyUserDataText2}",
+              style: bodyStyle,
+            ),
             SizedBox(height: 8),
-            Text('📊 Uygulama Kullanım Bilgileri'),
-            Text(
-                '- Firebase üzerinden kullanıcı davranışı ve uygulama performansına dair anonim veriler toplanabilir.'),
+            Text(AppLocalizations.of(context)!.privacyPolicyUsingAppTitle, style: bodyStyle.copyWith(fontWeight: FontWeight.w600)),
+            Text(AppLocalizations.of(context)!.privacyPolicyUsingAppText, style: bodyStyle),
             SizedBox(height: 16),
             Text(
-              '3. Verilerin Kullanımı',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              AppLocalizations.of(context)!.privacyPolicyUsingDataTitle,
+              style: sectionTitleStyle,
             ),
             Text(
-              '- Uygulama içeriğini kişiselleştirmek\n'
-              '- Konum bazlı hikaye ve rota önerileri sunmak\n'
-              '- Uygulama performansını ve kullanıcı deneyimini iyileştirmek\n'
-              '- Hataları analiz etmek ve düzeltmek',
-            ),
-            SizedBox(height: 16),
-            Text(
-              '4. Üçüncü Taraf Servisler',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              '- Google Firebase (Auth, Firestore, Storage)\n'
-              '- Google Maps SDK\n'
-              '- Geolocator ve Harita servisleri\n\n'
-              '> Bu servislerin her biri kendi gizlilik politikalarına sahiptir.',
+              "${AppLocalizations.of(context)!.privacyPolicyUsingDataText}\n"
+              "${AppLocalizations.of(context)!.privacyPolicyUsingDataText2}\n"
+              "${AppLocalizations.of(context)!.privacyPolicyUsingDataText3}\n"
+              "${AppLocalizations.of(context)!.privacyPolicyUsingDataText4}",
+              style: bodyStyle,
             ),
             SizedBox(height: 16),
             Text(
-              '5. Verilerin Saklanması ve Güvenliği',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              AppLocalizations.of(context)!.privacyPolicyThirdPartyServicesTitle,
+              style: sectionTitleStyle,
             ),
-            Text(
-              '- Kullanıcı verileri Firebase altyapısında güvenli şekilde saklanır.\n'
-              '- Uygulama, verilerin yetkisiz erişime karşı korunması için gerekli teknik önlemleri alır.',
-            ),
+            Text(AppLocalizations.of(context)!.privacyPolicyThirdPartyServicesText, style: bodyStyle),
             SizedBox(height: 16),
             Text(
-              '6. Çerezler',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              AppLocalizations.of(context)!.privacyPolicyDataStorageTitle,
+              style: sectionTitleStyle,
             ),
-            Text('- Uygulama herhangi bir çerez (cookie) kullanmaz.'),
+            Text(AppLocalizations.of(context)!.privacyPolicyDataStorageText, style: bodyStyle),
             SizedBox(height: 16),
             Text(
-              '7. Verilerin Paylaşımı',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              AppLocalizations.of(context)!.privacyPolicyCookiesTitle,
+              style: sectionTitleStyle,
             ),
-            Text(
-              '- Kullanıcı verileri üçüncü kişilerle asla paylaşılmaz, satılmaz veya kiralanmaz.\n'
-              '- Yasal zorunluluk durumunda yalnızca yetkili makamlarla paylaşılabilir.',
-            ),
+            Text(AppLocalizations.of(context)!.privacyPolicyCookiesText, style: bodyStyle),
             SizedBox(height: 16),
             Text(
-              '8. Kullanıcı Hakları',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              AppLocalizations.of(context)!.privacyPolicyDataSharingTitle,
+              style: sectionTitleStyle,
             ),
-            Text(
-              '- Kullanıcılar, kişisel verilerine erişme, düzeltme veya silme hakkına sahiptir.\n'
-              '- Bu tür talepler için geliştirici ile iletişime geçilebilir:\n'
-              '📧 E-posta: cihanoren1@gmail.com',
-            ),
+            Text(AppLocalizations.of(context)!.privacyPolicyDataSharingText, style: bodyStyle),
             SizedBox(height: 16),
             Text(
-              '9. Politikadaki Değişiklikler',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              AppLocalizations.of(context)!.privacyPolicyUserRightsTitle,
+              style: sectionTitleStyle,
             ),
+            Text(AppLocalizations.of(context)!.privacyPolicyUserRightsText, style: bodyStyle),
+            SizedBox(height: 16),
             Text(
-              '- Bu gizlilik politikası zaman zaman güncellenebilir.\n'
-              '- Güncellemeler uygulama içinden veya bu sayfa üzerinden duyurulur.',
+              AppLocalizations.of(context)!.privacyPolicyChangesTitle,
+              style: sectionTitleStyle,
             ),
+            Text(AppLocalizations.of(context)!.privacyPolicyChangesText, style: bodyStyle),
             SizedBox(height: 32),
           ],
         ),

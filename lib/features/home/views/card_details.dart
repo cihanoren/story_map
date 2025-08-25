@@ -109,7 +109,7 @@ class _CardDetailsState extends State<CardDetails> {
                       // Paylaşma işlemi
                       break;
                     case 'delete':
-                      _showDeleteConfirmationDialog(); // 👈 Yeni fonksiyon
+                      _showDeleteConfirmationDialog();
                       break;
                   }
                 },
@@ -117,12 +117,18 @@ class _CardDetailsState extends State<CardDetails> {
                   PopupMenuItem<String>(
                     value: 'edit',
                     child: SizedBox(
-                      width: 180,
+                      width: 220, // biraz daha geniş
                       child: Row(
                         children: [
                           Icon(Icons.edit, color: Colors.purple),
                           SizedBox(width: 10),
-                          Text(AppLocalizations.of(context)!.editRoute),
+                          Flexible(
+                            child: Text(
+                              AppLocalizations.of(context)!.editRoute,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -130,13 +136,18 @@ class _CardDetailsState extends State<CardDetails> {
                   PopupMenuItem<String>(
                     value: 'share_in_explore',
                     child: SizedBox(
-                      width: 180, // genişlik artırıldı
+                      width: 220, // biraz daha geniş
                       child: Row(
                         children: [
-                          Icon(Icons.switch_access_shortcut_outlined,
-                              color: Colors.blue),
+                          Icon(Icons.switch_access_shortcut_outlined, color: Colors.blue),
                           SizedBox(width: 10),
-                          Text(AppLocalizations.of(context)!.shareInExplore),
+                          Flexible(
+                            child: Text(
+                              AppLocalizations.of(context)!.shareInExplore,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -144,12 +155,18 @@ class _CardDetailsState extends State<CardDetails> {
                   PopupMenuItem<String>(
                     value: 'share',
                     child: SizedBox(
-                      width: 180,
+                      width: 220, // biraz daha geniş
                       child: Row(
                         children: [
-                          Icon(Icons.share, color: Colors.green),
+                          Icon(Icons.edit, color: Colors.green),
                           SizedBox(width: 10),
-                          Text(AppLocalizations.of(context)!.share),
+                          Flexible(
+                            child: Text(
+                              AppLocalizations.of(context)!.share,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -157,12 +174,18 @@ class _CardDetailsState extends State<CardDetails> {
                   PopupMenuItem<String>(
                     value: 'delete',
                     child: SizedBox(
-                      width: 180,
+                      width: 220, // biraz daha geniş
                       child: Row(
                         children: [
                           Icon(Icons.delete, color: Colors.red),
                           SizedBox(width: 10),
-                          Text(AppLocalizations.of(context)!.deleteRoute),
+                          Flexible(
+                            child: Text(
+                              AppLocalizations.of(context)!.deleteRoute,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -485,7 +508,8 @@ class _CardDetailsState extends State<CardDetails> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.routeDeletedSuccessfuly),
+            content:
+                Text(AppLocalizations.of(context)!.routeDeletedSuccessfuly),
             backgroundColor: Colors.red,
           ),
         );
@@ -497,7 +521,8 @@ class _CardDetailsState extends State<CardDetails> {
           content: Row(
             children: [
               Icon(Icons.error, color: Colors.red),
-              Text('${AppLocalizations.of(context)!.routeDeleteUnsuccessfuly}: $e'),
+              Text(
+                  '${AppLocalizations.of(context)!.routeDeleteUnsuccessfuly}: $e'),
             ],
           ),
         ),

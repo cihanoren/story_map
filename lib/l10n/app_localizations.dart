@@ -5,10 +5,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_ar.dart';
 import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
 import 'app_localizations_fr.dart';
+import 'app_localizations_it.dart';
 import 'app_localizations_ru.dart';
 import 'app_localizations_tr.dart';
 
@@ -98,10 +100,12 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
     Locale('de'),
     Locale('en'),
     Locale('es'),
     Locale('fr'),
+    Locale('it'),
     Locale('ru'),
     Locale('tr')
   ];
@@ -933,6 +937,192 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Hesabınız yok mu?'**
   String get dontHaveAccount;
+
+  /// No description provided for @privacyPolicyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gizlilik Politikası'**
+  String get privacyPolicyTitle;
+
+  /// No description provided for @privacyPolicyTextTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Story Map Gizlilik Politikası'**
+  String get privacyPolicyTextTitle;
+
+  /// No description provided for @privacyPolicyLastUpdate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son Güncellenme Tarihi: 01.08.2025'**
+  String get privacyPolicyLastUpdate;
+
+  /// No description provided for @privacyPolicyIntroTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'1. Giriş'**
+  String get privacyPolicyIntroTitle;
+
+  /// No description provided for @privacyPolicyIntroText.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu gizlilik politikası, Story Map adlı mobil uygulamanın kullanıcı verilerini nasıl topladığını, kullandığını ve koruduğunu açıklamaktadır. Uygulamayı kullanarak bu politikayı kabul etmiş sayılırsınız.'**
+  String get privacyPolicyIntroText;
+
+  /// No description provided for @privacyPolicyCollectedDataTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'2. Toplanan Veriler'**
+  String get privacyPolicyCollectedDataTitle;
+
+  /// No description provided for @privacyPolicyLocationData.
+  ///
+  /// In tr, this message translates to:
+  /// **'Konum Verisi'**
+  String get privacyPolicyLocationData;
+
+  /// No description provided for @privacyPolicyLocationDataText.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcının mevcut konumunu alarak harita üzerinde konuma dayalı rotalar ve hikayeler sunar.'**
+  String get privacyPolicyLocationDataText;
+
+  /// No description provided for @privacyPolicyLocationDataText2.
+  ///
+  /// In tr, this message translates to:
+  /// **'Konum yalnızca kullanıcı izniyle alınır ve arka planda izleme yapılmaz.'**
+  String get privacyPolicyLocationDataText2;
+
+  /// No description provided for @privacyPolicyUserDataTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullnıcı Bilgileri (Google hesabı ile giriş yapıldığında)'**
+  String get privacyPolicyUserDataTitle;
+
+  /// No description provided for @privacyPolicyUserDataText.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad, soyad, e-posta adresi'**
+  String get privacyPolicyUserDataText;
+
+  /// No description provided for @privacyPolicyUserDataText2.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profil fotoğrafı'**
+  String get privacyPolicyUserDataText2;
+
+  /// No description provided for @privacyPolicyUsingAppTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygulama Kullanım Bilgileri'**
+  String get privacyPolicyUsingAppTitle;
+
+  /// No description provided for @privacyPolicyUsingAppText.
+  ///
+  /// In tr, this message translates to:
+  /// **'Firebase üzerinden kullanıcı davranışı ve uygulama performansına dair anonim veriler toplanabilir.'**
+  String get privacyPolicyUsingAppText;
+
+  /// No description provided for @privacyPolicyUsingDataTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'3. Verilerin Kullanımı'**
+  String get privacyPolicyUsingDataTitle;
+
+  /// No description provided for @privacyPolicyUsingDataText.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygulama içeriğini kişiselleştirmek'**
+  String get privacyPolicyUsingDataText;
+
+  /// No description provided for @privacyPolicyUsingDataText2.
+  ///
+  /// In tr, this message translates to:
+  /// **'Konum bazlı hikaye ve rota önerileri sunmak'**
+  String get privacyPolicyUsingDataText2;
+
+  /// No description provided for @privacyPolicyUsingDataText3.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygulama performansını ve kullanıcı deneyimini iyileştirmek'**
+  String get privacyPolicyUsingDataText3;
+
+  /// No description provided for @privacyPolicyUsingDataText4.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hataları analiz etmek ve düzeltmek'**
+  String get privacyPolicyUsingDataText4;
+
+  /// No description provided for @privacyPolicyThirdPartyServicesTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'4. Üçüncü Taraf Servisler'**
+  String get privacyPolicyThirdPartyServicesTitle;
+
+  /// No description provided for @privacyPolicyThirdPartyServicesText.
+  ///
+  /// In tr, this message translates to:
+  /// **'- Google Firebase (Auth, Firestore, Storage)\n- Google Maps SDK\n- Geolocator ve Harita servisleri\n\n> Bu servislerin her biri kendi gizlilik politikalarına sahiptir.'**
+  String get privacyPolicyThirdPartyServicesText;
+
+  /// No description provided for @privacyPolicyDataStorageTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'5. Verilerin Saklanması ve Güvenliği'**
+  String get privacyPolicyDataStorageTitle;
+
+  /// No description provided for @privacyPolicyDataStorageText.
+  ///
+  /// In tr, this message translates to:
+  /// **'- Kullanıcı verileri Firebase altyapısında güvenli şekilde saklanır.\n- Uygulama, verilerin yetkisiz erişime karşı korunması için gerekli teknik önlemleri alır.'**
+  String get privacyPolicyDataStorageText;
+
+  /// No description provided for @privacyPolicyCookiesTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'6. Çerezler'**
+  String get privacyPolicyCookiesTitle;
+
+  /// No description provided for @privacyPolicyCookiesText.
+  ///
+  /// In tr, this message translates to:
+  /// **'- Uygulama herhangi bir çerez (cookie) kullanmaz.'**
+  String get privacyPolicyCookiesText;
+
+  /// No description provided for @privacyPolicyDataSharingTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'7. Verilerin Paylaşımı'**
+  String get privacyPolicyDataSharingTitle;
+
+  /// No description provided for @privacyPolicyDataSharingText.
+  ///
+  /// In tr, this message translates to:
+  /// **'- Kullanıcı verileri üçüncü kişilerle asla paylaşılmaz, satılmaz veya kiralanmaz.\n- Yasal zorunluluk durumunda yalnızca yetkili makamlarla paylaşılabilir.'**
+  String get privacyPolicyDataSharingText;
+
+  /// No description provided for @privacyPolicyUserRightsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'8. Kullanıcı Hakları'**
+  String get privacyPolicyUserRightsTitle;
+
+  /// No description provided for @privacyPolicyUserRightsText.
+  ///
+  /// In tr, this message translates to:
+  /// **'- Kullanıcılar, kişisel verilerine erişme, düzeltme veya silme hakkına sahiptir.\n- Bu tür talepler için geliştirici ile iletişime geçilebilir:\n📧 E-posta: cihanoren1@gmail.com'**
+  String get privacyPolicyUserRightsText;
+
+  /// No description provided for @privacyPolicyChangesTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'9. Politikadaki Değişiklikler'**
+  String get privacyPolicyChangesTitle;
+
+  /// No description provided for @privacyPolicyChangesText.
+  ///
+  /// In tr, this message translates to:
+  /// **'- Bu gizlilik politikası zaman zaman güncellenebilir.\n- Güncellemeler uygulama içinden veya bu sayfa üzerinden duyurulur.'**
+  String get privacyPolicyChangesText;
 }
 
 class _AppLocalizationsDelegate
@@ -946,10 +1136,12 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) => <String>[
+        'ar',
         'de',
         'en',
         'es',
         'fr',
+        'it',
         'ru',
         'tr'
       ].contains(locale.languageCode);
@@ -961,6 +1153,8 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'ar':
+      return AppLocalizationsAr();
     case 'de':
       return AppLocalizationsDe();
     case 'en':
@@ -969,6 +1163,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEs();
     case 'fr':
       return AppLocalizationsFr();
+    case 'it':
+      return AppLocalizationsIt();
     case 'ru':
       return AppLocalizationsRu();
     case 'tr':

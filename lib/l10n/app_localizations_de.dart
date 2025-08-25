@@ -181,7 +181,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get editRoute => 'Route bearbeiten';
 
   @override
-  String get shareInExplore => 'In „Entdecken“ teilen';
+  String get shareInExplore => 'In Entdecken teilen';
 
   @override
   String get share => 'Teilen';
@@ -197,7 +197,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get alreadyRouteSharedExplore =>
-      'Diese Route wurde bereits in „Entdecken“ geteilt';
+      'Diese Route wurde bereits in Entdecken geteilt';
 
   @override
   String get routeSharedInExplore =>
@@ -443,4 +443,113 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get dontHaveAccount => 'Haben Sie kein Konto?';
+
+  @override
+  String get privacyPolicyTitle => 'Datenschutzerklärung';
+
+  @override
+  String get privacyPolicyTextTitle => 'Story Map Datenschutzerklärung';
+
+  @override
+  String get privacyPolicyLastUpdate => 'Letzte Aktualisierung: 01.08.2025';
+
+  @override
+  String get privacyPolicyIntroTitle => '1. Einführung';
+
+  @override
+  String get privacyPolicyIntroText =>
+      'Diese Datenschutzerklärung erklärt, wie die mobile Anwendung Story Map Benutzerdaten sammelt, verwendet und schützt. Durch die Nutzung der Anwendung stimmen Sie dieser Richtlinie zu.';
+
+  @override
+  String get privacyPolicyCollectedDataTitle => '2. Gesammelte Daten';
+
+  @override
+  String get privacyPolicyLocationData => 'Standortdaten';
+
+  @override
+  String get privacyPolicyLocationDataText =>
+      'Erfasst den aktuellen Standort des Benutzers, um standortbasierte Routen und Geschichten auf der Karte bereitzustellen.';
+
+  @override
+  String get privacyPolicyLocationDataText2 =>
+      'Der Standort wird nur mit der Zustimmung des Benutzers erfasst, und es findet keine Hintergrundverfolgung statt.';
+
+  @override
+  String get privacyPolicyUserDataTitle =>
+      'Benutzerdaten (bei Anmeldung mit Google-Konto)';
+
+  @override
+  String get privacyPolicyUserDataText => 'Vorname, Nachname, E-Mail-Adresse';
+
+  @override
+  String get privacyPolicyUserDataText2 => 'Profilbild';
+
+  @override
+  String get privacyPolicyUsingAppTitle =>
+      'Nutzungsinformationen der Anwendung';
+
+  @override
+  String get privacyPolicyUsingAppText =>
+      'Anonyme Daten über das Nutzerverhalten und die Leistung der App können über Firebase gesammelt werden.';
+
+  @override
+  String get privacyPolicyUsingDataTitle => '3. Verwendung der Daten';
+
+  @override
+  String get privacyPolicyUsingDataText => 'Personalisierung der App-Inhalte';
+
+  @override
+  String get privacyPolicyUsingDataText2 =>
+      'Bereitstellung von standortbasierten Geschichten- und Routenvorschlägen';
+
+  @override
+  String get privacyPolicyUsingDataText3 =>
+      'Verbesserung der App-Leistung und der Benutzererfahrung';
+
+  @override
+  String get privacyPolicyUsingDataText4 => 'Analyse und Behebung von Fehlern';
+
+  @override
+  String get privacyPolicyThirdPartyServicesTitle =>
+      '4. Dienste von Drittanbietern';
+
+  @override
+  String get privacyPolicyThirdPartyServicesText =>
+      '- Google Firebase (Auth, Firestore, Storage)\n- Google Maps SDK\n- Geolocator und Kartendienste\n\n> Jeder dieser Dienste verfügt über eine eigene Datenschutzerklärung.';
+
+  @override
+  String get privacyPolicyDataStorageTitle =>
+      '5. Speicherung und Sicherheit der Daten';
+
+  @override
+  String get privacyPolicyDataStorageText =>
+      '- Benutzerdaten werden sicher in der Firebase-Infrastruktur gespeichert.\n- Die Anwendung ergreift die notwendigen technischen Maßnahmen, um Daten vor unbefugtem Zugriff zu schützen.';
+
+  @override
+  String get privacyPolicyCookiesTitle => '6. Cookies';
+
+  @override
+  String get privacyPolicyCookiesText =>
+      '- Die Anwendung verwendet keine Cookies.';
+
+  @override
+  String get privacyPolicyDataSharingTitle => '7. Weitergabe von Daten';
+
+  @override
+  String get privacyPolicyDataSharingText =>
+      '- Benutzerdaten werden niemals an Dritte weitergegeben, verkauft oder vermietet.\n- Eine Weitergabe erfolgt nur an autorisierte Behörden im Falle gesetzlicher Verpflichtungen.';
+
+  @override
+  String get privacyPolicyUserRightsTitle => '8. Benutzerrechte';
+
+  @override
+  String get privacyPolicyUserRightsText =>
+      '- Benutzer haben das Recht, auf ihre personenbezogenen Daten zuzugreifen, diese zu berichtigen oder zu löschen.\n- Für solche Anfragen können Sie den Entwickler kontaktieren:\n📧 E-Mail: cihanoren1@gmail.com';
+
+  @override
+  String get privacyPolicyChangesTitle => '9. Änderungen der Richtlinie';
+
+  @override
+  String get privacyPolicyChangesText =>
+      '- Diese Datenschutzerklärung kann von Zeit zu Zeit aktualisiert werden.\n- Aktualisierungen werden innerhalb der Anwendung oder auf dieser Seite bekannt gegeben.';
 }

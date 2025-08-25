@@ -13,7 +13,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noRoutesMessage =>
-      'У вас ещё нет сохранённых маршрутов.\nВы можете использовать карту, чтобы создать новый маршрут.';
+      'У вас ещё нет сохранённых маршрутов.\nВы можете создать новый маршрут, используя карту.';
 
   @override
   String get emptyImageText => 'Пусто';
@@ -34,7 +34,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get profileTitle => 'Профиль';
 
   @override
-  String get unnamedRoute => 'Маршрут без названия';
+  String get unnamedRoute => 'Безымянный маршрут';
 
   @override
   String get connectionErrorRoute =>
@@ -87,7 +87,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get ratingsCount => 'Оценки';
 
   @override
-  String get notFoundAnyPlace => 'Ни одного места не найдено.';
+  String get notFoundAnyPlace => 'Места не найдены.';
 
   @override
   String get noName => 'Без имени';
@@ -111,7 +111,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get allCountries => 'Все страны';
 
   @override
-  String get notSharedRouteYet => 'Ещё нет опубликованных маршрутов.';
+  String get notSharedRouteYet => 'Пока нет опубликованных маршрутов.';
 
   @override
   String get shared => 'Опубликовано';
@@ -132,13 +132,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get selectTransportMode => 'Выберите вид транспорта';
 
   @override
-  String get driving => 'На машине';
+  String get driving => 'Автомобиль';
 
   @override
   String get walking => 'Пешком';
 
   @override
-  String get bicycling => 'На велосипеде';
+  String get bicycling => 'Велосипед';
 
   @override
   String get start => 'Начать';
@@ -225,7 +225,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get routeDeleteUnsuccessfuly => 'Не удалось удалить маршрут';
 
   @override
-  String get storyLoadingError => 'Произошла ошибка при загрузке истории';
+  String get storyLoadingError => 'Ошибка загрузки истории';
 
   @override
   String get storyNotFound => 'История не найдена';
@@ -246,11 +246,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sendEvaluateSuccessfuly => 'Ваша оценка успешно отправлена';
 
   @override
-  String get sendEvaluateUnSuccessfuly =>
-      'Произошла ошибка при отправке оценки';
+  String get sendEvaluateUnSuccessfuly => 'Ошибка при отправке оценки';
 
   @override
-  String get commentsLoadingError => 'Ошибка при загрузке комментариев';
+  String get commentsLoadingError => 'Ошибка загрузки комментариев';
 
   @override
   String get noCommentsYet => 'Комментариев пока нет';
@@ -277,8 +276,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get issueHintText => 'Напр.: Карта не загружается';
 
   @override
-  String get issueBoxTitle =>
-      'Пожалуйста, опишите проблему, с которой вы столкнулись, подробно.';
+  String get issueBoxTitle => 'Пожалуйста, опишите проблему подробно.';
 
   @override
   String get send => 'Отправить';
@@ -396,8 +394,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get updateInfoSuccessfuly => 'Данные успешно обновлены';
 
   @override
-  String get errorOccurredWhenInfoUpdate =>
-      'Произошла ошибка при обновлении данных';
+  String get errorOccurredWhenInfoUpdate => 'Ошибка при обновлении данных';
 
   @override
   String get name => 'Имя';
@@ -438,4 +435,113 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get dontHaveAccount => 'Нет аккаунта?';
+
+  @override
+  String get privacyPolicyTitle => 'Политика конфиденциальности';
+
+  @override
+  String get privacyPolicyTextTitle => 'Политика конфиденциальности Story Map';
+
+  @override
+  String get privacyPolicyLastUpdate => 'Последнее обновление: 01.08.2025';
+
+  @override
+  String get privacyPolicyIntroTitle => '1. Введение';
+
+  @override
+  String get privacyPolicyIntroText =>
+      'Данная политика конфиденциальности объясняет, как мобильное приложение Story Map собирает, использует и защищает данные пользователей. Используя приложение, вы принимаете данную политику.';
+
+  @override
+  String get privacyPolicyCollectedDataTitle => '2. Собираемые данные';
+
+  @override
+  String get privacyPolicyLocationData => 'Данные о местоположении';
+
+  @override
+  String get privacyPolicyLocationDataText =>
+      'Определяет текущее местоположение пользователя для предоставления маршрутов и историй на карте на основе местоположения.';
+
+  @override
+  String get privacyPolicyLocationDataText2 =>
+      'Местоположение определяется только с разрешения пользователя, фонового отслеживания не осуществляется.';
+
+  @override
+  String get privacyPolicyUserDataTitle =>
+      'Данные пользователя (при входе через Google аккаунт)';
+
+  @override
+  String get privacyPolicyUserDataText =>
+      'Имя, фамилия, адрес электронной почты';
+
+  @override
+  String get privacyPolicyUserDataText2 => 'Фото профиля';
+
+  @override
+  String get privacyPolicyUsingAppTitle =>
+      'Информация об использовании приложения';
+
+  @override
+  String get privacyPolicyUsingAppText =>
+      'Через Firebase могут собираться анонимные данные о поведении пользователя и производительности приложения.';
+
+  @override
+  String get privacyPolicyUsingDataTitle => '3. Использование данных';
+
+  @override
+  String get privacyPolicyUsingDataText =>
+      'Персонализация содержимого приложения';
+
+  @override
+  String get privacyPolicyUsingDataText2 =>
+      'Предоставление рекомендаций маршрутов и историй на основе местоположения';
+
+  @override
+  String get privacyPolicyUsingDataText3 =>
+      'Улучшение производительности приложения и пользовательского опыта';
+
+  @override
+  String get privacyPolicyUsingDataText4 => 'Анализ и исправление ошибок';
+
+  @override
+  String get privacyPolicyThirdPartyServicesTitle => '4. Сторонние сервисы';
+
+  @override
+  String get privacyPolicyThirdPartyServicesText =>
+      '- Google Firebase (Auth, Firestore, Storage)\n- Google Maps SDK\n- Geolocator и сервисы карт\n\n> Каждый из этих сервисов имеет собственную политику конфиденциальности.';
+
+  @override
+  String get privacyPolicyDataStorageTitle =>
+      '5. Хранение и безопасность данных';
+
+  @override
+  String get privacyPolicyDataStorageText =>
+      '- Данные пользователей надежно хранятся в инфраструктуре Firebase.\n- Приложение принимает необходимые технические меры для защиты данных от несанкционированного доступа.';
+
+  @override
+  String get privacyPolicyCookiesTitle => '6. Cookies';
+
+  @override
+  String get privacyPolicyCookiesText => '- Приложение не использует cookies.';
+
+  @override
+  String get privacyPolicyDataSharingTitle => '7. Передача данных';
+
+  @override
+  String get privacyPolicyDataSharingText =>
+      '- Данные пользователей никогда не передаются, не продаются и не сдаются в аренду третьим лицам.\n- Передача возможна только уполномоченным органам в случае законных требований.';
+
+  @override
+  String get privacyPolicyUserRightsTitle => '8. Права пользователей';
+
+  @override
+  String get privacyPolicyUserRightsText =>
+      '- Пользователи имеют право на доступ, исправление или удаление своих персональных данных.\n- По таким запросам можно обращаться к разработчику:\n📧 Эл. почта: cihanoren1@gmail.com';
+
+  @override
+  String get privacyPolicyChangesTitle => '9. Изменения в политике';
+
+  @override
+  String get privacyPolicyChangesText =>
+      '- Данная политика конфиденциальности может время от времени обновляться.\n- Обновления будут объявляться через приложение или на этой странице.';
 }

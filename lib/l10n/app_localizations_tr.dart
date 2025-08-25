@@ -435,4 +435,114 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get dontHaveAccount => 'Hesabınız yok mu?';
+
+  @override
+  String get privacyPolicyTitle => 'Gizlilik Politikası';
+
+  @override
+  String get privacyPolicyTextTitle => 'Story Map Gizlilik Politikası';
+
+  @override
+  String get privacyPolicyLastUpdate => 'Son Güncellenme Tarihi: 01.08.2025';
+
+  @override
+  String get privacyPolicyIntroTitle => '1. Giriş';
+
+  @override
+  String get privacyPolicyIntroText =>
+      'Bu gizlilik politikası, Story Map adlı mobil uygulamanın kullanıcı verilerini nasıl topladığını, kullandığını ve koruduğunu açıklamaktadır. Uygulamayı kullanarak bu politikayı kabul etmiş sayılırsınız.';
+
+  @override
+  String get privacyPolicyCollectedDataTitle => '2. Toplanan Veriler';
+
+  @override
+  String get privacyPolicyLocationData => 'Konum Verisi';
+
+  @override
+  String get privacyPolicyLocationDataText =>
+      'Kullanıcının mevcut konumunu alarak harita üzerinde konuma dayalı rotalar ve hikayeler sunar.';
+
+  @override
+  String get privacyPolicyLocationDataText2 =>
+      'Konum yalnızca kullanıcı izniyle alınır ve arka planda izleme yapılmaz.';
+
+  @override
+  String get privacyPolicyUserDataTitle =>
+      'Kullnıcı Bilgileri (Google hesabı ile giriş yapıldığında)';
+
+  @override
+  String get privacyPolicyUserDataText => 'Ad, soyad, e-posta adresi';
+
+  @override
+  String get privacyPolicyUserDataText2 => 'Profil fotoğrafı';
+
+  @override
+  String get privacyPolicyUsingAppTitle => 'Uygulama Kullanım Bilgileri';
+
+  @override
+  String get privacyPolicyUsingAppText =>
+      'Firebase üzerinden kullanıcı davranışı ve uygulama performansına dair anonim veriler toplanabilir.';
+
+  @override
+  String get privacyPolicyUsingDataTitle => '3. Verilerin Kullanımı';
+
+  @override
+  String get privacyPolicyUsingDataText =>
+      'Uygulama içeriğini kişiselleştirmek';
+
+  @override
+  String get privacyPolicyUsingDataText2 =>
+      'Konum bazlı hikaye ve rota önerileri sunmak';
+
+  @override
+  String get privacyPolicyUsingDataText3 =>
+      'Uygulama performansını ve kullanıcı deneyimini iyileştirmek';
+
+  @override
+  String get privacyPolicyUsingDataText4 =>
+      'Hataları analiz etmek ve düzeltmek';
+
+  @override
+  String get privacyPolicyThirdPartyServicesTitle =>
+      '4. Üçüncü Taraf Servisler';
+
+  @override
+  String get privacyPolicyThirdPartyServicesText =>
+      '- Google Firebase (Auth, Firestore, Storage)\n- Google Maps SDK\n- Geolocator ve Harita servisleri\n\n> Bu servislerin her biri kendi gizlilik politikalarına sahiptir.';
+
+  @override
+  String get privacyPolicyDataStorageTitle =>
+      '5. Verilerin Saklanması ve Güvenliği';
+
+  @override
+  String get privacyPolicyDataStorageText =>
+      '- Kullanıcı verileri Firebase altyapısında güvenli şekilde saklanır.\n- Uygulama, verilerin yetkisiz erişime karşı korunması için gerekli teknik önlemleri alır.';
+
+  @override
+  String get privacyPolicyCookiesTitle => '6. Çerezler';
+
+  @override
+  String get privacyPolicyCookiesText =>
+      '- Uygulama herhangi bir çerez (cookie) kullanmaz.';
+
+  @override
+  String get privacyPolicyDataSharingTitle => '7. Verilerin Paylaşımı';
+
+  @override
+  String get privacyPolicyDataSharingText =>
+      '- Kullanıcı verileri üçüncü kişilerle asla paylaşılmaz, satılmaz veya kiralanmaz.\n- Yasal zorunluluk durumunda yalnızca yetkili makamlarla paylaşılabilir.';
+
+  @override
+  String get privacyPolicyUserRightsTitle => '8. Kullanıcı Hakları';
+
+  @override
+  String get privacyPolicyUserRightsText =>
+      '- Kullanıcılar, kişisel verilerine erişme, düzeltme veya silme hakkına sahiptir.\n- Bu tür talepler için geliştirici ile iletişime geçilebilir:\n📧 E-posta: cihanoren1@gmail.com';
+
+  @override
+  String get privacyPolicyChangesTitle => '9. Politikadaki Değişiklikler';
+
+  @override
+  String get privacyPolicyChangesText =>
+      '- Bu gizlilik politikası zaman zaman güncellenebilir.\n- Güncellemeler uygulama içinden veya bu sayfa üzerinden duyurulur.';
 }

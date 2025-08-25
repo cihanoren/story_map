@@ -442,4 +442,113 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dontHaveAccount => '¿No tienes cuenta?';
+
+  @override
+  String get privacyPolicyTitle => 'Política de Privacidad';
+
+  @override
+  String get privacyPolicyTextTitle => 'Política de Privacidad de Story Map';
+
+  @override
+  String get privacyPolicyLastUpdate => 'Última actualización: 01.08.2025';
+
+  @override
+  String get privacyPolicyIntroTitle => '1. Introducción';
+
+  @override
+  String get privacyPolicyIntroText =>
+      'Esta política de privacidad explica cómo la aplicación móvil Story Map recopila, utiliza y protege los datos de los usuarios. Al usar la aplicación, usted acepta esta política.';
+
+  @override
+  String get privacyPolicyCollectedDataTitle => '2. Datos recopilados';
+
+  @override
+  String get privacyPolicyLocationData => 'Datos de ubicación';
+
+  @override
+  String get privacyPolicyLocationDataText =>
+      'Obtiene la ubicación actual del usuario para proporcionar rutas e historias basadas en la ubicación en el mapa.';
+
+  @override
+  String get privacyPolicyLocationDataText2 =>
+      'La ubicación solo se obtiene con el permiso del usuario y no se realiza seguimiento en segundo plano.';
+
+  @override
+  String get privacyPolicyUserDataTitle =>
+      'Información del usuario (cuando se inicia sesión con cuenta de Google)';
+
+  @override
+  String get privacyPolicyUserDataText =>
+      'Nombre, apellido, dirección de correo electrónico';
+
+  @override
+  String get privacyPolicyUserDataText2 => 'Foto de perfil';
+
+  @override
+  String get privacyPolicyUsingAppTitle =>
+      'Información sobre el uso de la aplicación';
+
+  @override
+  String get privacyPolicyUsingAppText =>
+      'Se pueden recopilar datos anónimos sobre el comportamiento del usuario y el rendimiento de la aplicación a través de Firebase.';
+
+  @override
+  String get privacyPolicyUsingDataTitle => '3. Uso de los datos';
+
+  @override
+  String get privacyPolicyUsingDataText =>
+      'Personalizar el contenido de la aplicación';
+
+  @override
+  String get privacyPolicyUsingDataText2 =>
+      'Proporcionar sugerencias de historias y rutas basadas en la ubicación';
+
+  @override
+  String get privacyPolicyUsingDataText3 =>
+      'Mejorar el rendimiento de la aplicación y la experiencia del usuario';
+
+  @override
+  String get privacyPolicyUsingDataText4 => 'Analizar y corregir errores';
+
+  @override
+  String get privacyPolicyThirdPartyServicesTitle => '4. Servicios de terceros';
+
+  @override
+  String get privacyPolicyThirdPartyServicesText =>
+      '- Google Firebase (Auth, Firestore, Storage)\n- Google Maps SDK\n- Geolocator y servicios de mapas\n\n> Cada uno de estos servicios tiene su propia política de privacidad.';
+
+  @override
+  String get privacyPolicyDataStorageTitle =>
+      '5. Almacenamiento y seguridad de datos';
+
+  @override
+  String get privacyPolicyDataStorageText =>
+      '- Los datos de los usuarios se almacenan de forma segura en la infraestructura de Firebase.\n- La aplicación toma las medidas técnicas necesarias para proteger los datos contra accesos no autorizados.';
+
+  @override
+  String get privacyPolicyCookiesTitle => '6. Cookies';
+
+  @override
+  String get privacyPolicyCookiesText => '- La aplicación no utiliza cookies.';
+
+  @override
+  String get privacyPolicyDataSharingTitle => '7. Compartición de datos';
+
+  @override
+  String get privacyPolicyDataSharingText =>
+      '- Los datos de los usuarios nunca se comparten, venden ni alquilan a terceros.\n- Solo pueden compartirse con autoridades autorizadas en caso de obligaciones legales.';
+
+  @override
+  String get privacyPolicyUserRightsTitle => '8. Derechos del usuario';
+
+  @override
+  String get privacyPolicyUserRightsText =>
+      '- Los usuarios tienen derecho a acceder, corregir o eliminar sus datos personales.\n- Para tales solicitudes, puede contactar al desarrollador:\n📧 Correo electrónico: cihanoren1@gmail.com';
+
+  @override
+  String get privacyPolicyChangesTitle => '9. Cambios en la política';
+
+  @override
+  String get privacyPolicyChangesText =>
+      '- Esta política de privacidad puede actualizarse periódicamente.\n- Las actualizaciones se anunciarán a través de la aplicación o en esta página.';
 }

@@ -8,6 +8,7 @@ import 'package:story_map/features/auth/views/sign_in.dart';
 import 'package:story_map/features/home/views/profile/account__info.dart';
 import 'package:story_map/features/home/views/profile/change_password.dart';
 import 'package:story_map/features/home/views/profile/help_center.dart';
+import 'package:story_map/features/home/views/profile/language_options_page.dart';
 import 'package:story_map/features/home/views/profile/privacy_policy.dart';
 import 'package:story_map/l10n/app_localizations.dart';
 import 'package:story_map/main.dart';
@@ -42,7 +43,8 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
         children: [
           ListTile(
             leading: const Icon(Icons.manage_accounts_rounded),
-            title: Text(AppLocalizations.of(context)!.accountInfo), // "Hesap Bilgileri"
+            title: Text(
+                AppLocalizations.of(context)!.accountInfo), // "Hesap Bilgileri"
             onTap: () {
               // Hesap bilgileri ekranına yönlendirme yapar
               Navigator.push(
@@ -55,7 +57,8 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
           ),
           ListTile(
             leading: const Icon(Icons.lock),
-            title: Text(AppLocalizations.of(context)!.changePassword), // "Şifre Değiştir"
+            title: Text(AppLocalizations.of(context)!
+                .changePassword), // "Şifre Değiştir"
             onTap: () {
               // Şifre değiştir ekranına yönlendirme yapar
               Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -65,16 +68,24 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
           ),
           ListTile(
             leading: const Icon(Icons.notifications),
-            title: Text(AppLocalizations.of(context)!.notificationSettings), // "Bildirim Ayarları"
+            title: Text(AppLocalizations.of(context)!
+                .notificationSettings), // "Bildirim Ayarları"
             onTap: () {
               // Bildirim ayarları ekranına yönlendirme yapılabilir
             },
           ),
           ListTile(
             leading: const Icon(Icons.language),
-            title: Text(AppLocalizations.of(context)!.languageOptions), // "Dil Seçenekleri"
+            title: Text(AppLocalizations.of(context)!
+                .languageOptions), // "Dil Seçenekleri"
             onTap: () {
               // Dil seçimi ekranına yönlendirme yapılabilir
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const LanguageOptionsPage(),
+                ),
+              );
             },
           ),
 
@@ -93,7 +104,8 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
           ),
           ListTile(
             leading: const Icon(Icons.policy_rounded),
-            title: Text(AppLocalizations.of(context)!.privacyPolicy), // "Gizlilik Politikası"
+            title: Text(AppLocalizations.of(context)!
+                .privacyPolicy), // "Gizlilik Politikası"
             onTap: () {
               // Gizlilik Politikası ekranına yönlendirme yapar
               Navigator.push(
@@ -106,7 +118,8 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
           ),
           ListTile(
             leading: const Icon(Icons.help_rounded),
-            title: Text(AppLocalizations.of(context)!.helpAndSupport), // "Yardım Merkezi"
+            title: Text(AppLocalizations.of(context)!
+                .helpAndSupport), // "Yardım Merkezi"
             onTap: () {
               // Hesap bilgileri ekranına yönlendirme yapar
               Navigator.push(
@@ -134,13 +147,15 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
               final shouldLogout = await showDialog<bool>(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text(AppLocalizations.of(context)!.logOut), 
-                  content: Text(AppLocalizations.of(context)!.logOutConfirmation), // "Çıkış yapmak istediğinize emin misiniz?"
-                      
+                  title: Text(AppLocalizations.of(context)!.logOut),
+                  content: Text(AppLocalizations.of(context)!
+                      .logOutConfirmation), // "Çıkış yapmak istediğinize emin misiniz?"
+
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context, false),
-                      child: Text(AppLocalizations.of(context)!.cancel), // "İptal"
+                      child:
+                          Text(AppLocalizations.of(context)!.cancel), // "İptal"
                     ),
                     TextButton(
                       onPressed: () => Navigator.pop(context, true),
@@ -164,7 +179,7 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
                 );
               }
             },
-          ),/*
+          ), /*
           ListTile(
             leading: const Icon(Icons.delete_forever, color: Colors.red),
             title: Text(

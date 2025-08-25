@@ -1212,7 +1212,7 @@
       "lat": 41.16714279572021,
       "lng": 41.79460321349126
     },
-    "title": "Kafkasör Yaylası",
+    "title": "Artvin Kafkasör Yaylası",
     "image": "https://storymap-images.s3.us-east-1.amazonaws.com/kafkasor.jpg",
     "iconPath": "assets/markers/park.png"
   },
@@ -1411,7 +1411,7 @@
       "lng": 32.837078600000005
     },
     "title": "Anıtkabir",
-    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/anitkabir.jpeg",
+    "image": "https://storymap-images.s3.us-east-1.amazonaws.com/an%C4%B1tkabir.jpg",
     "iconPath": "assets/markers/monument.png"
   }
 ]

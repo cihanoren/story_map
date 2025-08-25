@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:story_map/features/home/services.dart/InterstitialAdManager.dart';
 import 'package:story_map/l10n/app_localizations.dart';
+import 'package:story_map/features/home/services.dart/translation_service.dart'; // 🔹 TranslationService ekledik
 
 class ExplorePlacesTab extends StatefulWidget {
   const ExplorePlacesTab({super.key});
@@ -125,6 +126,9 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
       return const Center(child: CircularProgressIndicator());
     }
 
+    // 🔹 Kullanıcının seçili dilini al
+    final locale = Localizations.localeOf(context).languageCode;
+
     return SmartRefresher(
       controller: _refreshController,
       enablePullDown: true,
@@ -156,7 +160,8 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
                 final showAd = _tapCount % 2 == 0; // Her 2 tıklamada bir göster
 
                 showBottomSheet() async {
-                  final storyText = await _fetchStory(title);
+                  final storyText =
+                      await _fetchTranslatedStory(title, locale); // 🔹 çeviri
 
                   if (context.mounted) {
                     showModalBottomSheet(
@@ -201,7 +206,7 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
                                   Text(
                                     storyText ??
                                         AppLocalizations.of(context)!
-                                            .noStoryAvailable, // Hikaye yoksa mesaj
+                                            .noStoryAvailable,
                                     style: const TextStyle(fontSize: 16),
                                   ),
                                   const SizedBox(height: 24),
@@ -233,7 +238,7 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
               title: Text(title,
                   style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(
-                "${AppLocalizations.of(context)!.averageScore} $rating (${count} ${AppLocalizations.of(context)!.ratingsCount})", // Ortalama puan ve oy sayısı
+                "${AppLocalizations.of(context)!.averageScore} $rating (${count} ${AppLocalizations.of(context)!.ratingsCount})",
               ),
               trailing: const Icon(Icons.star, color: Colors.amber),
             ),
@@ -243,23 +248,17 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
     );
   }
 
-  // Hikaye çekme fonksiyonu
-  // Bu fonksiyon, Firestore'dan belirli bir mekanın hikayesini çeker.
-  Future<String?> _fetchStory(String placeTitle) async {
+  // 🔹 Çeviriyi getiren fonksiyon
+  Future<String?> _fetchTranslatedStory(String placeTitle, String locale) async {
     try {
-      final doc = await FirebaseFirestore.instance
-          .collection('places')
-          .doc(placeTitle)
-          .collection('story')
-          .doc('content') // 🔁 burası düzeltildi
-          .get();
+      // TranslationService ile istenilen dile çevir
+      final translated = await TranslationService.translateStory(
+          placeId: placeTitle, targetLocale: locale);
 
-      if (doc.exists) {
-        return doc.data()?['text'] as String?;
-      }
+      return translated;
     } catch (e) {
-      print("Hikaye çekme hatası: $e");
+      print("Hikaye çekme/çeviri hatası: $e");
+      return null;
     }
-    return null;
   }
 }

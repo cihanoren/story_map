@@ -3,9 +3,11 @@ template-arb-file: intl_tr.arb
 output-localization-file: app_localizations.dart
 output-class: AppLocalizations
 supported-locales:
-  - tr
-  - en
-  - de
-  - fr
-  - es
-  - ru
+  - tr # Turkish
+  - en # English
+  - de # German
+  - fr # French
+  - es # Spanish
+  - ru # Russian
+  - it # Italian
+  - ar # Arabic

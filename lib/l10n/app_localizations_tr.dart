@@ -545,4 +545,7 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get privacyPolicyChangesText =>
       '- Bu gizlilik politikası zaman zaman güncellenebilir.\n- Güncellemeler uygulama içinden veya bu sayfa üzerinden duyurulur.';
+
+  @override
+  String get searchPlace => 'Yer Ara...';
 }

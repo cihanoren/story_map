@@ -382,30 +382,35 @@ class StoryBottomSheet extends ConsumerWidget {
 
   /// 🔹 AWS S3 veya lokal görüntüyü destekleyen dinamik resim bileşeni
   Widget _buildImage() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: imagePath.startsWith("http")
-          ? Image.network(
-              imagePath,
-              width: double.infinity,
-              height: 200,
-              fit: BoxFit.cover,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Center();
-              },
-              errorBuilder: (context, error, stackTrace) {
-                return Icon(Icons.broken_image, size: 100, color: Colors.grey);
-              },
-            )
-          : Image.asset(
-              imagePath,
-              width: double.infinity,
-              height: 200,
-              fit: BoxFit.cover,
-            ),
-    );
+  if (imagePath.isEmpty) {
+    return SizedBox.shrink(); // hiç resim gösterme
   }
+
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(12),
+    child: imagePath.startsWith("http")
+        ? Image.network(
+            imagePath,
+            width: double.infinity,
+            height: 200,
+            fit: BoxFit.cover,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(child: CircularProgressIndicator());
+            },
+            errorBuilder: (context, error, stackTrace) {
+              return Icon(Icons.broken_image, size: 100, color: Colors.grey);
+            },
+          )
+        : Image.asset(
+            imagePath,
+            width: double.infinity,
+            height: 200,
+            fit: BoxFit.cover,
+          ),
+  );
+}
+
 
   /// 🔹 Hikaye yüklenirken gösterilecek animasyon
   Widget _buildLoadingAnimation() {

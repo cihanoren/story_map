@@ -6,11 +6,67 @@ import 'package:story_map/features/home/controller.dart/maps_controller.dart';
 import 'package:story_map/l10n/app_localizations.dart';
 import 'package:story_map/utils/marker_icons.dart';
 
-class MapView extends ConsumerWidget {
+class MapView extends ConsumerStatefulWidget {
   const MapView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MapView> createState() => _MapViewState();
+}
+
+class _MapViewState extends ConsumerState<MapView> {
+  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+
+  List<Map<String, dynamic>> _searchResults = [];
+
+  /// 🔎 Arama fonksiyonu
+  List<Map<String, dynamic>> searchPlaces(
+      String query, List<Map<String, dynamic>> allPlaces) {
+    if (query.length < 2) return [];
+
+    final lowerQuery = query.toLowerCase();
+
+    return allPlaces.where((place) {
+      final title = (place['title'] ?? '').toString().toLowerCase();
+
+      // Başlık içindeki her kelimeye bakıyoruz
+      final words = title.split(RegExp(r'\s+'));
+      return words.any((w) => w.startsWith(lowerQuery));
+    }).toList();
+  }
+
+  void _onSearch(String query, MapController mapController) {
+    if (query.isEmpty) {
+      setState(() => _searchResults = []);
+      return;
+    }
+    final allPlaces = mapController.getAllMarkersData();
+    setState(() {
+      _searchResults = searchPlaces(query, allPlaces);
+    });
+  }
+
+  /// 📍 Seçilen mekana git
+  void _goToPlace(Map<String, dynamic> place, MapController mapController) {
+    final position = place['position'] as LatLng?;
+    if (position == null) return;
+
+    mapController.animateToLocation(position);
+
+    setState(() {
+      _searchResults = [];
+      _searchController.clear();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _searchFocusNode.dispose(); // 👈 burası önemli
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final mapState = ref.watch(mapControllerProvider);
     final mapController = ref.read(mapControllerProvider.notifier);
     final isTourActive = mapState['isTourActive'] as bool? ?? false;
@@ -26,6 +82,11 @@ class MapView extends ConsumerWidget {
                 GoogleMap(
                   mapType: MapType.normal, // Harita tipi
                   compassEnabled: false, // Pusula butonu
+                  onCameraMove: (pos) => ref
+                      .read(mapControllerProvider.notifier)
+                      .onCameraMove(pos),
+                  onCameraIdle: () =>
+                      ref.read(mapControllerProvider.notifier).onCameraIdle(),
                   polylines: mapState['polyline'] != null
                       ? {mapState['polyline']}
                       : {},
@@ -40,14 +101,90 @@ class MapView extends ConsumerWidget {
                       mapController.loadMarkers();
                     });
                   },
-                  zoomControlsEnabled:
-                      false, // Google Maps kendi zoom in out butonları
+                  zoomControlsEnabled: false,
                   myLocationEnabled: true,
-                  myLocationButtonEnabled:
-                      false, // Google Maps kendi konum butonu
+                  myLocationButtonEnabled: false,
                   markers: mapState['markers'],
                   onTap: (LatLng position) {},
                 ),
+
+                /// 🔎 Arama Barı
+                Positioned(
+                  top: 40,
+                  left: 15,
+                  right: 70,
+                  child: Column(
+                    children: [
+                      Material(
+                        elevation: 4,
+                        borderRadius: BorderRadius.circular(25),
+                        child: TextField(
+                          controller: _searchController,
+                          focusNode: _searchFocusNode,
+                          onChanged: (val) => _onSearch(val, mapController),
+                          decoration: InputDecoration(
+                            hintText: AppLocalizations.of(context)!.searchPlace,
+                            prefixIcon: const Icon(Icons.search),
+                            suffixIcon: _searchController.text.isNotEmpty
+                                ? IconButton(
+                                    icon: const Icon(Icons.clear),
+                                    onPressed: () {
+                                      _searchController
+                                          .clear(); // yazıyı temizle
+                                      _onSearch('',
+                                          mapController); // sonuçları sıfırla
+                                      _searchFocusNode
+                                          .unfocus(); // klavyeyi kapat
+
+                                      setState(() {}); // UI’yi güncelle
+                                    },
+                                  )
+                                : null,
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                          ),
+                        ),
+                      ),
+                      if (_searchResults.isNotEmpty)
+                        Container(
+                          margin: const EdgeInsets.only(top: 5),
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 6,
+                              ),
+                            ],
+                          ),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: _searchResults.length,
+                            itemBuilder: (context, index) {
+                              final place = _searchResults[index];
+
+                              // 📌 Burada her mekana ait ikon belirleniyor
+                              final iconPath = place['iconPath'] as String?;
+                              final categoryIcon = iconPath != null
+                                  ? Image.asset(iconPath, width: 28, height: 28)
+                                  : const Icon(Icons.location_on,
+                                      color: Colors.deepPurple);
+
+                              return ListTile(
+                                leading: categoryIcon,
+                                title: Text(place['title']),
+                                onTap: () => _goToPlace(place, mapController),
+                              );
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+
                 // Harita üzerindeki konum butonu
                 Positioned(
                   top: 40,
@@ -91,6 +228,33 @@ class MapView extends ConsumerWidget {
                     ],
                   ),
                 ),
+
+                /// 📌 Senin tur başlatma / tur aktifse rota gösterme kodların
+                if (!isTourActive)
+                  Positioned(
+                    bottom: 20,
+                    left: 85,
+                    right: 85,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // ... burası senin verdiğin start trip modal kodu ...
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        backgroundColor: Colors.grey[900],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.startTrip,
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.yellowAccent[700]),
+                      ),
+                    ),
+                  ),
 
                 if (!isTourActive)
                   Positioned(

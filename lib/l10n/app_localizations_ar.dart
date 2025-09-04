@@ -539,4 +539,7 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get privacyPolicyChangesText =>
       '- قد يتم تحديث سياسة الخصوصية هذه من وقت لآخر.\n- ستتم الإعلانات عن التحديثات من خلال التطبيق أو هذه الصفحة.';
+
+  @override
+  String get searchPlace => 'ابحث عن مكان...';
 }

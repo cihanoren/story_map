@@ -224,6 +224,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       child: Card(
+                        color: Colors.grey[100],
                         elevation: 4,
                         margin: const EdgeInsets.symmetric(vertical: 8),
                         shape: RoundedRectangleBorder(

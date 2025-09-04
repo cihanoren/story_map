@@ -547,4 +547,7 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get privacyPolicyChangesText =>
       '- Questa politica sulla privacy può essere aggiornata di tanto in tanto.\n- Gli aggiornamenti saranno comunicati tramite l\'app o questa pagina.';
+
+  @override
+  String get searchPlace => 'Cerca luogo...';
 }

@@ -1123,6 +1123,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'- Bu gizlilik politikası zaman zaman güncellenebilir.\n- Güncellemeler uygulama içinden veya bu sayfa üzerinden duyurulur.'**
   String get privacyPolicyChangesText;
+
+  /// No description provided for @searchPlace.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yer Ara...'**
+  String get searchPlace;
 }
 
 class _AppLocalizationsDelegate

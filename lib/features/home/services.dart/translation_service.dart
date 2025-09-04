@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'package:story_map/core/config.dart';
+import 'package:story_map/features/home/services.dart/story_api_services.dart';
 
 class TranslationService {
   static const String _apiUrl = "https://api.openai.com/v1/chat/completions";
-  static const String _model = "gpt-3.5-turbo"; // ileride yükseltilebilir
+  static const String _model = "gpt-3.5-turbo"; 
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   /// Kısa dil kodunu modelin anlayacağı dil adına çevir
@@ -25,12 +25,16 @@ class TranslationService {
         return 'İspanyolca';
       case 'ru':
         return 'Rusça';
+      case 'ar':
+        return 'Arapça';
+      case 'it':
+        return 'İtalyanca';
       default:
         return 'İngilizce';
     }
   }
 
-  /// Orijinal hikayeyi al ve istenilen dile çevir
+  /// Hikayeyi hedef dile çevir
   static Future<String> translateStory({
     required String placeId,
     required String targetLocale,
@@ -38,7 +42,7 @@ class TranslationService {
     try {
       final placeDoc = _firestore.collection("places").doc(placeId);
 
-      // 1️⃣ Daha önce çeviri var mı kontrol et
+      // 1️⃣ Daha önce çeviri var mı?
       final translationDoc =
           await placeDoc.collection("story").doc(targetLocale).get();
 
@@ -46,14 +50,19 @@ class TranslationService {
         return translationDoc.data()!["text"];
       }
 
-      // 2️⃣ Orijinal hikayeyi al (story/content)
-      final originalDoc = await placeDoc.collection("story").doc("content").get();
-      if (!originalDoc.exists || originalDoc.data()?["text"] == null) {
-        return "Orijinal hikaye bulunamadı.";
-      }
-      final originalStory = originalDoc.data()!["text"] as String;
+      // 2️⃣ Orijinal hikayeyi getir (yoksa oluştur)
+      final originalDoc =
+          await placeDoc.collection("story").doc("content").get();
 
-      // 3️⃣ OpenAI ile çevir
+      String originalStory;
+      if (!originalDoc.exists || originalDoc.data()?["text"] == null) {
+        // Yoksa önce hikaye oluştur
+        originalStory = await StoryService.fetchStory(placeId);
+      } else {
+        originalStory = originalDoc.data()!["text"] as String;
+      }
+
+      // 3️⃣ Çeviri yap
       final languageName = getLanguageName(targetLocale);
 
       final response = await http.post(
@@ -68,7 +77,8 @@ class TranslationService {
             {
               "role": "system",
               "content":
-                  "Sen bir çeviri uzmanısın. Kullanıcı için hikayeyi $languageName diline çevir."
+                  "Sen profesyonel bir çeviri uzmanısın. Kullanıcı için hikayeyi sadece $languageName diline çevir. "
+                      "Ekstra açıklama, yorum veya başka dilde içerik ekleme."
             },
             {"role": "user", "content": originalStory}
           ],
@@ -81,13 +91,10 @@ class TranslationService {
             jsonResponse["choices"]?.first["message"]["content"]?.trim();
 
         if (translatedStory != null) {
-          // 4️⃣ Çeviriyi Firestore'a kaydet (story/{targetLocale})
-          await placeDoc
-              .collection("story")
-              .doc(targetLocale)
-              .set({
+          // 4️⃣ Çeviriyi Firestore'a kaydet
+          await placeDoc.collection("story").doc(targetLocale).set({
             "text": translatedStory,
-            "createdAt": FieldValue.serverTimestamp()
+            "createdAt": FieldValue.serverTimestamp(),
           });
 
           return translatedStory;

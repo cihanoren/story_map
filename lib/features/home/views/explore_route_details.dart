@@ -193,6 +193,7 @@ class _ExploreRouteDetailsState extends State<ExploreRouteDetails> {
                       final sharedAt = formatTimestamp(place['sharedAt']);
 
                       return Card(
+                        color: Colors.grey[100],
                         margin: const EdgeInsets.symmetric(vertical: 8),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),

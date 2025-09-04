@@ -139,7 +139,8 @@ class _CardDetailsState extends State<CardDetails> {
                       width: 220, // biraz daha geniş
                       child: Row(
                         children: [
-                          Icon(Icons.switch_access_shortcut_outlined, color: Colors.blue),
+                          Icon(Icons.switch_access_shortcut_outlined,
+                              color: Colors.blue),
                           SizedBox(width: 10),
                           Flexible(
                             child: Text(
@@ -221,6 +222,7 @@ class _CardDetailsState extends State<CardDetails> {
                 final createdAt = formatTimestamp(place['createdAt']);
 
                 return Card(
+                  color: Colors.grey[100],
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12)),

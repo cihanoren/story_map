@@ -34,7 +34,7 @@
             android:value="2" />
             <meta-data
                 android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyAlSs28fI5QiDZ_txQ3EgBqjexqE57W7Xk"/>
+                android:value="AIzaSyBCCC6yeolve44xzBTrvd0Q_8RHYBoRehc"/>
 
         <!-- ✅ AdMob Application ID -->
         <meta-data

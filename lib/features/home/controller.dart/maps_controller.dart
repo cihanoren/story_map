@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:isolate';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -27,6 +28,19 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
   GoogleMapController? _googleMapController;
   int _markerClickCounter = 0;
 
+  /// JSON’dan gelen tüm marker verileri (ham)
+  List<Map<String, dynamic>> _allMarkersData = [];
+
+  /// Mevcut zoom
+  double _currentZoom = 5;
+
+  /// Tur rotası
+  List<LatLng> _tourPath = [];
+  List<String> _tourTitles = [];
+
+  final RouteService _routeService = RouteService();
+  String _selectedTravelMode = 'walking';
+
   MapController()
       : super({
           'location': null,
@@ -40,6 +54,197 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     _googleMapController = controller;
   }
 
+  /// JSON’dan markerları oku
+  Future<void> _initializeMarkers() async {
+    await MarkerIcons.loadIcons();
+    _allMarkersData = await PredefinedMarkers.loadMarkers();
+
+    // Başlangıç için boş marker seti
+    state = {
+      ...state,
+      'markers': <Marker>{},
+    };
+  }
+
+  /// Kamera hareketi bittiğinde çağırılacak
+  Future<void> onCameraIdle() async {
+    if (_googleMapController == null) return;
+
+    final bounds = await _googleMapController!.getVisibleRegion();
+    final zoom = _currentZoom;
+
+    final clusters = await computeClusters(
+      _allMarkersData,
+      bounds,
+      zoom,
+    );
+
+    final newMarkers = <Marker>{};
+    for (var c in clusters) {
+      if (c['isCluster'] == true) {
+        // Cluster marker
+        final count = c['count']; // cluster içindeki mekan sayısı
+
+        BitmapDescriptor clusterIcon;
+        switch (count) {
+          case 2:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(80, 80)),
+              "assets/cluster_icons/cluster_2.png",
+            );
+            break;
+          case 3:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_3.png",
+            );
+            break;
+          case 4:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_4.png",
+            );
+            break;
+          case 5:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_5.png",
+            );
+            break;
+          case 6:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_6.png",
+            );
+            break;
+          case 7:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_7.png",
+            );
+            break;
+          case 8:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_8.png",
+            );
+            break;
+          case 9:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_9.png",
+            );
+            break;
+          case 10:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_10.png",
+            );
+            break;
+          case 11:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_11.png",
+            );
+            break;
+          case 12:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_12.png",
+            );
+            break;
+          case 13:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_13.png",
+            );
+            break;
+          case 14:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_14.png",
+            );
+            break;
+          case 15:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_15.png",
+            );
+            break;
+          case 16:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_16.png",
+            );
+            break;
+          case 17:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_17.png",
+            );
+            break;
+          case 18:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_18.png",
+            );
+            break;
+          case 19:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_19.png",
+            );
+            break;
+          case 20:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/cluster_20.png",
+            );
+            break;
+          default:
+            clusterIcon = await BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(64, 64)),
+              "assets/cluster_icons/default_cluster.png",
+            );
+        }
+
+        newMarkers.add(
+          Marker(
+            markerId: MarkerId("cluster_${c['lat']}_${c['lng']}"),
+            position: LatLng(c['lat'], c['lng']),
+            icon: clusterIcon,
+            infoWindow: InfoWindow(title: "${count} mekan"),
+          ),
+        );
+      } else {
+        // Tekil marker
+        final iconPath = c['iconPath'];
+        BitmapDescriptor customIcon =
+            await MarkerIcons.getBitmapDescriptor(iconPath);
+
+        newMarkers.add(
+          Marker(
+            markerId: MarkerId("marker_${c['lat']}_${c['lng']}"),
+            position: LatLng(c['lat'], c['lng']),
+            icon: customIcon,
+            infoWindow: InfoWindow(title: c['title']),
+            onTap: () => _showBottomSheet(c['title'], c['image']),
+          ),
+        );
+      }
+    }
+
+    state = {
+      ...state,
+      'markers': newMarkers,
+    };
+  }
+
+  /// Kamera zoom’u güncelle
+  void onCameraMove(CameraPosition position) {
+    _currentZoom = position.zoom;
+  }
+
   // Konumun doğruluğunu kontrol et ve kullanıcıya izin iste
   Future<void> _determinePosition() async {
     final context = navigatorKey.currentContext;
@@ -49,9 +254,9 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
       if (context != null) {
         _showDialog(
           context: context,
-          title: AppLocalizations.of(context)!.locationServiceDisable, // Konum servisleri kapalı mesajı
-          content: AppLocalizations.of(context)!.openLocationServiceMessage, // Konum servisini açın mesajı
-          actionText: AppLocalizations.of(context)!.settings, // Ayarlar mesajı
+          title: AppLocalizations.of(context)!.locationServiceDisable,
+          content: AppLocalizations.of(context)!.openLocationServiceMessage,
+          actionText: AppLocalizations.of(context)!.settings,
           onPressed: () => Geolocator.openLocationSettings(),
         );
       }
@@ -65,9 +270,10 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
         if (context != null) {
           _showDialog(
             context: context,
-            title: AppLocalizations.of(context)!.requiredPermission, // Konum izni verilmedi mesajı
-            content: AppLocalizations.of(context)!.requiredAppLocationPermissionMessage, // Konum izni mesajı
-            actionText: AppLocalizations.of(context)!.actionOK, // Tamam mesajı
+            title: AppLocalizations.of(context)!.requiredPermission,
+            content: AppLocalizations.of(context)!
+                .requiredAppLocationPermissionMessage,
+            actionText: AppLocalizations.of(context)!.actionOK,
           );
         }
         return;
@@ -78,10 +284,10 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
       if (context != null) {
         _showDialog(
           context: context,
-          title: AppLocalizations.of(context)!.noLocationPermission, // İzin verilmedi mesajı
+          title: AppLocalizations.of(context)!.noLocationPermission,
           content:
-              AppLocalizations.of(context)!.rejectedLocationPermissionMessage, // Konum izni kalıcı olarak reddedildi mesajı
-          actionText: AppLocalizations.of(context)!.settings, // Ayarlar mesajı
+              AppLocalizations.of(context)!.rejectedLocationPermissionMessage,
+          actionText: AppLocalizations.of(context)!.settings,
           onPressed: () => Geolocator.openAppSettings(),
         );
       }
@@ -103,15 +309,14 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
       if (context != null) {
         _showDialog(
           context: context,
-          title: AppLocalizations.of(context)!.locationError, // Konum hatası mesajı
-          content: AppLocalizations.of(context)!.getLocationError, // Konum alınamadı mesajı
-          actionText: AppLocalizations.of(context)!.actionOK, // Tamam mesajı
+          title: AppLocalizations.of(context)!.locationError,
+          content: AppLocalizations.of(context)!.getLocationError,
+          actionText: AppLocalizations.of(context)!.actionOK,
         );
       }
     }
   }
 
-  // Kullanıcıya konum izni verildiğinde çağrılır
   void _showDialog({
     required BuildContext context,
     required String title,
@@ -141,24 +346,6 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     if (_googleMapController != null && state['location'] != null) {
       _googleMapController!.animateCamera(
         CameraUpdate.newLatLngZoom(state['location'], 15.0),
-      );
-    }
-  }
-
-  void _initializeMarkers() async {
-    // İkonları yüklemeden önce loadIcons çağırılıyor
-    await MarkerIcons.loadIcons();
-
-    // JSON verisini assets/markers.json'dan oku
-    List<Map<String, dynamic>> markers = await PredefinedMarkers.loadMarkers();
-
-    // Markerları ekleyin
-    for (var markerData in markers) {
-      await addMarker(
-        markerData['position'],
-        markerData['title'],
-        markerData['image'],
-        markerData['iconPath'],
       );
     }
   }
@@ -242,7 +429,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     state = {
       'location': state['location'],
       'markers': markers,
-      'isTourActive': state['isTourActive'] ?? false, // <-- EKLE
+      'isTourActive': state['isTourActive'] ?? false,
     };
   }
 
@@ -252,16 +439,33 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
 
     _markerClickCounter++;
 
-    // Her 2 tıklamadan 1'inde reklam göster
     if (_markerClickCounter % 2 == 0) {
       final adManager = InterstitialAdManager();
       adManager.loadAndShowAd(() {
-        _openStoryBottomSheet(
-            context, title, imageUrl); // Reklam kapandıktan sonra
+        _openStoryBottomSheet(context, title, imageUrl);
       });
     } else {
-      _openStoryBottomSheet(context, title, imageUrl); // Direkt göster
+      _openStoryBottomSheet(context, title, imageUrl);
     }
+  }
+
+// JSON’daki tüm marker verilerini döndüren fonksiyon
+  List<Map<String, dynamic>> getAllMarkersData() {
+    return _allMarkersData; // 👈 senin JSON’dan yüklediğin marker listesi
+  }
+
+//  Hedef konuma animasyonla git
+  Future<void> animateToLocation(LatLng target) async {
+    if (_googleMapController == null) return;
+
+    await _googleMapController!.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: target,
+          zoom: 16, // yakınlaştırma seviyesini sen ayarlayabilirsin
+        ),
+      ),
+    );
   }
 
   void _openStoryBottomSheet(
@@ -293,6 +497,10 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     _initializeMarkers();
   }
 
+  // ---- ROTA, TUR VE API KISMI AYNEN KORUNDU ----
+  // (createShortestPath, createRealPath, _drawRouteWithDirections, _getRouteFromApi vs.)
+  // Burada kapatma hataları yoktu. Yalnızca MapController sınıfının içine aldım.
+  // ------------------------------------------------
   Future<List<LatLng>> createShortestPath(int locationCount,
       {String travelMode = 'walking'}) async {
     final currentLocation = state['location'] as LatLng?;
@@ -343,7 +551,9 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
           (m) => m.position == point,
           orElse: () => Marker(markerId: MarkerId('')),
         );
-        return marker.infoWindow.title ?? AppLocalizations.of(navigatorKey.currentContext!)!.startingPoint; // Başlangıç noktası için varsayılan metin
+        return marker.infoWindow.title ??
+            AppLocalizations.of(navigatorKey.currentContext!)!
+                .startingPoint; // Başlangıç noktası için varsayılan metin
       }).toList(),
     );
 
@@ -351,7 +561,51 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
   }
 
   /// Tur rotasını döndüren fonksiyon
-  List<String> getTourTitles() => _tourTitles;
+  //List<String> getTourTitles() => _tourTitles;
+
+  Future<void> saveCurrentRoute({
+    String? customTitle,
+  }) async {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    if (userId == null) return;
+
+    final places = _tourPath
+        .asMap()
+        .map((index, e) {
+          final title = _tourTitles[index];
+          // JSON’daki marker verilerinden image’ı çekelim
+          final image = _allMarkersData.firstWhere(
+            (m) => m['title'] == title,
+            orElse: () => {'image': ''},
+          )['image'];
+
+          return MapEntry(
+            index,
+            Place(
+              name: title,
+              image: image ?? '',
+              lat: e.latitude,
+              lng: e.longitude,
+            ),
+          );
+        })
+        .values
+        .toList();
+
+    final route = RouteModel(
+      id: '',
+      userId: userId,
+      title: customTitle ??
+          AppLocalizations.of(navigatorKey.currentContext!)!.unnamedRoute,
+      description: _tourTitles.join(' - '),
+      places: places,
+      mode: _selectedTravelMode,
+      isShared: false,
+      createdAt: Timestamp.now(),
+    );
+
+    await _routeService.saveRoute(route);
+  }
 
   /// İki koordinat arasındaki mesafeyi hesaplayan fonksiyon (Haversine Formula)
   double _calculateDistance(
@@ -505,7 +759,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
   }
 
 // Zoom in ve zoom out fonksiyonları
-  double _currentZoom = 15;
+//  double _currentZoom = 15;
 
   void zoomIn() {
     _currentZoom += 1;
@@ -553,8 +807,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     return polyline;
   }
 
-  List<LatLng> _tourPath = [];
-  List<String> _tourTitles = [];
+  List<String> getTourTitles() => _tourTitles;
 
   void startTour() {
     state = {
@@ -573,71 +826,98 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     };
   }
 
-  /// Tur rotasını saklamak için çağrılır
   void setTourPath(List<LatLng> path, List<String> titles) {
     _tourPath = path;
     _tourTitles = titles;
   }
 
-  Future<Map<String, String>> loadMarkerImages() async {
-    final String jsonStr = await rootBundle.loadString('assets/markers.json');
-    final List<dynamic> jsonList = json.decode(jsonStr);
-
-    // title -> image URL eşlemesi
-    return {
-      for (var item in jsonList)
-        if (item['title'] != null && item['image'] != null)
-          item['title']: item['image']
-    };
-  }
-
-  Future<void> saveCurrentRoute({
-    String? customTitle,
-  }) async {
-    final userId = FirebaseAuth.instance.currentUser?.uid;
-    if (userId == null) return;
-
-    final imageMap = await loadMarkerImages();
-
-    final places = _tourPath
-        .asMap()
-        .map((index, e) {
-          final title = _tourTitles[index];
-          return MapEntry(
-            index,
-            Place(
-              name: title,
-              image: imageMap[title] ?? '',
-              lat: e.latitude,
-              lng: e.longitude,
-            ),
-          );
-        })
-        .values
-        .toList();
-
-    final route = RouteModel(
-      id: '',
-      userId: userId,
-      title: customTitle ?? AppLocalizations.of(navigatorKey.currentContext!)!.unnamedRoute, // İsimlendirilmemiş rota
-      description: _tourTitles.join(' - '),
-      places: places,
-      mode:
-          _selectedTravelMode, // 👈 burada artık kayıtlı olan travel mode kullanılıyor
-      isShared: false,
-      createdAt: Timestamp.now(),
-    );
-
-    await _routeService.saveRoute(route);
-  }
-
-  final RouteService _routeService = RouteService();
-
-  String _selectedTravelMode = 'walking';
-
-  void setTravelMode(String mode) {
-    _selectedTravelMode = mode;
-  }
-
   String get selectedTravelMode => _selectedTravelMode;
+  void setTravelMode(String mode) => _selectedTravelMode = mode;
+}
+
+/// Isolate fonksiyonu
+Future<List<Map<String, dynamic>>> computeClusters(
+    List<Map<String, dynamic>> allMarkers,
+    LatLngBounds bounds,
+    double zoom) async {
+  return await Isolate.run(() {
+    final minLat = bounds.southwest.latitude;
+    final maxLat = bounds.northeast.latitude;
+    final minLng = bounds.southwest.longitude;
+    final maxLng = bounds.northeast.longitude;
+
+    // Görünen bölgedeki markerları filtrele
+    final visible = allMarkers.where((m) {
+      final lat = m['position'].latitude;
+      final lng = m['position'].longitude;
+      return lat >= minLat && lat <= maxLat && lng >= minLng && lng <= maxLng;
+    }).toList();
+
+    if (visible.isEmpty) return [];
+
+    // 🔑 Zoom’a göre grid boyutu
+    double _getGridSize(double zoom) {
+      if (zoom < 5) return 1.0;
+      if (zoom < 10) return 0.5;
+      if (zoom < 13) return 0.2;
+      if (zoom < 16) return 0.05;
+      return 0.02;
+    }
+
+    final gridSize = _getGridSize(zoom);
+
+    // Çok az marker varsa clusterlama yapma
+    if (visible.length < 30) {
+      return visible
+          .map((m) => {
+                'isCluster': false,
+                'lat': m['position'].latitude,
+                'lng': m['position'].longitude,
+                'title': m['title'],
+                'image': m['image'],
+                'iconPath': m['iconPath'],
+              })
+          .toList();
+    }
+
+    // Cluster grupları
+    final clusters = <String, List<Map<String, dynamic>>>{};
+
+    for (var m in visible) {
+      final lat = m['position'].latitude;
+      final lng = m['position'].longitude;
+      final key = "${(lat / gridSize).floor()}_${(lng / gridSize).floor()}";
+      clusters.putIfAbsent(key, () => []).add(m);
+    }
+
+    final results = <Map<String, dynamic>>[];
+    clusters.forEach((key, group) {
+      if (group.length == 1) {
+        final m = group.first;
+        results.add({
+          'isCluster': false,
+          'lat': m['position'].latitude,
+          'lng': m['position'].longitude,
+          'title': m['title'],
+          'image': m['image'],
+          'iconPath': m['iconPath'],
+        });
+      } else {
+        final avgLat =
+            group.map((m) => m['position'].latitude).reduce((a, b) => a + b) /
+                group.length;
+        final avgLng =
+            group.map((m) => m['position'].longitude).reduce((a, b) => a + b) /
+                group.length;
+        results.add({
+          'isCluster': true,
+          'lat': avgLat,
+          'lng': avgLng,
+          'count': group.length,
+        });
+      }
+    });
+
+    return results;
+  });
 }

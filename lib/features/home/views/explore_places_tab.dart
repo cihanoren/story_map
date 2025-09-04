@@ -1,8 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:story_map/features/home/controller.dart/predefined_markers.dart';
 import 'package:story_map/features/home/services.dart/InterstitialAdManager.dart';
 import 'package:story_map/l10n/app_localizations.dart';
 import 'package:story_map/features/home/services.dart/translation_service.dart'; // 🔹 TranslationService ekledik
@@ -37,14 +37,17 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
   }
 
   Future<void> _loadMarkerImages() async {
-    final jsonStr = await rootBundle.loadString('assets/markers.json');
-    final List<dynamic> jsonList = jsonDecode(jsonStr);
-    _titleToImageMap = {
-      for (var item in jsonList)
-        if (item['title'] != null && item['image'] != null)
-          item['title']: item['image']
-    };
-  }
+  // PredefinedMarkers.loadMarkers() ile tüm json dosyalarını oku
+  final allMarkers = await PredefinedMarkers.loadMarkers();
+
+  // title -> image map oluştur
+  _titleToImageMap = {
+    for (var marker in allMarkers)
+      if (marker['title'] != null && marker['image'] != null)
+        marker['title']: marker['image']
+  };
+}
+
 
   Future<void> _updateMissingImagesInFirestore() async {
     final snapshot =
@@ -148,6 +151,7 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
           final imageUrl = item['placeImage'] ?? _titleToImageMap[title];
 
           return Card(
+            color: Colors.grey[100],
             elevation: 3,
             margin: const EdgeInsets.symmetric(vertical: 8),
             shape: RoundedRectangleBorder(

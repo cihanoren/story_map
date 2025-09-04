@@ -544,4 +544,7 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get privacyPolicyChangesText =>
       '- Данная политика конфиденциальности может время от времени обновляться.\n- Обновления будут объявляться через приложение или на этой странице.';
+
+  @override
+  String get searchPlace => 'Поиск места...';
 }

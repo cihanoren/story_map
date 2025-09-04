@@ -552,4 +552,7 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get privacyPolicyChangesText =>
       '- Diese Datenschutzerklärung kann von Zeit zu Zeit aktualisiert werden.\n- Aktualisierungen werden innerhalb der Anwendung oder auf dieser Seite bekannt gegeben.';
+
+  @override
+  String get searchPlace => 'Ort suchen...';
 }

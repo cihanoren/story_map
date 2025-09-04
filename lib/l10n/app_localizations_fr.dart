@@ -554,4 +554,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get privacyPolicyChangesText =>
       '- Cette politique de confidentialité peut être mise à jour périodiquement.\n- Les mises à jour seront annoncées via l\'application ou sur cette page.';
+
+  @override
+  String get searchPlace => 'Rechercher un lieu...';
 }

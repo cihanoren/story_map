@@ -294,6 +294,7 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
                         );
                       },
                       child: Card(
+                        color: Colors.grey[100],
                         margin: const EdgeInsets.symmetric(vertical: 8),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),

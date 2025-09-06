@@ -555,4 +555,107 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get searchPlace => 'Ort suchen...';
+
+  @override
+  String get help_editAccount_title =>
+      'Wie bearbeite ich meine Kontoinformationen?';
+
+  @override
+  String get help_editAccount_content =>
+      'Tippe auf das Einstellungssymbol auf der Profilseite, um Benutzername und E-Mail-Adresse zu bearbeiten.';
+
+  @override
+  String get help_shareRoute_title => 'Wie teile ich eine Route?';
+
+  @override
+  String get help_shareRoute_content =>
+      'Nachdem du eine Route erstellt hast, kannst du die Option \'Im Entdecken teilen\' verwenden, um deine Route im Entdecken-Bereich zu veröffentlichen.';
+
+  @override
+  String get help_favorites_title => 'Wo kann ich meine Lieblingsrouten sehen?';
+
+  @override
+  String get help_favorites_content =>
+      'Tippe auf der Profilseite auf den Reiter \'Favoriten\', um die Routen zu sehen, die du zuvor geliked hast.';
+
+  @override
+  String get help_editLocation_title =>
+      'Wie ändere ich meine Standortinformationen?';
+
+  @override
+  String get help_editLocation_content =>
+      'Tippe auf das Stiftsymbol neben dem Standort auf der Profilseite, um den Standort manuell einzugeben.';
+
+  @override
+  String get help_reportIssue_title => 'Wie kann ich ein Problem melden?';
+
+  @override
+  String get help_reportIssue_content =>
+      'Du kannst den Entwickler über den Kommunikationsbereich in der App kontaktieren. Wenn dies nicht funktioniert, sende eine E-Mail an cihanoren10@gmail.com.';
+
+  @override
+  String get help_deleteRoute_title => 'Wie kann ich meine Routen löschen?';
+
+  @override
+  String get help_deleteRoute_content =>
+      'Gehe zur Detailseite der von dir erstellten Route und verwende die Option \'Löschen\', um die Route dauerhaft zu entfernen.';
+
+  @override
+  String get help_addFavorites_title =>
+      'Wie füge ich eine Route zu meinen Favoriten hinzu?';
+
+  @override
+  String get help_addFavorites_content =>
+      'Tippe im Entdecken-Bereich auf das Herzsymbol einer Route, die dir gefällt, um sie zu deinen Favoriten hinzuzufügen.';
+
+  @override
+  String get help_addComment_title => 'Wie kann ich einen Kommentar abgeben?';
+
+  @override
+  String get help_addComment_content =>
+      'Tippe auf der Karte auf den entsprechenden Ort, gehe zum unteren Bereich der Story und teile deine Gedanken im Feld \'Kommentar schreiben\'.';
+
+  @override
+  String get help_changeLanguage_title =>
+      'Wie ändere ich die Spracheinstellungen?';
+
+  @override
+  String get help_changeLanguage_content =>
+      'Du kannst die Anzeigesprache der App in den Einstellungen unter \'Sprache\' ändern.';
+
+  @override
+  String get help_notifications_title =>
+      'Kann ich App-Benachrichtigungen deaktivieren?';
+
+  @override
+  String get help_notifications_content =>
+      'Du kannst die Benachrichtigungsberechtigungen in den Geräteeinstellungen deaktivieren oder die App-Benachrichtigungen in den App-Einstellungen stummschalten.';
+
+  @override
+  String get help_viewStories_title => 'Wie kann ich Stories ansehen?';
+
+  @override
+  String get help_viewStories_content =>
+      'Tippe auf der Karte oder im Entdecken-Bereich auf das Story-Symbol unter den ausgewählten Orten, um die geteilten Stories anzusehen.';
+
+  @override
+  String get help_offlineUsage_title =>
+      'Kann ich die App ohne Internet verwenden?';
+
+  @override
+  String get help_offlineUsage_content =>
+      'Zum Erstellen von Routen und Anzeigen gespeicherter Routen ist eine Internetverbindung erforderlich.';
+
+  @override
+  String get help_deleteAccount_title => 'Kann ich mein Konto löschen?';
+
+  @override
+  String get help_deleteAccount_content =>
+      'Um dein Konto zu löschen, kontaktiere den Entwickler über den Kommunikationsbereich in der App und gib dabei deinen Benutzernamen und deine E-Mail-Adresse an.';
+
+  @override
+  String get helpCenterTitle => 'Hilfe-Center';
+
+  @override
+  String get sendFeedback => 'Feedback senden';
 }

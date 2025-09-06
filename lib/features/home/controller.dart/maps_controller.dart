@@ -30,6 +30,7 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
 
   /// JSON’dan gelen tüm marker verileri (ham)
   List<Map<String, dynamic>> _allMarkersData = [];
+  List<Marker> clusteredMarkers = []; // Görünür ve cluster yapılmış markerlar
 
   /// Mevcut zoom
   double _currentZoom = 5;
@@ -80,140 +81,30 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     );
 
     final newMarkers = <Marker>{};
+
     for (var c in clusters) {
       if (c['isCluster'] == true) {
-        // Cluster marker
         final count = c['count']; // cluster içindeki mekan sayısı
 
-        BitmapDescriptor clusterIcon;
-        switch (count) {
-          case 2:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(80, 80)),
-              "assets/cluster_icons/cluster_2.png",
-            );
-            break;
-          case 3:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_3.png",
-            );
-            break;
-          case 4:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_4.png",
-            );
-            break;
-          case 5:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_5.png",
-            );
-            break;
-          case 6:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_6.png",
-            );
-            break;
-          case 7:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_7.png",
-            );
-            break;
-          case 8:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_8.png",
-            );
-            break;
-          case 9:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_9.png",
-            );
-            break;
-          case 10:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_10.png",
-            );
-            break;
-          case 11:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_11.png",
-            );
-            break;
-          case 12:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_12.png",
-            );
-            break;
-          case 13:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_13.png",
-            );
-            break;
-          case 14:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_14.png",
-            );
-            break;
-          case 15:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_15.png",
-            );
-            break;
-          case 16:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_16.png",
-            );
-            break;
-          case 17:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_17.png",
-            );
-            break;
-          case 18:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_18.png",
-            );
-            break;
-          case 19:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_19.png",
-            );
-            break;
-          case 20:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/cluster_20.png",
-            );
-            break;
-          default:
-            clusterIcon = await BitmapDescriptor.fromAssetImage(
-              const ImageConfiguration(size: Size(64, 64)),
-              "assets/cluster_icons/default_cluster.png",
-            );
+        // ikon dosya adını dinamik üret
+        String iconPath;
+        if (count >= 2 && count <= 30) {
+          iconPath = "assets/cluster_icons/cluster_$count.png";
+        } else {
+          iconPath = "assets/cluster_icons/default_cluster.png";
         }
+
+        final clusterIcon = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(64, 64)),
+          iconPath,
+        );
 
         newMarkers.add(
           Marker(
             markerId: MarkerId("cluster_${c['lat']}_${c['lng']}"),
             position: LatLng(c['lat'], c['lng']),
             icon: clusterIcon,
-            infoWindow: InfoWindow(title: "${count} mekan"),
+            infoWindow: InfoWindow(title: "$count mekan"),
           ),
         );
       } else {
@@ -497,71 +388,55 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     _initializeMarkers();
   }
 
-  // ---- ROTA, TUR VE API KISMI AYNEN KORUNDU ----
-  // (createShortestPath, createRealPath, _drawRouteWithDirections, _getRouteFromApi vs.)
-  // Burada kapatma hataları yoktu. Yalnızca MapController sınıfının içine aldım.
-  // ------------------------------------------------
   Future<List<LatLng>> createShortestPath(int locationCount,
       {String travelMode = 'walking'}) async {
     final currentLocation = state['location'] as LatLng?;
-    final markers = state['markers'] as Set<Marker>;
-
-    if (currentLocation == null || markers.isEmpty) return [];
+    if (currentLocation == null || _allMarkersData.isEmpty) return [];
 
     List<LatLng> path = [currentLocation];
-    List<String> addedMarkerIds = [];
+    List<String> addedTitles = [];
 
-    Set<Marker> remainingMarkers = {...markers};
+    // JSON’daki tüm markerlar üzerinden rota oluştur
+    List<Map<String, dynamic>> remainingMarkers = [..._allMarkersData];
     LatLng currentPoint = currentLocation;
 
     for (int i = 0; i < locationCount; i++) {
       if (remainingMarkers.isEmpty) break;
 
-      Marker? nearestMarker;
+      Map<String, dynamic>? nearest;
       double minDistance = double.infinity;
 
       for (var marker in remainingMarkers) {
-        if (addedMarkerIds.contains(marker.markerId.value)) continue;
+        final markerLat = marker['position'].latitude;
+        final markerLng = marker['position'].longitude;
 
         double distance = _calculateDistance(
           currentPoint.latitude,
           currentPoint.longitude,
-          marker.position.latitude,
-          marker.position.longitude,
+          markerLat,
+          markerLng,
         );
 
         if (distance < minDistance) {
           minDistance = distance;
-          nearestMarker = marker;
+          nearest = marker;
         }
       }
 
-      if (nearestMarker != null) {
-        path.add(nearestMarker.position);
-        addedMarkerIds.add(nearestMarker.markerId.value);
-        currentPoint = nearestMarker.position;
-        remainingMarkers.remove(nearestMarker);
+      if (nearest != null) {
+        final pos = nearest['position'] as LatLng;
+        path.add(pos);
+        addedTitles.add(nearest['title']);
+        currentPoint = pos;
+        remainingMarkers.remove(nearest);
       }
     }
 
-    setTourPath(
-      path,
-      path.map((point) {
-        final marker = markers.firstWhere(
-          (m) => m.position == point,
-          orElse: () => Marker(markerId: MarkerId('')),
-        );
-        return marker.infoWindow.title ??
-            AppLocalizations.of(navigatorKey.currentContext!)!
-                .startingPoint; // Başlangıç noktası için varsayılan metin
-      }).toList(),
-    );
-
+    setTourPath(path, addedTitles);
     return path;
   }
 
   /// Tur rotasını döndüren fonksiyon
-  //List<String> getTourTitles() => _tourTitles;
 
   Future<void> saveCurrentRoute({
     String? customTitle,
@@ -634,38 +509,40 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
   Future<void> createRealPath(int locationCount, String apiKey,
       {String travelMode = 'walking'}) async {
     final currentLocation = state['location'] as LatLng?;
-    final markers = state['markers'] as Set<Marker>;
-
-    if (currentLocation == null || markers.isEmpty) return;
+    if (currentLocation == null || _allMarkersData.isEmpty) return;
 
     List<LatLng> path = [];
-    Set<Marker> remainingMarkers = {...markers};
-
+    List<Map<String, dynamic>> remainingMarkers = [..._allMarkersData];
     LatLng currentPoint = currentLocation;
 
     for (int i = 0; i < locationCount; i++) {
       if (remainingMarkers.isEmpty) break;
 
-      Marker? nearestMarker;
+      Map<String, dynamic>? nearest;
       double minDistance = double.infinity;
 
       for (var marker in remainingMarkers) {
+        final markerLat = marker['position'].latitude;
+        final markerLng = marker['position'].longitude;
+
         double distance = _calculateDistance(
           currentPoint.latitude,
           currentPoint.longitude,
-          marker.position.latitude,
-          marker.position.longitude,
+          markerLat,
+          markerLng,
         );
+
         if (distance < minDistance) {
           minDistance = distance;
-          nearestMarker = marker;
+          nearest = marker;
         }
       }
 
-      if (nearestMarker != null) {
-        path.add(nearestMarker.position);
-        currentPoint = nearestMarker.position;
-        remainingMarkers.remove(nearestMarker);
+      if (nearest != null) {
+        final pos = nearest['position'] as LatLng;
+        path.add(pos);
+        currentPoint = pos;
+        remainingMarkers.remove(nearest);
       }
     }
 
@@ -759,8 +636,6 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
   }
 
 // Zoom in ve zoom out fonksiyonları
-//  double _currentZoom = 15;
-
   void zoomIn() {
     _currentZoom += 1;
     _googleMapController?.animateCamera(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:story_map/features/home/views/profile/feedback_page.dart';
 import 'package:story_map/features/home/views/profile/report_issue.dart';
+import 'package:story_map/l10n/app_localizations.dart';
 
 class HelpCenter extends StatefulWidget {
   const HelpCenter({super.key});
@@ -10,40 +11,69 @@ class HelpCenter extends StatefulWidget {
 }
 
 class _HelpCenterState extends State<HelpCenter> {
-  final List<Map<String, String>> helpTopics = [
-    {
-      "title": "Hesap bilgilerini nasıl düzenlerim?",
-      "content":
-          "Profil sayfasındaki ayarlar simgesine tıklayarak kullanıcı adı ve e-posta gibi bilgileri düzenleyebilirsin.",
-    },
-    {
-      "title": "Rota nasıl paylaşılır?",
-      "content":
-          "Bir rota oluşturduktan sonra 'Keşfette Paylaş' seçeneğini kullanarak rotanı keşfet bölümüne gönderebilirsin.",
-    },
-    {
-      "title": "Beğendiğim rotaları nereden görebilirim?",
-      "content":
-          "Profil sayfasında 'Beğendiklerin' sekmesine tıklayarak daha önce beğendiğin rotaları görebilirsin.",
-    },
-    {
-      "title": "Konum bilgilerimi nasıl değiştirebilirim?",
-      "content":
-          "Profil sayfasında konum kısmındaki kalem ikonuna tıklayarak manuel konum girişi yapabilirsin.",
-    },
-    {
-      "title": "Sorun bildirimi nasıl yapabilirim?",
-      "content":
-          "Geliştiriciye ulaşmak için uygulama içindeki iletişim sekmesini kullanabilirsin (ileride e-posta desteği eklenebilir).",
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    // AppLocalizations kullanmak için build içinde oluşturduk
+    final List<Map<String, String>> helpTopics = [
+      {
+        "title": AppLocalizations.of(context)!.help_editAccount_title,
+        "content": AppLocalizations.of(context)!.help_editAccount_content,
+      },
+      {
+        "title": AppLocalizations.of(context)!.help_shareRoute_title,
+        "content": AppLocalizations.of(context)!.help_shareRoute_content,
+      },
+      {
+        "title": AppLocalizations.of(context)!.help_favorites_title,
+        "content": AppLocalizations.of(context)!.help_favorites_content,
+      },
+      {
+        "title": AppLocalizations.of(context)!.help_editLocation_title,
+        "content": AppLocalizations.of(context)!.help_editLocation_content,
+      },
+      {
+        "title": AppLocalizations.of(context)!.help_reportIssue_title,
+        "content": AppLocalizations.of(context)!.help_reportIssue_content,
+      },
+      {
+        "title": AppLocalizations.of(context)!.help_deleteRoute_title,
+        "content": AppLocalizations.of(context)!.help_deleteRoute_content,
+      },
+      {
+        "title": AppLocalizations.of(context)!.help_addFavorites_title,
+        "content": AppLocalizations.of(context)!.help_addFavorites_content,
+      },
+      {
+        "title": AppLocalizations.of(context)!.help_addComment_title,
+        "content": AppLocalizations.of(context)!.help_addComment_content,
+      },
+      {
+        "title": AppLocalizations.of(context)!.help_changeLanguage_title,
+        "content": AppLocalizations.of(context)!.help_changeLanguage_content,
+      },
+      {
+        "title": AppLocalizations.of(context)!.help_notifications_title,
+        "content": AppLocalizations.of(context)!.help_notifications_content,
+      },
+      {
+        "title": AppLocalizations.of(context)!.help_viewStories_title,
+        "content": AppLocalizations.of(context)!.help_viewStories_content,
+      },
+      {
+        "title": AppLocalizations.of(context)!.help_offlineUsage_title,
+        "content": AppLocalizations.of(context)!.help_offlineUsage_content,
+      },
+      {
+        "title": AppLocalizations.of(context)!.help_deleteAccount_title,
+        "content": AppLocalizations.of(context)!.help_deleteAccount_content,
+      },
+    ];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text("Yardım Merkezi", style: TextStyle(color: Colors.black),),
+        title: Text(AppLocalizations.of(context)!.helpCenterTitle,
+            style: const TextStyle(color: Colors.black)),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back,
@@ -62,8 +92,8 @@ class _HelpCenterState extends State<HelpCenter> {
                   title: Text(topic["title"] ?? ""),
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       child: Text(
                         topic["content"] ?? "",
                         style: const TextStyle(fontSize: 16),
@@ -81,8 +111,7 @@ class _HelpCenterState extends State<HelpCenter> {
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 200),
                   child: OutlinedButton.icon(
-                    icon: const Icon(Icons.feedback_outlined,
-                        color: Colors.black),
+                    icon: const Icon(Icons.feedback_outlined, color: Colors.black),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(48),
                     ),
@@ -92,7 +121,7 @@ class _HelpCenterState extends State<HelpCenter> {
                         MaterialPageRoute(builder: (_) => const FeedbackPage()),
                       );
                     },
-                    label: const Text("Geri Bildirim Gönder",
+                    label: Text(AppLocalizations.of(context)!.sendFeedback,
                         style: TextStyle(color: Colors.black)),
                   ),
                 ),
@@ -112,13 +141,13 @@ class _HelpCenterState extends State<HelpCenter> {
                         MaterialPageRoute(builder: (_) => ReportIssuePage()),
                       );
                     },
-                    label: const Text("Sorun Bildir",
+                    label: Text(AppLocalizations.of(context)!.reportIssue,
                         style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

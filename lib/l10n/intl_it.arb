@@ -169,5 +169,46 @@
   "privacyPolicyUserRightsText": "- Gli utenti hanno diritto ad accedere, correggere o cancellare i propri dati personali.\n- Per tali richieste contatta lo sviluppatore:\n📧 Email: cihanoren1@gmail.com",
   "privacyPolicyChangesTitle": "9. Modifiche alla politica",
   "privacyPolicyChangesText": "- Questa politica sulla privacy può essere aggiornata di tanto in tanto.\n- Gli aggiornamenti saranno comunicati tramite l'app o questa pagina.",
-  "searchPlace": "Cerca luogo..."
+  "searchPlace": "Cerca luogo...",
+  
+  "help_editAccount_title": "Come posso modificare le informazioni del mio account?",
+  "help_editAccount_content": "Tocca l'icona delle impostazioni nella pagina del profilo per modificare nome utente e email.",
+
+  "help_shareRoute_title": "Come posso condividere un percorso?",
+  "help_shareRoute_content": "Dopo aver creato un percorso, utilizza l'opzione 'Condividi in Esplora' per inviarlo alla sezione Esplora.",
+
+  "help_favorites_title": "Dove posso vedere i percorsi che mi piacciono?",
+  "help_favorites_content": "Nella pagina del profilo, tocca la scheda 'Preferiti' per vedere i percorsi che hai apprezzato in precedenza.",
+
+  "help_editLocation_title": "Come posso modificare le informazioni sulla mia posizione?",
+  "help_editLocation_content": "Nella pagina del profilo, tocca l'icona della matita accanto alla posizione per inserire manualmente la tua posizione.",
+
+  "help_reportIssue_title": "Come posso segnalare un problema?",
+  "help_reportIssue_content": "Puoi contattare lo sviluppatore tramite la sezione contatti dell'app. Se non funziona, invia un'email a cihanoren10@gmail.com.",
+
+  "help_deleteRoute_title": "Come posso eliminare i miei percorsi?",
+  "help_deleteRoute_content": "Vai alla pagina dei dettagli del percorso che hai creato e utilizza l'opzione 'Elimina' per rimuoverlo definitivamente.",
+
+  "help_addFavorites_title": "Come aggiungo un percorso ai preferiti?",
+  "help_addFavorites_content": "Nella sezione Esplora, tocca l'icona a forma di cuore di un percorso che ti piace per aggiungerlo ai preferiti.",
+
+  "help_addComment_title": "Come posso lasciare un commento?",
+  "help_addComment_content": "Tocca il luogo corrispondente sulla mappa, scorri fino in fondo alla storia e condividi le tue impressioni nel campo 'Aggiungi commento'.",
+
+  "help_changeLanguage_title": "Come posso cambiare la lingua?",
+  "help_changeLanguage_content": "Puoi cambiare la lingua dell'app nella sezione Impostazioni, sotto 'Lingua'.",
+
+  "help_notifications_title": "Posso disattivare le notifiche dell'app?",
+  "help_notifications_content": "Puoi disattivare le autorizzazioni delle notifiche dalle impostazioni del dispositivo o silenziare le notifiche dall'interno dell'app.",
+
+  "help_viewStories_title": "Come posso visualizzare le storie?",
+  "help_viewStories_content": "Tocca l'icona della storia sotto i luoghi selezionati sulla mappa o nella sezione Esplora per vedere le storie condivise.",
+
+  "help_offlineUsage_title": "Posso usare l'app senza Internet?",
+  "help_offlineUsage_content": "È necessaria una connessione Internet per creare percorsi e visualizzare i percorsi salvati.",
+
+  "help_deleteAccount_title": "Posso eliminare il mio account?",
+  "help_deleteAccount_content": "Per eliminare il tuo account, contatta lo sviluppatore tramite la sezione contatti dell'app e fornisci il tuo nome utente e la tua email.",
+  "helpCenterTitle": "Centro assistenza",
+  "sendFeedback": "Invia feedback"
 }

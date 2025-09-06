@@ -169,5 +169,46 @@
   "privacyPolicyUserRightsText": "- Users have the right to access, correct, or delete their personal data.\n- For such requests, you can contact the developer:\n📧 Email: cihanoren1@gmail.com",
   "privacyPolicyChangesTitle": "9. Changes to the Policy",
   "privacyPolicyChangesText": "- This privacy policy may be updated from time to time.\n- Updates will be announced through the application or on this page.",
-  "searchPlace": "Search Place..."
+  "searchPlace": "Search Place...",
+  
+  "help_editAccount_title": "How can I edit my account information?",
+  "help_editAccount_content": "You can edit details such as your username and email by tapping the settings icon on your profile page.",
+
+  "help_shareRoute_title": "How can I share a route?",
+  "help_shareRoute_content": "After creating a route, you can use the 'Share on Explore' option to publish it in the explore section.",
+
+  "help_favorites_title": "Where can I see the routes I liked?",
+  "help_favorites_content": "On the profile page, tap the 'Liked' tab to view the routes you have previously liked.",
+
+  "help_editLocation_title": "How can I change my location information?",
+  "help_editLocation_content": "On the profile page, tap the pencil icon next to the location section to manually enter your location.",
+
+  "help_reportIssue_title": "How can I report an issue?",
+  "help_reportIssue_content": "You can contact the developer using the in-app contact section. If that doesn’t work, you can send an email to cihanoren10@gmail.com.",
+
+  "help_deleteRoute_title": "How can I delete my routes?",
+  "help_deleteRoute_content": "Go to the detail page of the route you created and use the 'Delete' option to permanently remove it.",
+
+  "help_addFavorites_title": "How can I add a route to favorites?",
+  "help_addFavorites_content": "In the explore section, tap the heart icon on a route you like to add it to your favorites.",
+
+  "help_addComment_title": "How can I comment?",
+  "help_addComment_content": "From the map section, tap the relevant place, scroll down to the bottom of the story, and use the 'Add Comment' area to share your thoughts.",
+
+  "help_changeLanguage_title": "How can I change the language settings?",
+  "help_changeLanguage_content": "From the settings page, you can change the display language of the app.",
+
+  "help_notifications_title": "Can I turn off app notifications?",
+  "help_notifications_content": "You can turn off app notification permissions from your device settings or mute them from within the app.",
+
+  "help_viewStories_title": "How can I view stories?",
+  "help_viewStories_content": "On the map or in the explore section, tap the story icon under the place you selected to see shared stories.",
+
+  "help_offlineUsage_title": "Can I use the app without the internet?",
+  "help_offlineUsage_content": "An internet connection is required to create routes and view saved routes.",
+
+  "help_deleteAccount_title": "Can I delete my account?",
+  "help_deleteAccount_content": "To delete your account, use the in-app contact section to reach the developer and provide your username and email address.",
+  "helpCenterTitle": "Help Center",
+  "sendFeedback": "Send Feedback"
 }

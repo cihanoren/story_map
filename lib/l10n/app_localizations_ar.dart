@@ -542,4 +542,102 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get searchPlace => 'ابحث عن مكان...';
+
+  @override
+  String get help_editAccount_title => 'كيف يمكنني تعديل معلومات الحساب؟';
+
+  @override
+  String get help_editAccount_content =>
+      'يمكنك تعديل اسم المستخدم والبريد الإلكتروني بالنقر على أيقونة الإعدادات في صفحة الملف الشخصي.';
+
+  @override
+  String get help_shareRoute_title => 'كيف أشارك مساراً؟';
+
+  @override
+  String get help_shareRoute_content =>
+      'بعد إنشاء مسار، استخدم خيار \'مشاركته في قسم الاستكشاف\' لإرساله إلى قسم الاستكشاف.';
+
+  @override
+  String get help_favorites_title => 'أين يمكنني رؤية المسارات التي أعجبتني؟';
+
+  @override
+  String get help_favorites_content =>
+      'في صفحة الملف الشخصي، اضغط على علامة التبويب \'المفضلة\' لرؤية المسارات التي أعجبتك مسبقًا.';
+
+  @override
+  String get help_editLocation_title => 'كيف يمكنني تغيير معلومات الموقع؟';
+
+  @override
+  String get help_editLocation_content =>
+      'في صفحة الملف الشخصي، اضغط على أيقونة القلم بجانب الموقع لإدخال موقعك يدويًا.';
+
+  @override
+  String get help_reportIssue_title => 'كيف يمكنني الإبلاغ عن مشكلة؟';
+
+  @override
+  String get help_reportIssue_content =>
+      'يمكنك التواصل مع المطور من خلال قسم الاتصال داخل التطبيق. إذا لم تتمكن من ذلك، أرسل بريدًا إلكترونيًا إلى cihanoren10@gmail.com.';
+
+  @override
+  String get help_deleteRoute_title => 'كيف يمكنني حذف مساراتي؟';
+
+  @override
+  String get help_deleteRoute_content =>
+      'اذهب إلى صفحة تفاصيل المسار الذي أنشأته واستخدم خيار \'حذف\' لإزالة المسار نهائيًا.';
+
+  @override
+  String get help_addFavorites_title => 'كيف يمكنني إضافة مسار إلى المفضلة؟';
+
+  @override
+  String get help_addFavorites_content =>
+      'في قسم الاستكشاف، اضغط على أيقونة القلب على المسار الذي أعجبك لإضافته إلى المفضلة.';
+
+  @override
+  String get help_addComment_title => 'كيف يمكنني إضافة تعليق؟';
+
+  @override
+  String get help_addComment_content =>
+      'اضغط على المكان المناسب على الخريطة، وانتقل إلى أسفل القصة، وشارك أفكارك في حقل \'إضافة تعليق\'.';
+
+  @override
+  String get help_changeLanguage_title => 'كيف يمكنني تغيير اللغة؟';
+
+  @override
+  String get help_changeLanguage_content =>
+      'يمكنك تغيير لغة التطبيق من خلال إعدادات التطبيق، في خيار \'اللغة\'.';
+
+  @override
+  String get help_notifications_title => 'هل يمكنني إيقاف إشعارات التطبيق؟';
+
+  @override
+  String get help_notifications_content =>
+      'يمكنك إيقاف أذونات الإشعارات من إعدادات الجهاز أو كتمها داخل التطبيق.';
+
+  @override
+  String get help_viewStories_title => 'كيف يمكنني عرض القصص؟';
+
+  @override
+  String get help_viewStories_content =>
+      'اضغط على أيقونة القصة أسفل الأماكن التي تختارها على الخريطة أو في قسم الاستكشاف لرؤية القصص المنشورة.';
+
+  @override
+  String get help_offlineUsage_title =>
+      'هل يمكنني استخدام التطبيق بدون الإنترنت؟';
+
+  @override
+  String get help_offlineUsage_content =>
+      'يتطلب إنشاء المسارات وعرض المسارات المحفوظة وجود اتصال بالإنترنت.';
+
+  @override
+  String get help_deleteAccount_title => 'هل يمكنني حذف حسابي؟';
+
+  @override
+  String get help_deleteAccount_content =>
+      'لحذف حسابك، تواصل مع المطور من خلال قسم الاتصال داخل التطبيق وقدم اسم المستخدم وعنوان البريد الإلكتروني الخاص بك.';
+
+  @override
+  String get helpCenterTitle => 'مركز المساعدة';
+
+  @override
+  String get sendFeedback => 'إرسال الملاحظات';
 }

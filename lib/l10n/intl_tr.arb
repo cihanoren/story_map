@@ -169,6 +169,48 @@
   "privacyPolicyUserRightsText": "- Kullanıcılar, kişisel verilerine erişme, düzeltme veya silme hakkına sahiptir.\n- Bu tür talepler için geliştirici ile iletişime geçilebilir:\n📧 E-posta: cihanoren1@gmail.com",
   "privacyPolicyChangesTitle": "9. Politikadaki Değişiklikler",
   "privacyPolicyChangesText": "- Bu gizlilik politikası zaman zaman güncellenebilir.\n- Güncellemeler uygulama içinden veya bu sayfa üzerinden duyurulur.",
-  "searchPlace": "Yer Ara..."
+  "searchPlace": "Yer Ara...",
+  
+  "help_editAccount_title": "Hesap bilgilerini nasıl düzenlerim?",
+  "help_editAccount_content": "Profil sayfasındaki ayarlar simgesine tıklayarak kullanıcı adı ve e-posta gibi bilgileri düzenleyebilirsin.",
+
+  "help_shareRoute_title": "Rota nasıl paylaşılır?",
+  "help_shareRoute_content": "Bir rota oluşturduktan sonra 'Keşfette Paylaş' seçeneğini kullanarak rotanı keşfet bölümüne gönderebilirsin.",
+
+  "help_favorites_title": "Beğendiğim rotaları nereden görebilirim?",
+  "help_favorites_content": "Profil sayfasında 'Beğendiklerin' sekmesine tıklayarak daha önce beğendiğin rotaları görebilirsin.",
+
+  "help_editLocation_title": "Konum bilgilerimi nasıl değiştirebilirim?",
+  "help_editLocation_content": "Profil sayfasında konum kısmındaki kalem ikonuna tıklayarak manuel konum girişi yapabilirsin.",
+
+  "help_reportIssue_title": "Sorun bildirimi nasıl yapabilirim?",
+  "help_reportIssue_content": "Geliştiriciye ulaşmak için uygulama içindeki iletişim sekmesini kullanabilirsin. Eğer iletişim sekmesinden ulaşamaz iseniz cihanoren10@gmail.com adresine e-posta gönderebilirsin.",
+
+  "help_deleteRoute_title": "Rotalarımı nasıl silebilirim?",
+  "help_deleteRoute_content": "Kendi oluşturduğun rotaların detay sayfasına gidip 'Sil' seçeneğini kullanarak rotayı kalıcı olarak kaldırabilirsin.",
+
+  "help_addFavorites_title": "Favorilere nasıl rota eklerim?",
+  "help_addFavorites_content": "Keşfet bölümünde beğendiğin bir rotanın kalp ikonuna tıklayarak favorilerine ekleyebilirsin.",
+
+  "help_addComment_title": "Yorum nasıl yapabilirim?",
+  "help_addComment_content": "Harita bölümünden ilgili yere tıklayarak hikayenin en altındaki alana gidebilir ve 'Yorum Yap' alanından düşüncelerini paylaşabilirsin.",
+
+  "help_changeLanguage_title": "Dil ayarlarını nasıl değiştirebilirim?",
+  "help_changeLanguage_content": "Ayarlar sayfasındaki 'Dil' seçeneğinden uygulamanın görüntüleneceği dilini değiştirebilirsin.",
+
+  "help_notifications_title": "Uygulama bildirimlerini kapatabilir miyim?",
+  "help_notifications_content": "Cihaz ayarlarından uygulamanın bildirim izinlerini kapatabilir veya uygulama içi ayarlardan sessize alabilirsin.",
+
+  "help_viewStories_title": "Hikayeler nasıl görüntülenir?",
+  "help_viewStories_content": "Harita üzerinde veya keşfet bölümünde seçtiğin mekanların altındaki hikaye ikonuna tıklayarak paylaşılan hikayeleri görebilirsin.",
+
+  "help_offlineUsage_title": "İnternet olmadan uygulamayı kullanabilir miyim?",
+  "help_offlineUsage_content": "Rotaları oluşturmak ve kayıtlı rotaları görmek için internet bağlantısı gerekir.",
+
+  "help_deleteAccount_title": "Hesabımı silebilir miyim?",
+  "help_deleteAccount_content": "Hesabınızı silmek için uygulama içindeki iletişim sekmesini kullanarak geliştiriciye ulaşabilirsiniz ve kullanıcı adınız ile beraber e-posta adresinizi belirtmeniz yeterlidir.",
+
+  "helpCenterTitle": "Yardım Merkezi",
+  "sendFeedback": "Geri Bildirim Gönder"
 }
   

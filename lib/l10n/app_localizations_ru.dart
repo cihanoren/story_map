@@ -547,4 +547,105 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get searchPlace => 'Поиск места...';
+
+  @override
+  String get help_editAccount_title => 'Как изменить данные учетной записи?';
+
+  @override
+  String get help_editAccount_content =>
+      'Нажмите на значок настроек на странице профиля, чтобы изменить имя пользователя и адрес электронной почты.';
+
+  @override
+  String get help_shareRoute_title => 'Как поделиться маршрутом?';
+
+  @override
+  String get help_shareRoute_content =>
+      'После создания маршрута используйте опцию \'Поделиться в разделе Исследовать\', чтобы отправить его в раздел Исследовать.';
+
+  @override
+  String get help_favorites_title =>
+      'Где я могу увидеть понравившиеся маршруты?';
+
+  @override
+  String get help_favorites_content =>
+      'На странице профиля нажмите на вкладку \'Избранное\', чтобы увидеть ранее понравившиеся маршруты.';
+
+  @override
+  String get help_editLocation_title =>
+      'Как изменить информацию о местоположении?';
+
+  @override
+  String get help_editLocation_content =>
+      'На странице профиля нажмите на значок карандаша рядом с местоположением, чтобы вручную ввести ваше местоположение.';
+
+  @override
+  String get help_reportIssue_title => 'Как сообщить о проблеме?';
+
+  @override
+  String get help_reportIssue_content =>
+      'Вы можете связаться с разработчиком через раздел контактов в приложении. Если это не сработает, отправьте письмо на cihanoren10@gmail.com.';
+
+  @override
+  String get help_deleteRoute_title => 'Как удалить мои маршруты?';
+
+  @override
+  String get help_deleteRoute_content =>
+      'Перейдите на страницу деталей маршрута, который вы создали, и используйте опцию \'Удалить\', чтобы навсегда удалить маршрут.';
+
+  @override
+  String get help_addFavorites_title => 'Как добавить маршрут в избранное?';
+
+  @override
+  String get help_addFavorites_content =>
+      'В разделе Исследовать нажмите на значок сердца на понравившемся маршруте, чтобы добавить его в избранное.';
+
+  @override
+  String get help_addComment_title => 'Как оставить комментарий?';
+
+  @override
+  String get help_addComment_content =>
+      'Нажмите на соответствующее место на карте, прокрутите вниз до конца истории и поделитесь своими мыслями в поле \'Оставить комментарий\'.';
+
+  @override
+  String get help_changeLanguage_title => 'Как изменить язык?';
+
+  @override
+  String get help_changeLanguage_content =>
+      'Вы можете изменить язык приложения в разделе настроек, в пункте \'Язык\'.';
+
+  @override
+  String get help_notifications_title =>
+      'Могу ли я отключить уведомления приложения?';
+
+  @override
+  String get help_notifications_content =>
+      'Вы можете отключить разрешения на уведомления в настройках устройства или отключить уведомления внутри приложения.';
+
+  @override
+  String get help_viewStories_title => 'Как просматривать истории?';
+
+  @override
+  String get help_viewStories_content =>
+      'Нажмите на значок истории под выбранными местами на карте или в разделе Исследовать, чтобы увидеть опубликованные истории.';
+
+  @override
+  String get help_offlineUsage_title =>
+      'Можно ли использовать приложение без интернета?';
+
+  @override
+  String get help_offlineUsage_content =>
+      'Для создания маршрутов и просмотра сохраненных маршрутов требуется интернет-соединение.';
+
+  @override
+  String get help_deleteAccount_title => 'Могу ли я удалить свой аккаунт?';
+
+  @override
+  String get help_deleteAccount_content =>
+      'Чтобы удалить свой аккаунт, свяжитесь с разработчиком через раздел контактов в приложении и укажите ваше имя пользователя и адрес электронной почты.';
+
+  @override
+  String get helpCenterTitle => 'Центр помощи';
+
+  @override
+  String get sendFeedback => 'Отправить отзыв';
 }

@@ -169,5 +169,46 @@
   "privacyPolicyUserRightsText": "- Benutzer haben das Recht, auf ihre personenbezogenen Daten zuzugreifen, diese zu berichtigen oder zu löschen.\n- Für solche Anfragen können Sie den Entwickler kontaktieren:\n📧 E-Mail: cihanoren1@gmail.com",
   "privacyPolicyChangesTitle": "9. Änderungen der Richtlinie",
   "privacyPolicyChangesText": "- Diese Datenschutzerklärung kann von Zeit zu Zeit aktualisiert werden.\n- Aktualisierungen werden innerhalb der Anwendung oder auf dieser Seite bekannt gegeben.",
-  "searchPlace": "Ort suchen..."
+  "searchPlace": "Ort suchen...",
+  
+  "help_editAccount_title": "Wie bearbeite ich meine Kontoinformationen?",
+  "help_editAccount_content": "Tippe auf das Einstellungssymbol auf der Profilseite, um Benutzername und E-Mail-Adresse zu bearbeiten.",
+
+  "help_shareRoute_title": "Wie teile ich eine Route?",
+  "help_shareRoute_content": "Nachdem du eine Route erstellt hast, kannst du die Option 'Im Entdecken teilen' verwenden, um deine Route im Entdecken-Bereich zu veröffentlichen.",
+
+  "help_favorites_title": "Wo kann ich meine Lieblingsrouten sehen?",
+  "help_favorites_content": "Tippe auf der Profilseite auf den Reiter 'Favoriten', um die Routen zu sehen, die du zuvor geliked hast.",
+
+  "help_editLocation_title": "Wie ändere ich meine Standortinformationen?",
+  "help_editLocation_content": "Tippe auf das Stiftsymbol neben dem Standort auf der Profilseite, um den Standort manuell einzugeben.",
+
+  "help_reportIssue_title": "Wie kann ich ein Problem melden?",
+  "help_reportIssue_content": "Du kannst den Entwickler über den Kommunikationsbereich in der App kontaktieren. Wenn dies nicht funktioniert, sende eine E-Mail an cihanoren10@gmail.com.",
+
+  "help_deleteRoute_title": "Wie kann ich meine Routen löschen?",
+  "help_deleteRoute_content": "Gehe zur Detailseite der von dir erstellten Route und verwende die Option 'Löschen', um die Route dauerhaft zu entfernen.",
+
+  "help_addFavorites_title": "Wie füge ich eine Route zu meinen Favoriten hinzu?",
+  "help_addFavorites_content": "Tippe im Entdecken-Bereich auf das Herzsymbol einer Route, die dir gefällt, um sie zu deinen Favoriten hinzuzufügen.",
+
+  "help_addComment_title": "Wie kann ich einen Kommentar abgeben?",
+  "help_addComment_content": "Tippe auf der Karte auf den entsprechenden Ort, gehe zum unteren Bereich der Story und teile deine Gedanken im Feld 'Kommentar schreiben'.",
+
+  "help_changeLanguage_title": "Wie ändere ich die Spracheinstellungen?",
+  "help_changeLanguage_content": "Du kannst die Anzeigesprache der App in den Einstellungen unter 'Sprache' ändern.",
+
+  "help_notifications_title": "Kann ich App-Benachrichtigungen deaktivieren?",
+  "help_notifications_content": "Du kannst die Benachrichtigungsberechtigungen in den Geräteeinstellungen deaktivieren oder die App-Benachrichtigungen in den App-Einstellungen stummschalten.",
+
+  "help_viewStories_title": "Wie kann ich Stories ansehen?",
+  "help_viewStories_content": "Tippe auf der Karte oder im Entdecken-Bereich auf das Story-Symbol unter den ausgewählten Orten, um die geteilten Stories anzusehen.",
+
+  "help_offlineUsage_title": "Kann ich die App ohne Internet verwenden?",
+  "help_offlineUsage_content": "Zum Erstellen von Routen und Anzeigen gespeicherter Routen ist eine Internetverbindung erforderlich.",
+
+  "help_deleteAccount_title": "Kann ich mein Konto löschen?",
+  "help_deleteAccount_content": "Um dein Konto zu löschen, kontaktiere den Entwickler über den Kommunikationsbereich in der App und gib dabei deinen Benutzernamen und deine E-Mail-Adresse an.",
+  "helpCenterTitle": "Hilfe-Center",
+  "sendFeedback": "Feedback senden"
 }

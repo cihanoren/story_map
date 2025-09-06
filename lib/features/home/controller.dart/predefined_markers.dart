@@ -8,7 +8,11 @@ class PredefinedMarkers {
     final files = [
       "assets/json/markers_tr.json",
       "assets/json/markers_it.json",
-      //"assets/json/markers_fr.json", // yeni dosya eklemek istersen buraya yaz
+      "assets/json/markers_fr.json",
+      "assets/json/markers_uk.json",
+      "assets/json/markers_de.json",
+      "assets/json/markers_es.json",
+      // yeni dosya eklemek istersen buraya yaz
     ];
 
     List<Map<String, dynamic>> allMarkers = [];
@@ -18,8 +22,9 @@ class PredefinedMarkers {
       final List<dynamic> jsonData = json.decode(jsonString);
 
       final markers = jsonData.map<Map<String, dynamic>>((marker) {
-        final lat = marker['position']['lat'];
-        final lng = marker['position']['lng'];
+        final lat = (marker['position']['lat']).toDouble();
+        final lng = (marker['position']['lng']).toDouble();
+
         return {
           "position": LatLng(lat, lng),
           "title": marker['title'],

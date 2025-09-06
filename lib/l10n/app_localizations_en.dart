@@ -550,4 +550,104 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get searchPlace => 'Search Place...';
+
+  @override
+  String get help_editAccount_title => 'How can I edit my account information?';
+
+  @override
+  String get help_editAccount_content =>
+      'You can edit details such as your username and email by tapping the settings icon on your profile page.';
+
+  @override
+  String get help_shareRoute_title => 'How can I share a route?';
+
+  @override
+  String get help_shareRoute_content =>
+      'After creating a route, you can use the \'Share on Explore\' option to publish it in the explore section.';
+
+  @override
+  String get help_favorites_title => 'Where can I see the routes I liked?';
+
+  @override
+  String get help_favorites_content =>
+      'On the profile page, tap the \'Liked\' tab to view the routes you have previously liked.';
+
+  @override
+  String get help_editLocation_title =>
+      'How can I change my location information?';
+
+  @override
+  String get help_editLocation_content =>
+      'On the profile page, tap the pencil icon next to the location section to manually enter your location.';
+
+  @override
+  String get help_reportIssue_title => 'How can I report an issue?';
+
+  @override
+  String get help_reportIssue_content =>
+      'You can contact the developer using the in-app contact section. If that doesn’t work, you can send an email to cihanoren10@gmail.com.';
+
+  @override
+  String get help_deleteRoute_title => 'How can I delete my routes?';
+
+  @override
+  String get help_deleteRoute_content =>
+      'Go to the detail page of the route you created and use the \'Delete\' option to permanently remove it.';
+
+  @override
+  String get help_addFavorites_title => 'How can I add a route to favorites?';
+
+  @override
+  String get help_addFavorites_content =>
+      'In the explore section, tap the heart icon on a route you like to add it to your favorites.';
+
+  @override
+  String get help_addComment_title => 'How can I comment?';
+
+  @override
+  String get help_addComment_content =>
+      'From the map section, tap the relevant place, scroll down to the bottom of the story, and use the \'Add Comment\' area to share your thoughts.';
+
+  @override
+  String get help_changeLanguage_title =>
+      'How can I change the language settings?';
+
+  @override
+  String get help_changeLanguage_content =>
+      'From the settings page, you can change the display language of the app.';
+
+  @override
+  String get help_notifications_title => 'Can I turn off app notifications?';
+
+  @override
+  String get help_notifications_content =>
+      'You can turn off app notification permissions from your device settings or mute them from within the app.';
+
+  @override
+  String get help_viewStories_title => 'How can I view stories?';
+
+  @override
+  String get help_viewStories_content =>
+      'On the map or in the explore section, tap the story icon under the place you selected to see shared stories.';
+
+  @override
+  String get help_offlineUsage_title =>
+      'Can I use the app without the internet?';
+
+  @override
+  String get help_offlineUsage_content =>
+      'An internet connection is required to create routes and view saved routes.';
+
+  @override
+  String get help_deleteAccount_title => 'Can I delete my account?';
+
+  @override
+  String get help_deleteAccount_content =>
+      'To delete your account, use the in-app contact section to reach the developer and provide your username and email address.';
+
+  @override
+  String get helpCenterTitle => 'Help Center';
+
+  @override
+  String get sendFeedback => 'Send Feedback';
 }

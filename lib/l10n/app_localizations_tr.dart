@@ -548,4 +548,105 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get searchPlace => 'Yer Ara...';
+
+  @override
+  String get help_editAccount_title => 'Hesap bilgilerini nasıl düzenlerim?';
+
+  @override
+  String get help_editAccount_content =>
+      'Profil sayfasındaki ayarlar simgesine tıklayarak kullanıcı adı ve e-posta gibi bilgileri düzenleyebilirsin.';
+
+  @override
+  String get help_shareRoute_title => 'Rota nasıl paylaşılır?';
+
+  @override
+  String get help_shareRoute_content =>
+      'Bir rota oluşturduktan sonra \'Keşfette Paylaş\' seçeneğini kullanarak rotanı keşfet bölümüne gönderebilirsin.';
+
+  @override
+  String get help_favorites_title => 'Beğendiğim rotaları nereden görebilirim?';
+
+  @override
+  String get help_favorites_content =>
+      'Profil sayfasında \'Beğendiklerin\' sekmesine tıklayarak daha önce beğendiğin rotaları görebilirsin.';
+
+  @override
+  String get help_editLocation_title =>
+      'Konum bilgilerimi nasıl değiştirebilirim?';
+
+  @override
+  String get help_editLocation_content =>
+      'Profil sayfasında konum kısmındaki kalem ikonuna tıklayarak manuel konum girişi yapabilirsin.';
+
+  @override
+  String get help_reportIssue_title => 'Sorun bildirimi nasıl yapabilirim?';
+
+  @override
+  String get help_reportIssue_content =>
+      'Geliştiriciye ulaşmak için uygulama içindeki iletişim sekmesini kullanabilirsin. Eğer iletişim sekmesinden ulaşamaz iseniz cihanoren10@gmail.com adresine e-posta gönderebilirsin.';
+
+  @override
+  String get help_deleteRoute_title => 'Rotalarımı nasıl silebilirim?';
+
+  @override
+  String get help_deleteRoute_content =>
+      'Kendi oluşturduğun rotaların detay sayfasına gidip \'Sil\' seçeneğini kullanarak rotayı kalıcı olarak kaldırabilirsin.';
+
+  @override
+  String get help_addFavorites_title => 'Favorilere nasıl rota eklerim?';
+
+  @override
+  String get help_addFavorites_content =>
+      'Keşfet bölümünde beğendiğin bir rotanın kalp ikonuna tıklayarak favorilerine ekleyebilirsin.';
+
+  @override
+  String get help_addComment_title => 'Yorum nasıl yapabilirim?';
+
+  @override
+  String get help_addComment_content =>
+      'Harita bölümünden ilgili yere tıklayarak hikayenin en altındaki alana gidebilir ve \'Yorum Yap\' alanından düşüncelerini paylaşabilirsin.';
+
+  @override
+  String get help_changeLanguage_title =>
+      'Dil ayarlarını nasıl değiştirebilirim?';
+
+  @override
+  String get help_changeLanguage_content =>
+      'Ayarlar sayfasındaki \'Dil\' seçeneğinden uygulamanın görüntüleneceği dilini değiştirebilirsin.';
+
+  @override
+  String get help_notifications_title =>
+      'Uygulama bildirimlerini kapatabilir miyim?';
+
+  @override
+  String get help_notifications_content =>
+      'Cihaz ayarlarından uygulamanın bildirim izinlerini kapatabilir veya uygulama içi ayarlardan sessize alabilirsin.';
+
+  @override
+  String get help_viewStories_title => 'Hikayeler nasıl görüntülenir?';
+
+  @override
+  String get help_viewStories_content =>
+      'Harita üzerinde veya keşfet bölümünde seçtiğin mekanların altındaki hikaye ikonuna tıklayarak paylaşılan hikayeleri görebilirsin.';
+
+  @override
+  String get help_offlineUsage_title =>
+      'İnternet olmadan uygulamayı kullanabilir miyim?';
+
+  @override
+  String get help_offlineUsage_content =>
+      'Rotaları oluşturmak ve kayıtlı rotaları görmek için internet bağlantısı gerekir.';
+
+  @override
+  String get help_deleteAccount_title => 'Hesabımı silebilir miyim?';
+
+  @override
+  String get help_deleteAccount_content =>
+      'Hesabınızı silmek için uygulama içindeki iletişim sekmesini kullanarak geliştiriciye ulaşabilirsiniz ve kullanıcı adınız ile beraber e-posta adresinizi belirtmeniz yeterlidir.';
+
+  @override
+  String get helpCenterTitle => 'Yardım Merkezi';
+
+  @override
+  String get sendFeedback => 'Geri Bildirim Gönder';
 }

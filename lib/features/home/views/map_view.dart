@@ -62,7 +62,7 @@ class _MapViewState extends ConsumerState<MapView> {
   @override
   void dispose() {
     super.dispose();
-    _searchFocusNode.dispose(); // 👈 burası önemli
+    _searchFocusNode.dispose(); // FocusNode’u dispose et
   }
 
   @override
@@ -229,36 +229,10 @@ class _MapViewState extends ConsumerState<MapView> {
                   ),
                 ),
 
-                /// 📌 Senin tur başlatma / tur aktifse rota gösterme kodların
+                // Eğer tur aktif değilse, "Geziye Başla" butonunu göster
                 if (!isTourActive)
                   Positioned(
-                    bottom: 20,
-                    left: 85,
-                    right: 85,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // ... burası senin verdiğin start trip modal kodu ...
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        backgroundColor: Colors.grey[900],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Text(
-                        AppLocalizations.of(context)!.startTrip,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.yellowAccent[700]),
-                      ),
-                    ),
-                  ),
-
-                if (!isTourActive)
-                  Positioned(
-                    bottom: 20,
+                    bottom: 10,
                     left: 85,
                     right: 85,
                     child: ElevatedButton(
@@ -267,7 +241,7 @@ class _MapViewState extends ConsumerState<MapView> {
                           context: context,
                           shape: const RoundedRectangleBorder(
                             borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(20)),
+                                BorderRadius.vertical(top: Radius.circular(12)),
                           ),
                           isScrollControlled: true,
                           builder: (context) {
@@ -397,10 +371,10 @@ class _MapViewState extends ConsumerState<MapView> {
                                             backgroundColor: Colors.black,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(12),
+                                                  BorderRadius.circular(30),
                                             ),
                                             padding: const EdgeInsets.symmetric(
-                                                horizontal: 32, vertical: 16),
+                                                horizontal: 32, vertical: 10),
                                           ),
                                           child: Text(
                                             AppLocalizations.of(context)!
@@ -422,10 +396,10 @@ class _MapViewState extends ConsumerState<MapView> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         backgroundColor: Colors.grey[900],
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(30),
                         ),
                       ),
                       child: Text(
@@ -459,9 +433,9 @@ class _MapViewState extends ConsumerState<MapView> {
 
                             return DraggableScrollableSheet(
                               expand: false,
-                              initialChildSize: 0.6,
-                              minChildSize: 0.4,
-                              maxChildSize: 0.95,
+                              initialChildSize: 0.4,
+                              minChildSize: 0.3,
+                              maxChildSize: 0.90,
                               builder: (context, scrollController) {
                                 return Padding(
                                   padding: MediaQuery.of(context).viewInsets,

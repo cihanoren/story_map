@@ -1129,6 +1129,174 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Yer Ara...'**
   String get searchPlace;
+
+  /// No description provided for @help_editAccount_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap bilgilerini nasıl düzenlerim?'**
+  String get help_editAccount_title;
+
+  /// No description provided for @help_editAccount_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profil sayfasındaki ayarlar simgesine tıklayarak kullanıcı adı ve e-posta gibi bilgileri düzenleyebilirsin.'**
+  String get help_editAccount_content;
+
+  /// No description provided for @help_shareRoute_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rota nasıl paylaşılır?'**
+  String get help_shareRoute_title;
+
+  /// No description provided for @help_shareRoute_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir rota oluşturduktan sonra \'Keşfette Paylaş\' seçeneğini kullanarak rotanı keşfet bölümüne gönderebilirsin.'**
+  String get help_shareRoute_content;
+
+  /// No description provided for @help_favorites_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Beğendiğim rotaları nereden görebilirim?'**
+  String get help_favorites_title;
+
+  /// No description provided for @help_favorites_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profil sayfasında \'Beğendiklerin\' sekmesine tıklayarak daha önce beğendiğin rotaları görebilirsin.'**
+  String get help_favorites_content;
+
+  /// No description provided for @help_editLocation_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Konum bilgilerimi nasıl değiştirebilirim?'**
+  String get help_editLocation_title;
+
+  /// No description provided for @help_editLocation_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profil sayfasında konum kısmındaki kalem ikonuna tıklayarak manuel konum girişi yapabilirsin.'**
+  String get help_editLocation_content;
+
+  /// No description provided for @help_reportIssue_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sorun bildirimi nasıl yapabilirim?'**
+  String get help_reportIssue_title;
+
+  /// No description provided for @help_reportIssue_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geliştiriciye ulaşmak için uygulama içindeki iletişim sekmesini kullanabilirsin. Eğer iletişim sekmesinden ulaşamaz iseniz cihanoren10@gmail.com adresine e-posta gönderebilirsin.'**
+  String get help_reportIssue_content;
+
+  /// No description provided for @help_deleteRoute_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rotalarımı nasıl silebilirim?'**
+  String get help_deleteRoute_title;
+
+  /// No description provided for @help_deleteRoute_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kendi oluşturduğun rotaların detay sayfasına gidip \'Sil\' seçeneğini kullanarak rotayı kalıcı olarak kaldırabilirsin.'**
+  String get help_deleteRoute_content;
+
+  /// No description provided for @help_addFavorites_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Favorilere nasıl rota eklerim?'**
+  String get help_addFavorites_title;
+
+  /// No description provided for @help_addFavorites_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Keşfet bölümünde beğendiğin bir rotanın kalp ikonuna tıklayarak favorilerine ekleyebilirsin.'**
+  String get help_addFavorites_content;
+
+  /// No description provided for @help_addComment_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yorum nasıl yapabilirim?'**
+  String get help_addComment_title;
+
+  /// No description provided for @help_addComment_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Harita bölümünden ilgili yere tıklayarak hikayenin en altındaki alana gidebilir ve \'Yorum Yap\' alanından düşüncelerini paylaşabilirsin.'**
+  String get help_addComment_content;
+
+  /// No description provided for @help_changeLanguage_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dil ayarlarını nasıl değiştirebilirim?'**
+  String get help_changeLanguage_title;
+
+  /// No description provided for @help_changeLanguage_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ayarlar sayfasındaki \'Dil\' seçeneğinden uygulamanın görüntüleneceği dilini değiştirebilirsin.'**
+  String get help_changeLanguage_content;
+
+  /// No description provided for @help_notifications_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygulama bildirimlerini kapatabilir miyim?'**
+  String get help_notifications_title;
+
+  /// No description provided for @help_notifications_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cihaz ayarlarından uygulamanın bildirim izinlerini kapatabilir veya uygulama içi ayarlardan sessize alabilirsin.'**
+  String get help_notifications_content;
+
+  /// No description provided for @help_viewStories_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hikayeler nasıl görüntülenir?'**
+  String get help_viewStories_title;
+
+  /// No description provided for @help_viewStories_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Harita üzerinde veya keşfet bölümünde seçtiğin mekanların altındaki hikaye ikonuna tıklayarak paylaşılan hikayeleri görebilirsin.'**
+  String get help_viewStories_content;
+
+  /// No description provided for @help_offlineUsage_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'İnternet olmadan uygulamayı kullanabilir miyim?'**
+  String get help_offlineUsage_title;
+
+  /// No description provided for @help_offlineUsage_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rotaları oluşturmak ve kayıtlı rotaları görmek için internet bağlantısı gerekir.'**
+  String get help_offlineUsage_content;
+
+  /// No description provided for @help_deleteAccount_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabımı silebilir miyim?'**
+  String get help_deleteAccount_title;
+
+  /// No description provided for @help_deleteAccount_content.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabınızı silmek için uygulama içindeki iletişim sekmesini kullanarak geliştiriciye ulaşabilirsiniz ve kullanıcı adınız ile beraber e-posta adresinizi belirtmeniz yeterlidir.'**
+  String get help_deleteAccount_content;
+
+  /// No description provided for @helpCenterTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yardım Merkezi'**
+  String get helpCenterTitle;
+
+  /// No description provided for @sendFeedback.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geri Bildirim Gönder'**
+  String get sendFeedback;
 }
 
 class _AppLocalizationsDelegate

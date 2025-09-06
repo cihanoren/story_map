@@ -557,4 +557,109 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get searchPlace => 'Rechercher un lieu...';
+
+  @override
+  String get help_editAccount_title =>
+      'Comment puis-je modifier les informations de mon compte ?';
+
+  @override
+  String get help_editAccount_content =>
+      'Appuyez sur l\'icône des paramètres sur la page de profil pour modifier le nom d\'utilisateur et l\'e-mail.';
+
+  @override
+  String get help_shareRoute_title => 'Comment partager un itinéraire ?';
+
+  @override
+  String get help_shareRoute_content =>
+      'Après avoir créé un itinéraire, utilisez l\'option \'Partager dans Explorer\' pour envoyer votre itinéraire à la section Explorer.';
+
+  @override
+  String get help_favorites_title =>
+      'Où puis-je voir mes itinéraires favoris ?';
+
+  @override
+  String get help_favorites_content =>
+      'Sur la page de profil, appuyez sur l\'onglet \'Favoris\' pour voir les itinéraires que vous avez aimés précédemment.';
+
+  @override
+  String get help_editLocation_title =>
+      'Comment puis-je modifier mes informations de localisation ?';
+
+  @override
+  String get help_editLocation_content =>
+      'Sur la page de profil, appuyez sur l\'icône de crayon à côté de la localisation pour saisir manuellement votre position.';
+
+  @override
+  String get help_reportIssue_title => 'Comment puis-je signaler un problème ?';
+
+  @override
+  String get help_reportIssue_content =>
+      'Vous pouvez contacter le développeur via la section contact de l\'application. Si cela ne fonctionne pas, envoyez un e-mail à cihanoren10@gmail.com.';
+
+  @override
+  String get help_deleteRoute_title =>
+      'Comment puis-je supprimer mes itinéraires ?';
+
+  @override
+  String get help_deleteRoute_content =>
+      'Allez sur la page de détails de l\'itinéraire que vous avez créé et utilisez l\'option \'Supprimer\' pour le retirer définitivement.';
+
+  @override
+  String get help_addFavorites_title =>
+      'Comment ajouter un itinéraire à mes favoris ?';
+
+  @override
+  String get help_addFavorites_content =>
+      'Dans la section Explorer, appuyez sur l\'icône cœur d\'un itinéraire que vous aimez pour l\'ajouter à vos favoris.';
+
+  @override
+  String get help_addComment_title =>
+      'Comment puis-je laisser un commentaire ?';
+
+  @override
+  String get help_addComment_content =>
+      'Appuyez sur le lieu correspondant sur la carte, faites défiler jusqu\'en bas de l\'histoire et partagez vos impressions dans le champ \'Ajouter un commentaire\'.';
+
+  @override
+  String get help_changeLanguage_title => 'Comment changer la langue ?';
+
+  @override
+  String get help_changeLanguage_content =>
+      'Vous pouvez modifier la langue d\'affichage de l\'application dans la section Paramètres, sous \'Langue\'.';
+
+  @override
+  String get help_notifications_title =>
+      'Puis-je désactiver les notifications de l\'application ?';
+
+  @override
+  String get help_notifications_content =>
+      'Vous pouvez désactiver les autorisations de notification dans les paramètres de votre appareil ou mettre les notifications en sourdine depuis les paramètres internes de l\'application.';
+
+  @override
+  String get help_viewStories_title => 'Comment puis-je voir les histoires ?';
+
+  @override
+  String get help_viewStories_content =>
+      'Appuyez sur l\'icône d\'histoire sous les lieux sélectionnés sur la carte ou dans la section Explorer pour voir les histoires partagées.';
+
+  @override
+  String get help_offlineUsage_title =>
+      'Puis-je utiliser l\'application sans Internet ?';
+
+  @override
+  String get help_offlineUsage_content =>
+      'Une connexion Internet est requise pour créer des itinéraires et voir les itinéraires enregistrés.';
+
+  @override
+  String get help_deleteAccount_title => 'Puis-je supprimer mon compte ?';
+
+  @override
+  String get help_deleteAccount_content =>
+      'Pour supprimer votre compte, contactez le développeur via la section contact de l\'application et fournissez votre nom d\'utilisateur et votre adresse e-mail.';
+
+  @override
+  String get helpCenterTitle => 'Centre d\'aide';
+
+  @override
+  String get sendFeedback => 'Envoyer un retour';
 }

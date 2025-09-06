@@ -169,5 +169,46 @@
   "privacyPolicyUserRightsText": "- Los usuarios tienen derecho a acceder, corregir o eliminar sus datos personales.\n- Para tales solicitudes, puede contactar al desarrollador:\n📧 Correo electrónico: cihanoren1@gmail.com",
   "privacyPolicyChangesTitle": "9. Cambios en la política",
   "privacyPolicyChangesText": "- Esta política de privacidad puede actualizarse periódicamente.\n- Las actualizaciones se anunciarán a través de la aplicación o en esta página.",
-  "searchPlace": "Buscar lugar..."
+  "searchPlace": "Buscar lugar...",
+  
+  "help_editAccount_title": "¿Cómo puedo editar la información de mi cuenta?",
+  "help_editAccount_content": "Toca el ícono de ajustes en la página de perfil para editar el nombre de usuario y el correo electrónico.",
+
+  "help_shareRoute_title": "¿Cómo compartir una ruta?",
+  "help_shareRoute_content": "Después de crear una ruta, puedes usar la opción 'Compartir en Explorar' para enviar tu ruta a la sección de Explorar.",
+
+  "help_favorites_title": "¿Dónde puedo ver mis rutas favoritas?",
+  "help_favorites_content": "En la página de perfil, toca la pestaña 'Favoritos' para ver las rutas que has marcado previamente.",
+
+  "help_editLocation_title": "¿Cómo puedo cambiar mi información de ubicación?",
+  "help_editLocation_content": "En la página de perfil, toca el ícono de lápiz junto a la ubicación para ingresar tu ubicación manualmente.",
+
+  "help_reportIssue_title": "¿Cómo puedo reportar un problema?",
+  "help_reportIssue_content": "Puedes contactar al desarrollador usando la sección de contacto en la aplicación. Si no funciona, envía un correo electrónico a cihanoren10@gmail.com.",
+
+  "help_deleteRoute_title": "¿Cómo puedo eliminar mis rutas?",
+  "help_deleteRoute_content": "Ve a la página de detalles de la ruta que creaste y usa la opción 'Eliminar' para quitar la ruta permanentemente.",
+
+  "help_addFavorites_title": "¿Cómo agrego una ruta a mis favoritos?",
+  "help_addFavorites_content": "En la sección de Explorar, toca el ícono de corazón de una ruta que te guste para agregarla a tus favoritos.",
+
+  "help_addComment_title": "¿Cómo puedo hacer un comentario?",
+  "help_addComment_content": "Toca el lugar correspondiente en el mapa, desplázate al final de la historia y comparte tus pensamientos en el campo 'Hacer un comentario'.",
+
+  "help_changeLanguage_title": "¿Cómo cambio el idioma?",
+  "help_changeLanguage_content": "Puedes cambiar el idioma de visualización de la aplicación en la sección de ajustes, en 'Idioma'.",
+
+  "help_notifications_title": "¿Puedo desactivar las notificaciones de la aplicación?",
+  "help_notifications_content": "Puedes desactivar los permisos de notificación en la configuración de tu dispositivo o silenciar las notificaciones desde la configuración interna de la aplicación.",
+
+  "help_viewStories_title": "¿Cómo puedo ver las historias?",
+  "help_viewStories_content": "Toca el ícono de historia debajo de los lugares seleccionados en el mapa o en la sección de Explorar para ver las historias compartidas.",
+
+  "help_offlineUsage_title": "¿Puedo usar la aplicación sin internet?",
+  "help_offlineUsage_content": "Se requiere conexión a internet para crear rutas y ver las rutas guardadas.",
+
+  "help_deleteAccount_title": "¿Puedo eliminar mi cuenta?",
+  "help_deleteAccount_content": "Para eliminar tu cuenta, contacta al desarrollador a través de la sección de contacto en la aplicación y proporciona tu nombre de usuario y dirección de correo electrónico.",
+  "helpCenterTitle": "Centro de ayuda",
+  "sendFeedback": "Enviar comentarios"
 }

@@ -550,4 +550,106 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get searchPlace => 'Cerca luogo...';
+
+  @override
+  String get help_editAccount_title =>
+      'Come posso modificare le informazioni del mio account?';
+
+  @override
+  String get help_editAccount_content =>
+      'Tocca l\'icona delle impostazioni nella pagina del profilo per modificare nome utente e email.';
+
+  @override
+  String get help_shareRoute_title => 'Come posso condividere un percorso?';
+
+  @override
+  String get help_shareRoute_content =>
+      'Dopo aver creato un percorso, utilizza l\'opzione \'Condividi in Esplora\' per inviarlo alla sezione Esplora.';
+
+  @override
+  String get help_favorites_title =>
+      'Dove posso vedere i percorsi che mi piacciono?';
+
+  @override
+  String get help_favorites_content =>
+      'Nella pagina del profilo, tocca la scheda \'Preferiti\' per vedere i percorsi che hai apprezzato in precedenza.';
+
+  @override
+  String get help_editLocation_title =>
+      'Come posso modificare le informazioni sulla mia posizione?';
+
+  @override
+  String get help_editLocation_content =>
+      'Nella pagina del profilo, tocca l\'icona della matita accanto alla posizione per inserire manualmente la tua posizione.';
+
+  @override
+  String get help_reportIssue_title => 'Come posso segnalare un problema?';
+
+  @override
+  String get help_reportIssue_content =>
+      'Puoi contattare lo sviluppatore tramite la sezione contatti dell\'app. Se non funziona, invia un\'email a cihanoren10@gmail.com.';
+
+  @override
+  String get help_deleteRoute_title => 'Come posso eliminare i miei percorsi?';
+
+  @override
+  String get help_deleteRoute_content =>
+      'Vai alla pagina dei dettagli del percorso che hai creato e utilizza l\'opzione \'Elimina\' per rimuoverlo definitivamente.';
+
+  @override
+  String get help_addFavorites_title =>
+      'Come aggiungo un percorso ai preferiti?';
+
+  @override
+  String get help_addFavorites_content =>
+      'Nella sezione Esplora, tocca l\'icona a forma di cuore di un percorso che ti piace per aggiungerlo ai preferiti.';
+
+  @override
+  String get help_addComment_title => 'Come posso lasciare un commento?';
+
+  @override
+  String get help_addComment_content =>
+      'Tocca il luogo corrispondente sulla mappa, scorri fino in fondo alla storia e condividi le tue impressioni nel campo \'Aggiungi commento\'.';
+
+  @override
+  String get help_changeLanguage_title => 'Come posso cambiare la lingua?';
+
+  @override
+  String get help_changeLanguage_content =>
+      'Puoi cambiare la lingua dell\'app nella sezione Impostazioni, sotto \'Lingua\'.';
+
+  @override
+  String get help_notifications_title =>
+      'Posso disattivare le notifiche dell\'app?';
+
+  @override
+  String get help_notifications_content =>
+      'Puoi disattivare le autorizzazioni delle notifiche dalle impostazioni del dispositivo o silenziare le notifiche dall\'interno dell\'app.';
+
+  @override
+  String get help_viewStories_title => 'Come posso visualizzare le storie?';
+
+  @override
+  String get help_viewStories_content =>
+      'Tocca l\'icona della storia sotto i luoghi selezionati sulla mappa o nella sezione Esplora per vedere le storie condivise.';
+
+  @override
+  String get help_offlineUsage_title => 'Posso usare l\'app senza Internet?';
+
+  @override
+  String get help_offlineUsage_content =>
+      'È necessaria una connessione Internet per creare percorsi e visualizzare i percorsi salvati.';
+
+  @override
+  String get help_deleteAccount_title => 'Posso eliminare il mio account?';
+
+  @override
+  String get help_deleteAccount_content =>
+      'Per eliminare il tuo account, contatta lo sviluppatore tramite la sezione contatti dell\'app e fornisci il tuo nome utente e la tua email.';
+
+  @override
+  String get helpCenterTitle => 'Centro assistenza';
+
+  @override
+  String get sendFeedback => 'Invia feedback';
 }

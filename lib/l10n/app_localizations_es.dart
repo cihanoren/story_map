@@ -554,4 +554,106 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get searchPlace => 'Buscar lugar...';
+
+  @override
+  String get help_editAccount_title =>
+      '¿Cómo puedo editar la información de mi cuenta?';
+
+  @override
+  String get help_editAccount_content =>
+      'Toca el ícono de ajustes en la página de perfil para editar el nombre de usuario y el correo electrónico.';
+
+  @override
+  String get help_shareRoute_title => '¿Cómo compartir una ruta?';
+
+  @override
+  String get help_shareRoute_content =>
+      'Después de crear una ruta, puedes usar la opción \'Compartir en Explorar\' para enviar tu ruta a la sección de Explorar.';
+
+  @override
+  String get help_favorites_title => '¿Dónde puedo ver mis rutas favoritas?';
+
+  @override
+  String get help_favorites_content =>
+      'En la página de perfil, toca la pestaña \'Favoritos\' para ver las rutas que has marcado previamente.';
+
+  @override
+  String get help_editLocation_title =>
+      '¿Cómo puedo cambiar mi información de ubicación?';
+
+  @override
+  String get help_editLocation_content =>
+      'En la página de perfil, toca el ícono de lápiz junto a la ubicación para ingresar tu ubicación manualmente.';
+
+  @override
+  String get help_reportIssue_title => '¿Cómo puedo reportar un problema?';
+
+  @override
+  String get help_reportIssue_content =>
+      'Puedes contactar al desarrollador usando la sección de contacto en la aplicación. Si no funciona, envía un correo electrónico a cihanoren10@gmail.com.';
+
+  @override
+  String get help_deleteRoute_title => '¿Cómo puedo eliminar mis rutas?';
+
+  @override
+  String get help_deleteRoute_content =>
+      'Ve a la página de detalles de la ruta que creaste y usa la opción \'Eliminar\' para quitar la ruta permanentemente.';
+
+  @override
+  String get help_addFavorites_title =>
+      '¿Cómo agrego una ruta a mis favoritos?';
+
+  @override
+  String get help_addFavorites_content =>
+      'En la sección de Explorar, toca el ícono de corazón de una ruta que te guste para agregarla a tus favoritos.';
+
+  @override
+  String get help_addComment_title => '¿Cómo puedo hacer un comentario?';
+
+  @override
+  String get help_addComment_content =>
+      'Toca el lugar correspondiente en el mapa, desplázate al final de la historia y comparte tus pensamientos en el campo \'Hacer un comentario\'.';
+
+  @override
+  String get help_changeLanguage_title => '¿Cómo cambio el idioma?';
+
+  @override
+  String get help_changeLanguage_content =>
+      'Puedes cambiar el idioma de visualización de la aplicación en la sección de ajustes, en \'Idioma\'.';
+
+  @override
+  String get help_notifications_title =>
+      '¿Puedo desactivar las notificaciones de la aplicación?';
+
+  @override
+  String get help_notifications_content =>
+      'Puedes desactivar los permisos de notificación en la configuración de tu dispositivo o silenciar las notificaciones desde la configuración interna de la aplicación.';
+
+  @override
+  String get help_viewStories_title => '¿Cómo puedo ver las historias?';
+
+  @override
+  String get help_viewStories_content =>
+      'Toca el ícono de historia debajo de los lugares seleccionados en el mapa o en la sección de Explorar para ver las historias compartidas.';
+
+  @override
+  String get help_offlineUsage_title =>
+      '¿Puedo usar la aplicación sin internet?';
+
+  @override
+  String get help_offlineUsage_content =>
+      'Se requiere conexión a internet para crear rutas y ver las rutas guardadas.';
+
+  @override
+  String get help_deleteAccount_title => '¿Puedo eliminar mi cuenta?';
+
+  @override
+  String get help_deleteAccount_content =>
+      'Para eliminar tu cuenta, contacta al desarrollador a través de la sección de contacto en la aplicación y proporciona tu nombre de usuario y dirección de correo electrónico.';
+
+  @override
+  String get helpCenterTitle => 'Centro de ayuda';
+
+  @override
+  String get sendFeedback => 'Enviar comentarios';
 }

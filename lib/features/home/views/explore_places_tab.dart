@@ -37,17 +37,16 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
   }
 
   Future<void> _loadMarkerImages() async {
-  // PredefinedMarkers.loadMarkers() ile tüm json dosyalarını oku
-  final allMarkers = await PredefinedMarkers.loadMarkers();
+    // PredefinedMarkers.loadMarkers() ile tüm json dosyalarını oku
+    final allMarkers = await PredefinedMarkers.loadMarkers();
 
-  // title -> image map oluştur
-  _titleToImageMap = {
-    for (var marker in allMarkers)
-      if (marker['title'] != null && marker['image'] != null)
-        marker['title']: marker['image']
-  };
-}
-
+    // title -> image map oluştur
+    _titleToImageMap = {
+      for (var marker in allMarkers)
+        if (marker['title'] != null && marker['image'] != null)
+          marker['title']: marker['image']
+    };
+  }
 
   Future<void> _updateMissingImagesInFirestore() async {
     final snapshot =
@@ -226,7 +225,14 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
 
                 if (showAd) {
                   final adManager = InterstitialAdManager();
-                  adManager.loadAndShowAd(() => showBottomSheet());
+                  adManager.loadAndShowAd(
+                    adUnitId:
+                        'ca-app-pub-9479192831415354/5701357503', // Keşfet için ayrı reklam birimi
+                    showEveryTwo: true, // 2'de 1 reklam göster
+                    onAdClosed: () async {
+                      await showBottomSheet();
+                    },
+                  );
                 } else {
                   await showBottomSheet();
                 }
@@ -253,7 +259,8 @@ class _ExplorePlacesTabState extends State<ExplorePlacesTab> {
   }
 
   // 🔹 Çeviriyi getiren fonksiyon
-  Future<String?> _fetchTranslatedStory(String placeTitle, String locale) async {
+  Future<String?> _fetchTranslatedStory(
+      String placeTitle, String locale) async {
     try {
       // TranslationService ile istenilen dile çevir
       final translated = await TranslationService.translateStory(

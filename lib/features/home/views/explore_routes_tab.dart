@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:story_map/features/home/services.dart/InterstitialAdManager.dart';
 import 'package:story_map/features/home/views/explore_route_details.dart';
 import 'package:story_map/l10n/app_localizations.dart';
 
@@ -17,6 +18,7 @@ class ExploreRoutesTab extends StatefulWidget {
 class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
   Future<List<Map<String, dynamic>>>? _sharedRoutes;
   final RefreshController _refreshController = RefreshController();
+  //int _tapRouteCount = 0;
 
   String? _selectedRegion; // Seçili ülke kodu
   List<String> _availableRegions = [
@@ -131,6 +133,42 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
     _refreshController.refreshCompleted();
   }
 
+  // StatefulWidget içinde async fonksiyon
+  int _tapRouteCount = 0; // Zaten var
+
+  Future<void> _showRouteDetailsWithAd(Map<String, dynamic> route) async {
+    final adManager = InterstitialAdManager();
+
+    // Sayaç burada artmalı, onTap içinde değil!
+    _tapRouteCount++;
+    final showAd = _tapRouteCount % 2 == 0; // 2 tıklamada bir reklam
+
+    Future<void> navigateToDetails() async {
+      if (!mounted) return;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ExploreRouteDetails(
+            routeId: route['routeId'],
+            routeTitle: route['title'],
+          ),
+        ),
+      );
+    }
+
+    if (showAd) {
+      adManager.loadAndShowAd(
+        adUnitId: 'ca-app-pub-9479192831415354/5701357503',
+        showEveryTwo: true,
+        onAdClosed: () async {
+          await navigateToDetails();
+        },
+      );
+    } else {
+      await navigateToDetails();
+    }
+  }
+
   String formatDate(Timestamp? timestamp) {
     if (timestamp == null) return '-';
     final date = timestamp.toDate();
@@ -157,71 +195,72 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
       children: [
         // Bölge seçimi dropdown
         Padding(
-  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-  child: Row(
-    children: [
-      Text(
-        AppLocalizations.of(context)!.region + ":",
-        style: TextStyle(fontWeight: FontWeight.w600),
-      ),
-      const SizedBox(width: 10),
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: DropdownButton<String>(
-          value: _availableRegions.contains(_selectedRegion)
-              ? _selectedRegion
-              : 'all',
-          items: _availableRegions.map((region) {
-            String displayText =
-                region == 'all' ? AppLocalizations.of(context)!.allCountries : region.toUpperCase(); // Tüm ülkeler için özel metin
-            return DropdownMenuItem<String>(
-              value: region,
-              child: Text(
-                displayText,
-                style: const TextStyle(
-                  fontSize: 12,             // Küçük yazı boyutu
-                  color: Colors.black,      // Menü içindeki yazı rengi
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: Row(
+            children: [
+              Text(
+                AppLocalizations.of(context)!.region + ":",
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(width: 10),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: DropdownButton<String>(
+                  value: _availableRegions.contains(_selectedRegion)
+                      ? _selectedRegion
+                      : 'all',
+                  items: _availableRegions.map((region) {
+                    String displayText = region == 'all'
+                        ? AppLocalizations.of(context)!.allCountries
+                        : region.toUpperCase(); // Tüm ülkeler için özel metin
+                    return DropdownMenuItem<String>(
+                      value: region,
+                      child: Text(
+                        displayText,
+                        style: const TextStyle(
+                          fontSize: 12, // Küçük yazı boyutu
+                          color: Colors.black, // Menü içindeki yazı rengi
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    if (value == null) return;
+                    setState(() {
+                      _selectedRegion = value;
+                    });
+                    _fetchAndSetRoutes();
+                  },
+                  underline: const SizedBox(),
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Colors.black54,
+                    size: 20,
+                  ),
+                  dropdownColor: Colors.white, // Açılır menü beyaz
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.black87,
+                  ), // seçili öğe yazı stili
+                  isDense: true,
+                  isExpanded: false,
                 ),
               ),
-            );
-          }).toList(),
-          onChanged: (value) {
-            if (value == null) return;
-            setState(() {
-              _selectedRegion = value;
-              _sharedRoutes = Future.value([]);
-            });
-            _fetchAndSetRoutes();
-          },
-          underline: const SizedBox(),
-          icon: const Icon(
-            Icons.keyboard_arrow_down,
-            color: Colors.black54,
-            size: 20,
+            ],
           ),
-          dropdownColor: Colors.white,  // Açılır menü beyaz
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.black87,
-          ), // seçili öğe yazı stili
-          isDense: true,
-          isExpanded: false,
         ),
-      ),
-    ],
-  ),
-),
 
         Expanded(
           child: FutureBuilder<List<Map<String, dynamic>>>(
@@ -244,7 +283,9 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
                     physics: const AlwaysScrollableScrollPhysics(),
                     children: [
                       SizedBox(height: 150),
-                      Center(child: Text(AppLocalizations.of(context)!.notSharedRouteYet)),
+                      Center(
+                          child: Text(
+                              AppLocalizations.of(context)!.notSharedRouteYet)),
                     ],
                   ),
                 );
@@ -283,15 +324,9 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
 
                     return InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ExploreRouteDetails(
-                              routeId: route['routeId'],
-                              routeTitle: route['title'],
-                            ),
-                          ),
-                        );
+                        _tapRouteCount++;
+
+                        _showRouteDetailsWithAd(route);
                       },
                       child: Card(
                         color: Colors.grey[100],
@@ -310,7 +345,9 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18)),
                                   const SizedBox(height: 4),
-                                  Text(AppLocalizations.of(context)!.shared + ": $sharedAt", // Paylaşım tarihi mesajı 
+                                  Text(
+                                      AppLocalizations.of(context)!.shared +
+                                          ": $sharedAt", // Paylaşım tarihi mesajı
                                       style:
                                           const TextStyle(color: Colors.grey)),
                                   const SizedBox(height: 12),
@@ -354,7 +391,8 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
                                       ),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        AppLocalizations.of(context)!.noImage, // Resim yok mesajı
+                                        AppLocalizations.of(context)!
+                                            .noImage, // Resim yok mesajı
                                         style: TextStyle(color: Colors.grey),
                                       ),
                                     ),

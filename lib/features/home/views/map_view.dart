@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:story_map/core/config.dart';
 import 'package:story_map/features/home/controller.dart/maps_controller.dart';
+import 'package:story_map/features/home/services.dart/InterstitialAdManager.dart';
 import 'package:story_map/l10n/app_localizations.dart';
 import 'package:story_map/utils/marker_icons.dart';
 
@@ -229,7 +230,6 @@ class _MapViewState extends ConsumerState<MapView> {
                   ),
                 ),
 
-                // Eğer tur aktif değilse, "Geziye Başla" butonunu göster
                 if (!isTourActive)
                   Positioned(
                     bottom: 10,
@@ -260,8 +260,8 @@ class _MapViewState extends ConsumerState<MapView> {
                                       children: [
                                         Text(
                                           AppLocalizations.of(context)!
-                                              .howManyLocationTripQuestion, // "Kaç konumlu gezi yapmak istersiniz?"
-                                          style: TextStyle(
+                                              .howManyLocationTripQuestion,
+                                          style: const TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -298,15 +298,15 @@ class _MapViewState extends ConsumerState<MapView> {
                                         const SizedBox(height: 20),
                                         Text(
                                           AppLocalizations.of(context)!
-                                              .selectTransportMode, // "Seyahat modu seçin:"
-                                          style: TextStyle(
+                                              .selectTransportMode,
+                                          style: const TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         RadioListTile(
-                                          title: Text(AppLocalizations.of(
-                                                  context)!
-                                              .driving), // "Araba (Driving)"
+                                          title: Text(
+                                              AppLocalizations.of(context)!
+                                                  .driving),
                                           value: 'driving',
                                           groupValue: selectedTravelMode,
                                           onChanged: (value) {
@@ -316,9 +316,9 @@ class _MapViewState extends ConsumerState<MapView> {
                                           },
                                         ),
                                         RadioListTile(
-                                          title: Text(AppLocalizations.of(
-                                                  context)!
-                                              .walking), // "Yürüyüş (Walking)"
+                                          title: Text(
+                                              AppLocalizations.of(context)!
+                                                  .walking),
                                           value: 'walking',
                                           groupValue: selectedTravelMode,
                                           onChanged: (value) {
@@ -328,9 +328,9 @@ class _MapViewState extends ConsumerState<MapView> {
                                           },
                                         ),
                                         RadioListTile(
-                                          title: Text(AppLocalizations.of(
-                                                  context)!
-                                              .bicycling), // "Bisiklet (Bicycling)"
+                                          title: Text(
+                                              AppLocalizations.of(context)!
+                                                  .bicycling),
                                           value: 'bicycling',
                                           groupValue: selectedTravelMode,
                                           onChanged: (value) {
@@ -344,28 +344,41 @@ class _MapViewState extends ConsumerState<MapView> {
                                           onPressed: () async {
                                             Navigator.of(context).pop();
 
-                                            mapController.setTravelMode(
-                                                selectedTravelMode); // 👈 travel mode'u sakla
+                                            // ✅ Rota oluşturma reklamı 2'de1 mantığıyla
+                                            final adManager =
+                                                InterstitialAdManager();
+                                            adManager.loadAndShowAd(
+                                              adUnitId:
+                                                  'ca-app-pub-9479192831415354/2616791875', // Rota oluşturma reklam birimi
+                                              showEveryTwo:
+                                                  true, // 2'de 1 reklam göster
+                                              onAdClosed: () async {
+                                                mapController.setTravelMode(
+                                                    selectedTravelMode);
+                                                mapController.startTour();
 
-                                            mapController.startTour();
+                                                await mapController
+                                                    .createRealPath(
+                                                  locationCount,
+                                                  Config.googleMapsPlacesApiKey,
+                                                  travelMode:
+                                                      selectedTravelMode,
+                                                );
 
-                                            await mapController.createRealPath(
-                                              locationCount,
-                                              Config.googleMapsPlacesApiKey,
-                                              travelMode: selectedTravelMode,
+                                                final path = await mapController
+                                                    .createShortestPath(
+                                                  locationCount,
+                                                  travelMode:
+                                                      selectedTravelMode,
+                                                );
+
+                                                print("Oluşturulan rota:");
+                                                for (var point in path) {
+                                                  print(
+                                                      "${point.latitude}, ${point.longitude}");
+                                                }
+                                              },
                                             );
-
-                                            final path = await mapController
-                                                .createShortestPath(
-                                              locationCount,
-                                              travelMode: selectedTravelMode,
-                                            );
-
-                                            print("Oluşturulan rota:");
-                                            for (var point in path) {
-                                              print(
-                                                  "${point.latitude}, ${point.longitude}");
-                                            }
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors.black,
@@ -377,13 +390,12 @@ class _MapViewState extends ConsumerState<MapView> {
                                                 horizontal: 32, vertical: 10),
                                           ),
                                           child: Text(
-                                            AppLocalizations.of(context)!
-                                                .start, // "Geziye Başla"
+                                            AppLocalizations.of(context)!.start,
                                             style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color:
-                                                    Colors.yellowAccent[700]),
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.yellowAccent[700],
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -403,8 +415,7 @@ class _MapViewState extends ConsumerState<MapView> {
                         ),
                       ),
                       child: Text(
-                        AppLocalizations.of(context)!
-                            .startTrip, // "Geziye Başla"
+                        AppLocalizations.of(context)!.startTrip,
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

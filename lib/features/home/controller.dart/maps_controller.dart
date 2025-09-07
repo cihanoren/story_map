@@ -325,20 +325,19 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
   }
 
   void _showBottomSheet(String title, String imageUrl) {
-    final context = navigatorKey.currentContext;
-    if (context == null || _googleMapController == null) return;
+  final context = navigatorKey.currentContext;
+  if (context == null || _googleMapController == null) return;
 
-    _markerClickCounter++;
-
-    if (_markerClickCounter % 2 == 0) {
-      final adManager = InterstitialAdManager();
-      adManager.loadAndShowAd(() {
-        _openStoryBottomSheet(context, title, imageUrl);
-      });
-    } else {
+  final adManager = InterstitialAdManager();
+  adManager.loadAndShowAd(
+    adUnitId: 'ca-app-pub-9479192831415354/5701357503', // 👈 keşfet için ayrı ID
+    showEveryTwo: true, // 2’de 1 reklam göster
+    onAdClosed: () {
       _openStoryBottomSheet(context, title, imageUrl);
-    }
-  }
+    },
+  );
+}
+
 
 // JSON’daki tüm marker verilerini döndüren fonksiyon
   List<Map<String, dynamic>> getAllMarkersData() {

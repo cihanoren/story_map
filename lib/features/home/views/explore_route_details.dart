@@ -213,7 +213,7 @@ class _ExploreRouteDetailsState extends State<ExploreRouteDetails> {
                                       ? Image.network(imageUrl,
                                           fit: BoxFit.cover)
                                       : Image.asset(
-                                          "assets/images/Story_Map.png",
+                                          "assets/images/sign_in.png",
                                           fit: BoxFit.cover),
                                 ),
                               ),

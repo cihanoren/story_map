@@ -371,7 +371,7 @@ class _ExploreRoutesTabState extends State<ExploreRoutesTab> {
                                               errorBuilder: (context, error,
                                                       stackTrace) =>
                                                   Image.asset(
-                                                "assets/images/Story_Map.png",
+                                                "assets/images/sign_in.png",
                                                 width: 120,
                                                 height: 90,
                                                 fit: BoxFit.cover,

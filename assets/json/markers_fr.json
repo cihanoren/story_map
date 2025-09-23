@@ -15333,7 +15333,7 @@
     },
     "title": "Puits du Marais",
     "image": "",
-    "iconPath": "assets/markers/technical_monument.png"
+    "iconPath": "assets/markers/monument.png"
   },
   {
     "position": {
@@ -48687,7 +48687,7 @@
     },
     "title": "Grue Titan grise",
     "image": "",
-    "iconPath": "assets/markers/technical_monument.png"
+    "iconPath": "assets/markers/monument.png"
   },
   {
     "position": {
@@ -90690,7 +90690,7 @@
     },
     "title": "Grue Noire",
     "image": "",
-    "iconPath": "assets/markers/technical_monument.png"
+    "iconPath": "assets/markers/monument.png"
   },
   {
     "position": {

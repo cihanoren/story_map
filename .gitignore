@@ -33,6 +33,9 @@ migrate_working_dir/
 .pub/
 /build/
 lib/core/config.dart
+key.properties
+**/*.keystore
+**/*.jks
 
 
 # Symbolication related

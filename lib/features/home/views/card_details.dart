@@ -239,7 +239,7 @@ class _CardDetailsState extends State<CardDetails> {
                             height: 100,
                             child: imageUrl != null && imageUrl.isNotEmpty
                                 ? Image.network(imageUrl, fit: BoxFit.cover)
-                                : Image.asset("assets/images/Story_Map.png",
+                                : Image.asset("assets/images/sign_in.png",
                                     fit: BoxFit.cover),
                           ),
                         ),

@@ -27,7 +27,8 @@ class _ProfileSettingPageState extends ConsumerState<ProfileSettingPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        elevation: 0,
         title: Text(
           AppLocalizations.of(context)!.settings, // "Ayarlar"
           style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),

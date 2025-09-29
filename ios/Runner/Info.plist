@@ -28,6 +28,8 @@
 		<string>ca-app-pub-9479192831415354~6852440031</string>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
+		<key>io.flutter.embedded_views_preview</key>
+		<true/>
 		<key>NSAppTransportSecurity</key>
 		<dict>
 			<key>NSAllowsArbitraryLoads</key>
@@ -41,8 +43,8 @@
 		<!-- Reklam Kimliği / App Tracking Transparency için izin -->
 		<key>NSUserTrackingUsageDescription</key>
 		<string>Uygulama deneyimini geliştirmek ve reklamları özelleştirmek için izin gerekiyor.</string>
-		<!--  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-		<string>Konumunuzu rota takibi için arka planda da kullanıyoruz.</string>  arka planda konum takibi izini-->
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>Konumunuzu rota takibi için arka planda da kullanıyoruz.</string> 
 		<key>NSLocationWhenInUseUsageDescription</key>
 		<string>Konumunuzu haritada rota ve mekanları göstermek için kullanıyoruz.</string>
 		<key>NSPhotoLibraryUsageDescription</key>

@@ -10,7 +10,7 @@ import GoogleMaps  // ✅ Google Maps için gerekli
   ) -> Bool {
     
     // ✅ Google Maps API Key ekleme
-    GMSServices.provideAPIKey("AIzaSyBCCC6yeolve44xzBTrvd0Q_8RHYBoRehc")
+    GMSServices.provideAPIKey("AIzaSyDR0bAousHaywqfYkv1YF6jEFSSrEwAeDc")
 
     // ✅ Flutter pluginleri kaydet
     GeneratedPluginRegistrant.register(with: self)

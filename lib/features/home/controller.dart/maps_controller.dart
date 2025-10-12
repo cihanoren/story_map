@@ -443,28 +443,28 @@ class MapController extends StateNotifier<Map<String, dynamic>> {
     final userId = FirebaseAuth.instance.currentUser?.uid;
     if (userId == null) return;
 
-    final places = _tourPath
-        .asMap()
-        .map((index, e) {
-          final title = _tourTitles[index];
-          // JSON’daki marker verilerinden image’ı çekelim
-          final image = _allMarkersData.firstWhere(
-            (m) => m['title'] == title,
-            orElse: () => {'image': ''},
-          )['image'];
+    final places = _tourPath.asMap().entries.map((entry) {
+  final index = entry.key;
+  final e = entry.value;
 
-          return MapEntry(
-            index,
-            Place(
-              name: title,
-              image: image ?? '',
-              lat: e.latitude,
-              lng: e.longitude,
-            ),
-          );
-        })
-        .values
-        .toList();
+  // Güvenli erişim: index _tourTitles içinde yoksa "Unnamed Place"
+  final title = index < _tourTitles.length 
+      ? _tourTitles[index] 
+      : "Unnamed Place";
+
+  // JSON’daki marker verilerinden image’ı çekelim
+  final image = _allMarkersData.firstWhere(
+    (m) => m['title'] == title,
+    orElse: () => {'image': ''},
+  )['image'];
+
+  return Place(
+    name: title,
+    image: image ?? '',
+    lat: e.latitude,
+    lng: e.longitude,
+  );
+}).toList();
 
     final route = RouteModel(
       id: '',

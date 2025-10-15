@@ -43,6 +43,9 @@
 		<true/>
 	</dict>
 
+	<!-- ✅ Apple ile devam et için eklendi -->
+	<key>NSAppleIDUsageDescription</key>
+	<string>Apple hesabınızla giriş yapabilmeniz için gerekli.</string>
 	<!-- ✅ Kamera / Galeri / Reklam izinleri -->
 	<key>NSCameraUsageDescription</key>
 	<string>Kamera erişimi fotoğraf çekmek için gereklidir.</string>

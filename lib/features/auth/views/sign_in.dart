@@ -201,6 +201,38 @@ class _SignInState extends ConsumerState<SignIn> {
 
                         const SizedBox(height: 15),
 
+
+                        // 🍎 Apple ile Giriş Butonu
+                        SignInButton(
+                          Buttons.appleDark,
+                          text: AppLocalizations.of(context)!.continueWithApple, // "Apple ile Giriş Yap"
+                          onPressed: () async {
+                            try {
+                              await ref.read(authControllerProvider.notifier).signInWithApple();
+
+                              // ✅ Oturum bilgisini sakla
+                              final prefs = await SharedPreferences.getInstance();
+                              await prefs.setBool("is_logged_in", true);
+
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(builder: (_) => const Home()),
+                                (route) => false,
+                              );
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Apple ile giriş başarısız: $e"),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          },
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                          elevation: 3,
+                        ),
+                        SizedBox(height: 5),
+
                         // Google İle Giriş Butonu
                         SignInButton(
                           Buttons.google,
@@ -234,8 +266,7 @@ class _SignInState extends ConsumerState<SignIn> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                           elevation: 3,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 10),
+                          
                         ),
 
                         SizedBox(height: 5),

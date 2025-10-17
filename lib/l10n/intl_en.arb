@@ -210,5 +210,7 @@
   "help_deleteAccount_title": "Can I delete my account?",
   "help_deleteAccount_content": "To delete your account, use the in-app contact section to reach the developer and provide your username and email address.",
   "helpCenterTitle": "Help Center",
-  "sendFeedback": "Send Feedback"
+  "sendFeedback": "Send Feedback",
+  "continueWithApple": "Continue with Apple"
+
 }

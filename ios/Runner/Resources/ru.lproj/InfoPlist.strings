@@ -1,0 +1,17 @@
+/* Apple Sign-In */
+"NSAppleIDUsageDescription" = "Требуется для входа с вашей учетной записью Apple.";
+
+/* Camera */
+"NSCameraUsageDescription" = "Доступ к камере необходим для съемки фотографий.";
+
+/* Photo Library */
+"NSPhotoLibraryUsageDescription" = "Доступ к фотогалерее необходим для загрузки фотографий.";
+"NSPhotoLibraryAddUsageDescription" = "Доступ к фотогалерее необходим для сохранения фотографий или контента.";
+
+/* App Tracking */
+"NSUserTrackingUsageDescription" = "Необходимо для улучшения работы приложения и персонализации рекламы.";
+
+/* Location */
+"NSLocationWhenInUseUsageDescription" = "Ваше местоположение используется для отображения маршрутов и мест на карте.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Ваше местоположение используется в фоновом режиме для отслеживания маршрутов.";
+"NSLocationAlwaysUsageDescription" = "Приложение требует постоянного доступа к вашему местоположению для непрерывного отслеживания.";

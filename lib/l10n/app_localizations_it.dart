@@ -652,4 +652,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get sendFeedback => 'Invia feedback';
+
+  @override
+  String get continueWithApple => 'Continua con Apple';
 }

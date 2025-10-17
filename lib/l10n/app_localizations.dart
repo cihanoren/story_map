@@ -1297,6 +1297,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Geri Bildirim Gönder'**
   String get sendFeedback;
+
+  /// No description provided for @continueWithApple.
+  ///
+  /// In tr, this message translates to:
+  /// **'Apple ile devam et'**
+  String get continueWithApple;
 }
 
 class _AppLocalizationsDelegate

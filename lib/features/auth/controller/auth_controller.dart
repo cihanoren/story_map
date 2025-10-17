@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:story_map/features/auth/repository/auth_repository.dart';
 
 // Kullanıcı oturum durumunu takip eden provider
@@ -24,6 +27,59 @@ class AuthController extends StateNotifier<User?> {
   void _loadCurrentUser() {
     state = authRepository.getCurrentUser();
   }
+
+  // 🔹 Apple ile Giriş
+  // 🔹 Apple ile Giriş (hem iOS hem Android)
+  Future<void> signInWithApple() async {
+  try {
+    final auth = FirebaseAuth.instance;
+    UserCredential userCredential;
+
+    if (Platform.isAndroid) {
+      // Android: Firebase tarafında yapılandırılmış Apple Sign-In
+      final provider = OAuthProvider("apple.com");
+      userCredential = await auth.signInWithProvider(provider);
+    } else {
+      // iOS: native Apple Sign-in
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      final oauthCredential = OAuthProvider("apple.com").credential(
+        idToken: appleCredential.identityToken,
+        accessToken: appleCredential.authorizationCode,
+      );
+
+      userCredential = await auth.signInWithCredential(oauthCredential);
+    }
+
+    // Ortak: kullanıcıyı state ve Firestore’a kaydet
+    final user = userCredential.user;
+    if (user != null) {
+      state = user;
+
+      final userDoc = FirebaseFirestore.instance.collection('users').doc(user.uid);
+      final doc = await userDoc.get();
+      if (!doc.exists) {
+        await userDoc.set({
+          'uid': user.uid,
+          'email': user.email,
+          'username': user.displayName ?? '',
+          'photoUrl': user.photoURL,
+          'createdAt': FieldValue.serverTimestamp(),
+          'provider': 'apple',
+        });
+      }
+    }
+  } catch (e) {
+    print('❌ Apple ile giriş hatası: $e');
+    throw Exception('Apple ile giriş başarısız: ${e.toString()}');
+  }
+}
+
 
   // Kullanıcı giriş yapıyor
   Future<void> signInWithEmailAndPassword({

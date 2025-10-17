@@ -1,0 +1,17 @@
+/* Apple Sign-In */
+"NSAppleIDUsageDescription" = "Requerido para iniciar sesión con su cuenta de Apple.";
+
+/* Camera */
+"NSCameraUsageDescription" = "Se requiere acceso a la cámara para tomar fotos.";
+
+/* Photo Library */
+"NSPhotoLibraryUsageDescription" = "Se requiere acceso a la biblioteca de fotos para subir fotos.";
+"NSPhotoLibraryAddUsageDescription" = "Se requiere acceso a la biblioteca de fotos para guardar fotos o contenido.";
+
+/* App Tracking */
+"NSUserTrackingUsageDescription" = "Se requiere para mejorar la experiencia de la aplicación y personalizar los anuncios.";
+
+/* Location */
+"NSLocationWhenInUseUsageDescription" = "Su ubicación se utiliza para mostrar rutas y lugares en el mapa.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Su ubicación se utiliza en segundo plano para el seguimiento de rutas.";
+"NSLocationAlwaysUsageDescription" = "La aplicación requiere acceso en segundo plano para rastrear continuamente su ubicación.";

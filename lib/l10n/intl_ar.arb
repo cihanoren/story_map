@@ -210,5 +210,6 @@
   "help_deleteAccount_title": "هل يمكنني حذف حسابي؟",
   "help_deleteAccount_content": "لحذف حسابك، تواصل مع المطور من خلال قسم الاتصال داخل التطبيق وقدم اسم المستخدم وعنوان البريد الإلكتروني الخاص بك.",
   "helpCenterTitle": "مركز المساعدة",
-  "sendFeedback": "إرسال الملاحظات"
+  "sendFeedback": "إرسال الملاحظات",
+  "continueWithApple": "المتابعة باستخدام Apple"
   }

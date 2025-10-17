@@ -211,6 +211,7 @@
   "help_deleteAccount_content": "Hesabınızı silmek için uygulama içindeki iletişim sekmesini kullanarak geliştiriciye ulaşabilirsiniz ve kullanıcı adınız ile beraber e-posta adresinizi belirtmeniz yeterlidir.",
 
   "helpCenterTitle": "Yardım Merkezi",
-  "sendFeedback": "Geri Bildirim Gönder"
+  "sendFeedback": "Geri Bildirim Gönder",
+  "continueWithApple": "Apple ile devam et"
 }
   

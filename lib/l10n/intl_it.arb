@@ -210,5 +210,6 @@
   "help_deleteAccount_title": "Posso eliminare il mio account?",
   "help_deleteAccount_content": "Per eliminare il tuo account, contatta lo sviluppatore tramite la sezione contatti dell'app e fornisci il tuo nome utente e la tua email.",
   "helpCenterTitle": "Centro assistenza",
-  "sendFeedback": "Invia feedback"
+  "sendFeedback": "Invia feedback",
+  "continueWithApple": "Continua con Apple"
 }

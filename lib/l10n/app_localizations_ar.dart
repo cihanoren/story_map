@@ -640,4 +640,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sendFeedback => 'إرسال الملاحظات';
+
+  @override
+  String get continueWithApple => 'المتابعة باستخدام Apple';
 }

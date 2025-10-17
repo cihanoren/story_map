@@ -1,0 +1,17 @@
+/* Apple ile Devam Et */
+"NSAppleIDUsageDescription" = "Apple hesabınızla giriş yapabilmeniz için gerekli.";
+
+/* Kamera */
+"NSCameraUsageDescription" = "Fotoğraf çekmek için kamera erişimi gereklidir.";
+
+/* Galeri */
+"NSPhotoLibraryUsageDescription" = "Fotoğraf yüklemek için galeriye erişim gereklidir.";
+"NSPhotoLibraryAddUsageDescription" = "Fotoğraf veya içerik kaydetmek için galeriye erişim gereklidir.";
+
+/* Reklam / Takip */
+"NSUserTrackingUsageDescription" = "Uygulama deneyimini geliştirmek ve reklamları özelleştirmek için izin gereklidir.";
+
+/* Konum */
+"NSLocationWhenInUseUsageDescription" = "Haritada rota ve mekanları göstermek için konumunuz kullanılır.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Rota takibi için konumunuz arka planda da kullanılır.";
+"NSLocationAlwaysUsageDescription" = "Uygulama konumunuzu sürekli izlemek için arka plan erişimi gerektirir.";

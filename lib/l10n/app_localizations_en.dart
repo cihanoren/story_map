@@ -650,4 +650,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sendFeedback => 'Send Feedback';
+
+  @override
+  String get continueWithApple => 'Continue with Apple';
 }

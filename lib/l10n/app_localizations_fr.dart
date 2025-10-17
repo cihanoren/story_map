@@ -662,4 +662,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get sendFeedback => 'Envoyer un retour';
+
+  @override
+  String get continueWithApple => 'Continuer avec Apple';
 }

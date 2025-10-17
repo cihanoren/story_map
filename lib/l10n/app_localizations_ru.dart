@@ -648,4 +648,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get sendFeedback => 'Отправить отзыв';
+
+  @override
+  String get continueWithApple => 'Продолжить с Apple';
 }

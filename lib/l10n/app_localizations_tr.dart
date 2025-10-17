@@ -649,4 +649,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get sendFeedback => 'Geri Bildirim Gönder';
+
+  @override
+  String get continueWithApple => 'Apple ile devam et';
 }
